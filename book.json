@@ -4,7 +4,8 @@
         "anchor-navigation",
         "annotate",
         "baidu",
-        "github"
+        "github",
+        "highlight"
     ],
     "pluginsConfig": {}
 }
