@@ -2,5 +2,5 @@
 
 * [0. 前言](README.md)
 * [1. 介绍](Introduction.md)
-* [2. puppet-keystone](puppet-keystone)
+* [2. puppet-keystone](puppet-keystone/intro.md)
 
