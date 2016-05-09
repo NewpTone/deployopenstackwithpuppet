@@ -1,6 +1,7 @@
 {
     "plugins": [
-        "add-header"
+        "add-header",
+        "anchor-navigation"
     ],
     "pluginsConfig": {}
 }
