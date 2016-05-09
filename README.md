@@ -27,5 +27,5 @@ UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付�
 
 关于作者
 =======
-* 余兴超 (Newptone)  UnitedStack R&D Director, 2011年开始接触Openstack，Puppetopenstack官方项目core developer，目前负责打酱油相关事宜。
+* 余兴超 (Newptone)  UnitedStack R&D Director, 2011年开始接触Openstack，PuppetOpenstack官方项目core developer，目前负责打酱油相关事宜。
 * 自己加
