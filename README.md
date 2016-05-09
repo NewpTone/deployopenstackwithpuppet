@@ -27,7 +27,5 @@ UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付�
 
 关于作者
 =======
-
-本书的目的是介绍如何使用自动化配置管理工具来完成Openstack系统的部署。
-
-Openstack目前已经成为开源IaaS项目的翘楚。在今年Openstack推出Big Tent战略后，在Openstack名下的项目已经多达百个。那么在面对如此复杂的架构和众多服务，我们该如何去面对？
+* 余兴超 (Newptone)  UnitedStack R&D Director, 2011年开始接触Openstack，Puppetopenstack官方项目core developer，目前负责打酱油相关事宜。
+* 自己加
