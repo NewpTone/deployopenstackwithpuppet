@@ -1,6 +1,6 @@
 {
     "plugins": [
-        "-add-header"
+        "add-header"
     ],
     "pluginsConfig": {}
 }
