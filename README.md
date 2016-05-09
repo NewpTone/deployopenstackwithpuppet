@@ -6,9 +6,9 @@
 其实是源于对于写书这件事情的恐惧，源于面对数十万文字工作量的害怕，这就像是一场体力和脑力合体的马拉松，普通人在看到重点的艰巨时，在起点就已经选择放弃了。
 
 这本书的介绍一张早在半年前开始动笔了，然后就没有了下文。决心虽然很重要，但是坚持更加可贵。今天让我重新拾起笔（键盘）的原因是源于今晚的一顿饭。Devops组的同事忙到晚上8点多正纷纷收拾东西下班，大家站在公司门前讨论去哪里吃饭，这时我走出来，虽然刚从纽约飞回到帝都，时差完全没有倒回来，脑袋浑浑噩噩，但又担心这帮邋遢的家伙站在公司大门口持续影响公司形象，于是忙把他们连哄带骗全都打包上车，拉到了附近的一家馆子里，几口飘香的云南饭菜入肚，大家就开始天南地北地扯东扯西，无外乎是谁谁谁今天又看了一本MySQL从删库到跑路，谁谁谁今天又当了一回Puppet背锅侠，谁谁谁的项目又埋了一个大坑。
-    不知不觉，我们就聊到了Openstack自动化部署这个话题上。作为一名从2011年开始接触Openstack的老人，在2013年进入PuppetOpenstack社区项目的core develeloper，我深深地感觉到是时候召(忽)唤（悠）这帮孩子开始来一起填我这个远古巨坑了。
+    不知不觉，我们就聊到了Openstack自动化部署这个话题上。作为一名从2011年开始接触Openstack的老人，在2013年进入PuppetOpenstack社区项目的core develeloper，我深深地感觉到是时候召(忽)唤（悠）这帮孩子来一起填这个史诗级别的远古巨坑了。
     
-UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付和持续集成事业中，目前使用了86个puppet module,成功部署并持续管理着近60个Openstack线上集群和12个Openstack开发测试集群，支撑了近3000台Openstack集群服务器（截止今日），独立开发了UOS部署工具(CTask)，软件包管理工具(Packforge,Specforge,Repoforge)，IaaS虚拟资源池(Chameleon）,Openstack平滑升级工具(Screenwriter)，这里面涉及到了大量的自动化运维工具，例如：Ansible,Foreman,Puppet,ClusterShell,Mcollective；同时还有编写了大量各种语言的脚本：Shell,Ruby,Python,Puppet。
+UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付和持续集成事业中，目前使用了86个puppet module,成功部署并持续管理着近60个Openstack线上集群和12个Openstack开发测试集群，支撑了近3000台Openstack集群服务器（截止今日），独立开发了UOS部署工具(CTask)，软件包管理工具(Packforge,Specforge,Repoforge)，IaaS虚拟资源池(Chameleon）,Openstack平滑升级工具(Screenwriter)，这里面涉及到了大量的自动化运维工具，例如：Ansible,Foreman, Puppet, ClusterShell, Mcollective；同时还有编写了大量各种语言的脚本：Shell,Ruby, Python, Puppet。
 
 说实话，DevOps团队里每个人平时都有忙不完的事情，从早上还没到公司到晚上回到家中，随时随刻会被人call online，就像今天吃饭那样，站在门口等我上个厕所，就有人被其他同事喊回去处理任务去了。但并不是说因此就有理由说，我们很忙，因此没有时间可以去写一本书。我们的确应该来停下脚步，回头看一看过去三年团队的努力，然后做一个系统性的梳理和总结了。
 
@@ -26,4 +26,4 @@ UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付�
 关于作者
 =======
 * 余兴超 (Newptone)  UnitedStack R&D Director, 2011年开始接触Openstack，PuppetOpenstack官方项目core developer，目前负责打酱油相关事宜。
-* 自己加
+* 你们自己加啊
