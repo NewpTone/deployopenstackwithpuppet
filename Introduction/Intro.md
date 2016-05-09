@@ -32,5 +32,6 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 第一，请看2016年4月新鲜出炉的Openstack User survey
 
 ![](pics/01/puppet.png)
+
 第二，Fuel和Packstack项目的部署逻辑直接使用的是PuppetOpenstack项目。所以，你可以理解为有近乎一半的公司选择使用PuppetOpenstack部署Openstack，这对于百花齐放的开源世界来说，是非常可观而且有说服力的数字。
 ￼
