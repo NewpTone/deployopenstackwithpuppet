@@ -1,12 +1,7 @@
 {
     "plugins": [
         "add-header",
-        "anchor-navigation",
-        "annotate",
-        "baidu",
-        "github",
-        "highlight",
-        "highlight2"
+        "anchor-navigation"
     ],
     "pluginsConfig": {}
 }
