@@ -3,7 +3,8 @@
         "add-header",
         "anchor-navigation",
         "annotate",
-        "baidu"
+        "baidu",
+        "github"
     ],
     "pluginsConfig": {}
 }
