@@ -2,7 +2,8 @@
     "plugins": [
         "add-header",
         "anchor-navigation",
-        "annotate"
+        "annotate",
+        "baidu"
     ],
     "pluginsConfig": {}
 }
