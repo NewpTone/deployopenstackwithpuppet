@@ -10,4 +10,5 @@
 * [puppet-keystone](puppet-keystone/intro.md)
 * [puppet-nova](puppet-nova/intro.md)
 * [puppet-openstack-integration](puppet-openstack-integration/Intro.md)
+* 基础模块
 
