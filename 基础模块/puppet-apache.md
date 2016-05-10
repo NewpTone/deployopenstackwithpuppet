@@ -6,8 +6,10 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 
 如果你之前使用手工配置了Apache服务，想要尝试使用puppet-apache模块管理，请额外小心该模块默认情况下会清理掉所有没有被puppet管理的配置文件！
 
+我们主要以Openstack服务中使用到的类进行介绍。
 
-## init.pp
+
+## class apache
 
 不想往下看，已经跃跃欲试了？
 OK, let's rock!
@@ -91,5 +93,17 @@ class { '::apache::default_mods':
     }
   }
 ```
-这里有两个apache::vhost define，分别用于生成一个
+这里有两个apache::vhost define，分别用于生成默认的80端口和443端口的vhost文件。
 
+## class apache::mod
+
+
+
+## class apache::mod::wsgi
+
+apache::mod下有大量的class用于支持各种类型mod的管理。Openstack服务是使用Python语言编写，因此要将Python程序运行在Apache上，那么需要使用到wsgi mod。
+
+
+## class apache::mod::ssl
+
+此外，为了确保通讯安全，用户会要求使用HTTPS来加密通讯，因此我们需要使用到ssl mod。
