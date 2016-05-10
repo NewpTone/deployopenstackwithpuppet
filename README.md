@@ -27,5 +27,5 @@ UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付�
 
 > * 余兴超 (Newptone)  UnitedStack R&D Director, 2011年开始接触Openstack，PuppetOpenstack官方项目core developer，目前负责打酱油相关事宜。
 > * 廖鹏辉
-> * 陆源
+> * 陆源(小斯)  UnitedStack DevOps成员，爱长城，不爱长城防火墙。2012年开始埋坑，目前负责PuppetOpenstack和UOS部署工具开发。
 > * 周维宇
