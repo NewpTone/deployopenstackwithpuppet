@@ -9,8 +9,14 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 
 ## init.pp
 
+   不想往下看，已经跃跃欲试了？
+   OK, let's rock!
+   
+   在终端下输入：
+   
+   ```puppet apply -ve "include ::apache"```
 
+   在约1分钟内（取决于你的网速和虚拟机的性能），你就已经完成了Apache服务的安装，配置和启动了。
 
-
-
+   
 
