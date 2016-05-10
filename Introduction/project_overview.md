@@ -1,6 +1,6 @@
 # 项目概览
 
-PuppetOpenstack项目应该是在2013年开始由曾经在PuppetLabs公司的Dan Bode发起，发布在github上。当时只有几个核心项目的modules，在经过3年多时间大量的贡献者的持续努力下，现在已经发展成为一个庞大而复杂的module系统。
+PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发起，发布在github上。当时只有几个核心项目的modules，但在3年多时间里，在大量贡献者的持续努力下，现在已经发展成为一个庞大而复杂的module系统。
 
 现在我们先站在最高的山峰上，来看看这些伟岸的群山把。
 
