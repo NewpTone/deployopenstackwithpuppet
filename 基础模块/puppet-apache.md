@@ -30,8 +30,8 @@ OK, let's rock!
 
 
 ``` class { '::apache::default_mods':
-        all => $default_mods,
-      }```
+              all => $default_mods,
+           }```
       
 启用所有默认的mods。
 
