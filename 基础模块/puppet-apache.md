@@ -20,22 +20,34 @@ OK, let's rock!
 如何做到的呢？我们打开puppet-apache模块下manifests/init.pp文件，看看是如何做的？
 这里面有比较多的判断逻辑，我们直接关注class apache调用了哪几个关键的class和define:
 
-
-``` package { 'httpd':
+```
+    package { 'httpd':
       ensure => $package_ensure,
       name   => $apache_name,
       notify => Class['Apache::Service'],
-    }```
+    }
+```
+安装apache软件包。
 
+```
+  file { $confd_dir:
+    ensure  => directory,
+    recurse => true,
+    purge   => $purge_confd,
+    notify  => Class['Apache::Service'],
+    require => Package['httpd'],
+  }
+```
 
+管理conf.d目录，注意这个$purge_confd参数，默认为true,会清理掉一切未被管理的配置文件。
 
-``` class { '::apache::default_mods':
-              all => $default_mods,
-           }```
+```
+class { '::apache::default_mods':
+  all => $default_mods,
+}
+```
       
 启用所有默认的mods。
-
-
 
 
    
