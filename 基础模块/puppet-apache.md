@@ -95,8 +95,9 @@ class { '::apache::default_mods':
 ```
 这里有两个apache::vhost define，分别用于生成默认的80端口和443端口的vhost文件。
 
-## class apache::mod
+## define apache::mod
 
+用来安装相应mod软件包和管理mod配置文件。需要配合apache::mod:xxx使用。
 
 
 ## class apache::mod::wsgi
