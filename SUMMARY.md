@@ -1,7 +1,7 @@
 # Summary
 
 * [前言](README.md)
-* [介绍](Introduction/intro.md)
+* [概览](Introduction/intro.md)
    * [准备工作](Introduction/requirement.md)
    * [相关约定](Introduction/convention.md)
    * [术语表](Introduction/term.md)
