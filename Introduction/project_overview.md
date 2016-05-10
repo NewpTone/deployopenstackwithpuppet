@@ -4,7 +4,6 @@ PuppetOpenstack项目应该是在2013年开始由曾经在PuppetLabs公司的Dan
 
 现在我们先站在最高的山峰上，来看看这些伟岸的群山把。
 
-
 ## OpenStack modules
 
 第一个印入我们眼帘的是Openstack服务相关的modules，目前puppetopenstack已经支持以下服务的配置和管理：
