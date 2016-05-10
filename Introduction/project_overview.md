@@ -10,28 +10,28 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
 
 * [Alarming](https://github.com/openstack/puppet-aodh/) (Aodh)
 * Key Manager (Barbican)
-* Telemetry (Ceilometer)
-* Block Storage (Cinder)
+* Telemetry (Ceilometer)  @liangliang
+* Block Storage (Cinder)  @weiyu
 * DNS (Designate)
-* Image service (Glance)
-* Time Series Database (Gnocchi)
+* Image service (Glance)  @luyuan
+* Time Series Database (Gnocchi)  
 * Orchestration (Heat)
-* Dashboard (Horizon)
+* Dashboard (Horizon)   @xingchao
 * Bare Metal (Ironic)
-* Identity (Keystone)
-* Shared Filesystems (Manila)
+* Identity (Keystone)   @xingchao
+* Shared Filesystems (Manila)   
 * Workflow service (Mistral)
 * Application catalog (Murano)
-* Networking (Neutron)
-* Compute (Nova)
+* Networking (Neutron)  @penghui
+* Compute (Nova)    @penghui
 * Load Balancer (Octavia)
-* Oslo libraries (Oslo)
-* Benchmarking (Rally)
+* Oslo libraries (Oslo)   @xingchao
+* Benchmarking (Rally)   
 * Data processing (Sahara)
-* Object Storage (Swift)
-* Testing (Tempest)
+* Object Storage (Swift)   @luyuan
+* Testing (Tempest)    
 * Deployment (TripleO)
-* Database service (Trove)
+* Database service (Trove)  
 * Deployment UI (TripleO UI)
 * Root Cause Analysis (Vitrage)
 * Message service (Zaqar)
@@ -41,10 +41,10 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
 
 第二大山脉是工具类相关的modules，分别有：
 
-* Common Puppet library (OpenStackLib)
+* Common Puppet library (OpenStackLib)    @penghui
 * Common Ruby helper library (puppet-openstack_spec_helper)
 * Puppet OpenStack helpers (OpenStackExtras)
-* Virtual Bridging (OpenvSwitch)
+* Virtual Bridging (OpenvSwitch)  @liangliang
 * Integration CI tools (Puppet OpenStack Integration)
 * Blueprints (Puppet OpenStack Specs) (hosted here)
 * Compliant tool (Cookiebutter)
@@ -55,7 +55,7 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
 
 第三大块则是一些尚在开发阶段或者已经废弃的模块：
 
-* Storage (Ceph)
+* Storage (Ceph)  @luyuan
 * Monitoring (Monasca)
 * Composition Layer (deprecated in Juno) (OpenStack)
 
