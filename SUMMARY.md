@@ -5,4 +5,5 @@
    * [准备工作](Introduction/requirement.md)
 * [puppet-keystone](puppet-keystone/intro.md)
 * [puppet-nova](puppet-nova/intro.md)
+* puppet-openstack-integration
 
