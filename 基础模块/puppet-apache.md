@@ -20,6 +20,9 @@ OK, let's rock!
 如何做到的呢？我们打开puppet-apache模块下manifests/init.pp文件，看看是如何做的？
 这里面有比较多的判断逻辑，我们直接关注class apache调用了哪几个关键的class和define:
 
+
+---
+
 ```
     package { 'httpd':
       ensure => $package_ensure,
@@ -27,7 +30,10 @@ OK, let's rock!
       notify => Class['Apache::Service'],
     }
 ```
-安装apache软件包。
+用于安装apache软件包。
+
+---
+
 
 ```
   file { $confd_dir:
@@ -39,7 +45,9 @@ OK, let's rock!
   }
 ```
 
-管理conf.d目录，注意这个$purge_confd参数，默认为true,会清理掉一切未被管理的配置文件。
+用于管理conf.d目录，注意这个$purge_confd参数，默认为true,会清理掉一切未被管理的配置文件。
+
+---
 
 ```
 class { '::apache::default_mods':
@@ -47,8 +55,41 @@ class { '::apache::default_mods':
 }
 ```
       
-启用所有默认的mods。
+用于启用所有默认的mods。
 
+---
 
-   
+```
+   ::apache::vhost { 'default':
+      ensure          => $default_vhost_ensure,
+      port            => 80,
+      docroot         => $docroot,
+      scriptalias     => $scriptalias,
+      serveradmin     => $serveradmin,
+      access_log_file => $access_log_file,
+      priority        => '15',
+      ip              => $ip,
+      logroot_mode    => $logroot_mode,
+      manage_docroot  => $default_vhost,
+    }
+    $ssl_access_log_file = $::osfamily ? {
+      'freebsd' => $access_log_file,
+      default   => "ssl_${access_log_file}",
+    }
+    ::apache::vhost { 'default-ssl':
+      ensure          => $default_ssl_vhost_ensure,
+      port            => 443,
+      ssl             => true,
+      docroot         => $docroot,
+      scriptalias     => $scriptalias,
+      serveradmin     => $serveradmin,
+      access_log_file => $ssl_access_log_file,
+      priority        => '15',
+      ip              => $ip,
+      logroot_mode    => $logroot_mode,
+      manage_docroot  => $default_ssl_vhost,
+    }
+  }
+```
+这里有两个apache::vhost define，分别用于生成一个
 
