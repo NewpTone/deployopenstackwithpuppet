@@ -7,9 +7,8 @@
    * [术语表](Introduction/term.md)
    * [项目概览](Introduction/project_overview.md)
    * [模块剖析](Introduction/module_structure.md)
-* [基础模块](基础模块)
+* [基础模块](基础模块/README.md)
 * [puppet-keystone](puppet-keystone/intro.md)
 * [puppet-nova](puppet-nova/intro.md)
 * [puppet-openstack-integration](puppet-openstack-integration/Intro.md)
-
 
