@@ -25,7 +25,7 @@ OK, let's rock!
 
 ---
 
-```
+``` puppet
     package { 'httpd':
       ensure => $package_ensure,
       name   => $apache_name,
@@ -37,7 +37,7 @@ OK, let's rock!
 ---
 
 
-```
+``` puppet
   file { $confd_dir:
     ensure  => directory,
     recurse => true,
@@ -51,7 +51,7 @@ OK, let's rock!
 
 ---
 
-```
+``` puppet
 class { '::apache::default_mods':
   all => $default_mods,
 }
@@ -61,7 +61,7 @@ class { '::apache::default_mods':
 
 ---
 
-```
+``` puppet
    ::apache::vhost { 'default':
       ensure          => $default_vhost_ensure,
       port            => 80,
@@ -127,3 +127,27 @@ apache::mod下有大量的class用于支持各种类型mod的管理。Openstack�
 *  $ssl_random_seed_bytes   = '512'
 *  $ssl_sessioncachetimeout = '300'
 
+## define apache::vhost
+
+> **Note**: See the [`apache::vhost`] defined type's reference for a list of all virtual host parameters.
+
+这个apache模块中是最重要的define，使用起来非常简单。
+
+最简单的方式是传递port和docroot两个参数，例如：
+
+``` puppet
+apache::vhost { 'vhost.example.com':
+  port    => '80',
+  docroot => '/var/www/vhost',
+}
+```
+
+配置SSL的vhost
+
+``` puppet
+apache::vhost { 'ssl.example.com':
+  port    => '443',
+  docroot => '/var/www/ssl',
+  ssl     => true,
+}
+```
