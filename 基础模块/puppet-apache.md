@@ -95,16 +95,35 @@ class { '::apache::default_mods':
 ```
 这里有两个apache::vhost define，分别用于生成默认的80端口和443端口的vhost文件。
 
+
 ## define apache::mod
 
 用来安装相应mod软件包和管理mod配置文件。需要配合apache::mod:xxx使用。
 
-
 ## class apache::mod::wsgi
 
 apache::mod下有大量的class用于支持各种类型mod的管理。Openstack服务是使用Python语言编写，因此要将Python程序运行在Apache上，那么需要使用到wsgi mod。
+在通常情况下,使用默认参数apache::mod::wsgi就可以完成wsgi mod的管理工作，同时也提供了5个可配置的参数，其中wsgi_socket_prefix有默认值，分别是：
 
+* $wsgi_socket_prefix = $::apache::params::wsgi_socket_prefix
+* $wsgi_python_path
+* $wsgi_python_home
+* $package_name
+* $mod_path
 
 ## class apache::mod::ssl
 
 此外，为了确保通讯安全，用户会要求使用HTTPS来加密通讯，因此我们需要使用到ssl mod。
+同上，在通常情况下，使用默认参数apache::mod::ssl就可以完成ssl mod的管理工作，同时也提供了10个可配置的参数，并附有默认值：
+
+*  $ssl_compression         = false
+*  $ssl_cryptodevice        = 'builtin'
+*  $ssl_options             = [ 'StdEnvVars' ]
+*  $ssl_openssl_conf_cmd    = undef
+*  $ssl_cipher              = 'HIGH:MEDIUM:!aNULL:!MD5:!RC4'
+*  $ssl_honorcipherorder    = 'On'
+*  $ssl_protocol            = [ 'all', '-SSLv2', '-SSLv3' ]
+*  $ssl_pass_phrase_dialog  = 'builtin'
+*  $ssl_random_seed_bytes   = '512'
+*  $ssl_sessioncachetimeout = '300'
+
