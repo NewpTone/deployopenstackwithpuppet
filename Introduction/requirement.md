@@ -11,7 +11,6 @@ Openstack自动化部署的活儿不能说抡起袖子说干就干，首先你�
 
 
 
-
 ## 资源准备
 
 * 请确保你至少有一台可用的虚拟机，2vcpu, 4G Ram, 30G Disk, 至少有一块NIC，操作系统为RHEL7/CentOS7，并且可以连接上Internet
