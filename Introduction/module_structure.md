@@ -12,4 +12,4 @@ Openstack服务类型的module目录结构是几乎一致的，这是在反复�
 * manifests/     放置puppet代码
 * releasenotes/  放置releasenote
 * spec/          放置class,unit,acceptance测试
-* tests/
+* tests/         已弃用，使用examples/ 替代
