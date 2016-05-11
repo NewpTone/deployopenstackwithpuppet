@@ -12,4 +12,5 @@
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
+   * puppet-cinder
 
