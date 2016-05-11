@@ -10,5 +10,5 @@
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
 * [Openstack模块](Openstack_modules/README.md)
-   * puppet-keystone
+   * [puppet-keystone](puppet-keystone.md)
 
