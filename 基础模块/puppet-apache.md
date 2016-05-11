@@ -1,7 +1,5 @@
 # puppet-apache
 
-[Module description](#module-description)
-
 puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。
 
 **puppet-apache module的管理范围:**
@@ -19,9 +17,6 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 如果你之前使用手工配置了Apache服务，想要尝试使用puppet-apache模块管理，请额外小心该模块默认情况下会清理掉所有没有被puppet管理的配置文件！
 
 我们主要以Openstack服务中使用到的类进行介绍。
-
-1. [Module description - What is the apache module, and what does it do?](id:Module description)
-
 
 ## class apache
 
