@@ -1,6 +1,6 @@
 # puppet-apache
 
-[Module description]: #module-description
+[Module description](#module-description)
 
 puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。在开始介绍前，做一个警告：
 
@@ -10,7 +10,7 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 
 我们主要以Openstack服务中使用到的类进行介绍。
 
-1. [Module description - What is the apache module, and what does it do?][Module description]
+1. [Module description - What is the apache module, and what does it do?](id:Module description)
 ## class apache
 
 不想往下看，已经跃跃欲试了？
