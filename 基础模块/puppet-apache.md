@@ -1,5 +1,7 @@
 # puppet-apache
 
+[Module description]: #module-description
+
 puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。在开始介绍前，做一个警告：
 
 > WARNING: Configurations not managed by Puppet will be purged.
@@ -8,7 +10,7 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 
 我们主要以Openstack服务中使用到的类进行介绍。
 
-
+1. [Module description - What is the apache module, and what does it do?][Module description]
 ## class apache
 
 不想往下看，已经跃跃欲试了？
@@ -129,9 +131,11 @@ apache::mod下有大量的class用于支持各种类型mod的管理。Openstack�
 
 ## define apache::vhost
 
-> **Note**: See the [`apache::vhost`][] defined type's reference for a list of all virtual host parameters.
+> **Note**: See the [`apache::vhost`] defined type's reference for a list of all virtual host parameters.
 
-这个apache模块中是最重要的define，使用起来非常简单。
+这个apache模块中是最重要的define，通常使用它来管理Apache的vhost配置文件。
+
+### 配置一个vhost
 
 最简单的方式是传递port和docroot两个参数，例如：
 
@@ -142,7 +146,7 @@ apache::vhost { 'vhost.example.com':
 }
 ```
 
-配置SSL的vhost
+### 配置开启SSL的vhost
 
 ``` puppet
 apache::vhost { 'ssl.example.com':
