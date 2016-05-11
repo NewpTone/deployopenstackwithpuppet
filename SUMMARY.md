@@ -14,4 +14,5 @@
    * puppet-glance
    * puppet-cinder
    * puppet-horizon
+* 公共库模块
 
