@@ -11,6 +11,5 @@
    * [puppet-apache](基础模块/puppet-apache.md)
 * [puppet-openstack-integration](puppet-openstack-integration/Intro.md)
 * [puppet-glance](puppet-glance.md)
-* [puppet-cinder](puppet-cinder.md)
 * Openstack模块
 
