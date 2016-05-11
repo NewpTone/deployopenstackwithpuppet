@@ -157,8 +157,6 @@ apache::mod下有大量的class用于支持各种类型mod的管理。Openstack�
 
 ## define apache::vhost
 
-> **Note**: See the [`apache::vhost`] defined type's reference for a list of all virtual host parameters.
-
 这个apache模块中是最重要的define，通常使用它来管理Apache的vhost配置文件。
 
 ### 配置一个vhost
