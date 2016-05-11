@@ -15,5 +15,5 @@
    * puppet-cinder
    * puppet-horizon
 * [公共库模块](Library_modules)
-* 最佳实践
+* [最佳实践](bestpractice)
 
