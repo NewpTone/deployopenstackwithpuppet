@@ -13,4 +13,5 @@
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
    * puppet-cinder
+   * puppet-horizon
 
