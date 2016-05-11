@@ -9,6 +9,6 @@
    * [模块剖析](Introduction/module_structure.md)
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
-* [Openstack模块](openstack_modules/README.md)
+* [Openstack模块](Openstack_modules/README.md)
    * puppet-keystone
 
