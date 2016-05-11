@@ -12,6 +12,6 @@
 * [puppet-keystone](puppet-keystone/intro.md)
 * [puppet-nova](puppet-nova/intro.md)
 * [puppet-openstack-integration](puppet-openstack-integration/Intro.md)
-* [puppet-cinder](puppet-cinder.md)
 * [puppet-glance](puppet-glance.md)
+* [puppet-cinder](puppet-cinder.md)
 
