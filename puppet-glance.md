@@ -6,3 +6,5 @@ puppet-glance 是 openstack 官方的 puppet 项目，用来部署和管理 glac
 
 puppet-glance主要有如下几个类组成：
 
+# glance
+
