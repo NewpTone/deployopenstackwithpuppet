@@ -68,11 +68,13 @@ class { '::keystone::endpoint':
 
 ### class keystone
 
-class keystone做了三件最核心的事情：
+class keystone逻辑非常复杂，我们先抛开大量的判断逻辑和类调用，它主要做了三件核心工作：
 
 * 安装keystone软件包
 * 管理keystone.conf中的核心参数
 * 管理keystone服务
+
+
 
 
 
