@@ -4,3 +4,5 @@ puppet-glance 是 openstack 官方的 puppet 项目，用来部署和管理 glac
 
 *学习本章，需要阅读前面的章节包括keystone/mysql/rabbitmq三个章节，并且需要对glance有些*了解。
 
+puppet-glance主要有如下几个类组成：
+
