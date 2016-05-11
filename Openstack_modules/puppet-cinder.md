@@ -1,8 +1,8 @@
 # puppet-cinder
 
-cinder项目是openstack项目的核心组件，puppet-keystone 是 openstack 官方的 puppet 项目，用来部署和管理cinder组件，包括manifests to provision 比如创建keystone endpoint、初始化RPC、初始化数据库等.配置文件管理，软件包安装，和服务管理这几个部分.
+cinder项目是openstack项目的核心组件，puppet-keystone 是 openstack 官方的 puppet 项目，用来部署和管理cinder组件，包括一些初始化工作创建keystone endpoint、初始化RPC、初始化数据库等,配置文件管理，软件包安装，和服务管理这几个部分.
 
-*学习本章，需要阅读前面的章节包括keystone/mysql/rabbitmq三个章节，并且需要对cinder有些*了解。
+*学习本章，需要阅读前面的章节包括keystone/mysql/rabbitmq三个章节，并且需要对cinder有些了解。*
 puppet-cinder主要由以下几个类组成:
 ## class cinder
 入口类，安装cinder基础包并配置cinder配置文件,ok，该类介绍完成(zen me ke neng)，我们马上来上手使用吧
@@ -24,31 +24,28 @@ class { 'cinder':
 我们来分析下cinder 目录下的init.pp文件，看下几个重要部分
 
 ``` puppet
-class cinder (
-  $database_connection                = undef,
-  ...  #定义该类接收的参数
 
-) inherits cinder::params {
+  include ::cinder::db
+  include ::cinder::logging
 
-  include ::cinder::db   ＃ include db类，进行数据库的配置
-  include ::cinder::logging # include logging类，进行日志配置
+```
+配置数据库和日志
 
-  ...
+---
 
-  anchor { 'cinder-start': }
-
-  #安装cinder软件包
+``` puppet
   package { 'cinder':
     ensure  => $package_ensure,
     name    => $::cinder::params::package_name,
     tag     => ['openstack', 'cinder-package'],
     require => Anchor['cinder-start'],
   }
-  
-  resources { 'cinder_config':
-    purge => $purge_config,
-  }
-  # 配置RPC
+```
+安装软件包
+
+---
+
+``` puppet
   if $rpc_backend == 'cinder.openstack.common.rpc.impl_kombu' or $rpc_backend == 'rabbit' {
 
     if ! $rabbit_password {
@@ -83,15 +80,12 @@ class cinder (
       'DEFAULT/service_down_time': value => $service_down_time;
     }
   }
+  ```
+  RPC相关的配置
+ 
+  ---
   
-  #AZ配置
-  if ! $default_availability_zone {
-    $default_availability_zone_real = $storage_availability_zone
-  } else {
-    $default_availability_zone_real = $default_availability_zone
-  }
-  
-  #调用自定义的 cinder_config type 配置cinder配置文件
+  ``` puppet
   cinder_config {
     'DEFAULT/api_paste_config':          value => $api_paste_config;
     'DEFAULT/storage_availability_zone': value => $storage_availability_zone;
@@ -99,8 +93,12 @@ class cinder (
     'DEFAULT/image_conversion_dir':      value => $image_conversion_dir;
     'DEFAULT/host':                      value => $host;
   }
+  ```
+  调用自定义的 cinder_config type 配置cinder配置文件
 
-  #ssl配置
+  ---
+  
+ ``` puppet
   if $use_ssl {
     cinder_config {
       'DEFAULT/ssl_cert_file' : value => $cert_file;
@@ -116,16 +114,17 @@ class cinder (
   }
 }
 ```
+ssl相关配置
 
 
 
-## api.pp
+## class cinder::api
 安装和配置cinder-api服务
-## scheduler.pp
+## class cinder::scheduler
 安装和配置cinder-scheduler服务
-## volume.pp
+## class cinder::volume
 安装和配置cinder-volume服务
-## backend and backend.pp
+## class cinder::backends
 配置cinder-volume后端
-## backup.pp
+## class cinder::backup
 安装和配置cinder-backup服务

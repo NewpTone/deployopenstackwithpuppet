@@ -9,9 +9,11 @@
    * [模块剖析](Introduction/module_structure.md)
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
-* [puppet-keystone](puppet-keystone/intro.md)
-* [puppet-nova](puppet-nova/intro.md)
-* [puppet-openstack-integration](puppet-openstack-integration/Intro.md)
-* [puppet-cinder](puppet-cinder.md)
-* [puppet-glance](puppet-glance.md)
+* [Openstack模块](Openstack_modules/README.md)
+   * [puppet-keystone](Openstack_modules/puppet-keystone.md)
+   * puppet-glance
+   * puppet-cinder
+   * puppet-horizon
+* [公共库模块](Library_modules)
+* [最佳实践](bestpractice)
 
