@@ -14,4 +14,5 @@
 * [puppet-openstack-integration](puppet-openstack-integration/Intro.md)
 * [puppet-glance](puppet-glance.md)
 * [puppet-cinder](puppet-cinder.md)
+* Openstack模块
 
