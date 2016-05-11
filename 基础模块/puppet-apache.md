@@ -129,7 +129,7 @@ apache::mod下有大量的class用于支持各种类型mod的管理。Openstack�
 
 ## define apache::vhost
 
-> **Note**: See the [`apache::vhost`] defined type's reference for a list of all virtual host parameters.
+> **Note**: See the [`apache::vhost`][] defined type's reference for a list of all virtual host parameters.
 
 这个apache模块中是最重要的define，使用起来非常简单。
 
@@ -151,3 +151,12 @@ apache::vhost { 'ssl.example.com':
   ssl     => true,
 }
 ```
+
+## Reference
+
+- [**Public classes**](#public-classes)
+    - [Class: apache](#class-apache)
+- [**Public defined types**](#public-defined-types)
+    - [Defined type: apache::mod](#defined-type-apachemod)
+    - [Defined type: apache::vhost](#defined-type-apachevhost)
+    - [Defined type: apache::vhost::custom](#defined-type-apachevhostcustom)
