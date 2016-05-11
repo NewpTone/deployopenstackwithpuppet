@@ -2,7 +2,17 @@
 
 [Module description](#module-description)
 
-puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。在开始介绍前，做一个警告：
+puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。
+
+**puppet-apache module的管理范围:**
+
+- Apache配置文件和目录
+- Apache的Package/service/conf
+- Apache modules
+- Virtual hosts
+- Listened-to ports
+
+在开始介绍代码前，给出一个重要的警告：
 
 > WARNING: Configurations not managed by Puppet will be purged.
 
@@ -11,6 +21,8 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 我们主要以Openstack服务中使用到的类进行介绍。
 
 1. [Module description - What is the apache module, and what does it do?](id:Module description)
+
+
 ## class apache
 
 不想往下看，已经跃跃欲试了？
@@ -19,11 +31,18 @@ OK, let's rock!
 在终端下输入：
    
    ```puppet apply -ve "include ::apache"```
+   
+或者创建并编辑一个文件test.pp，并输入：
+``` puppet
+class { 'apache': }
+```
+在终端下输入:
+
+   ```puppet apply -v test.pp```
 
 在约1分钟内（取决于你的网速和虚拟机的性能），你就已经完成了Apache服务的安装，配置和启动了。
 如何做到的呢？我们打开puppet-apache模块下manifests/init.pp文件，看看是如何做的？
 这里面有比较多的判断逻辑，我们直接关注class apache调用了哪几个关键的class和define:
-
 
 ---
 
@@ -97,6 +116,13 @@ class { '::apache::default_mods':
 ```
 这里有两个apache::vhost define，分别用于生成默认的80端口和443端口的vhost文件。
 
+以上例子仅用于简单的测试验证，若在生产环境中，请关闭默认生成的vhost文件：
+
+``` puppet
+class { 'apache':
+  default_vhost => false,
+}
+```
 
 ## define apache::mod
 
@@ -156,11 +182,13 @@ apache::vhost { 'ssl.example.com':
 }
 ```
 
-## Reference
+## 相关文档
 
-- [**Public classes**](#public-classes)
-    - [Class: apache](#class-apache)
-- [**Public defined types**](#public-defined-types)
-    - [Defined type: apache::mod](#defined-type-apachemod)
-    - [Defined type: apache::vhost](#defined-type-apachevhost)
-    - [Defined type: apache::vhost::custom](#defined-type-apachevhostcustom)
+* [ServerLimit](https://httpd.apache.org/docs/current/mod/mpm_common.html#serverlimit)
+* [ServerName](https://httpd.apache.org/docs/current/mod/core.html#servername)
+* [ServerRoot](https://httpd.apache.org/docs/current/mod/core.html#serverroot)
+* [ServerTokens](https://httpd.apache.org/docs/current/mod/core.html#servertokens)
+* [ServerSignature](https://httpd.apache.org/docs/current/mod/core.html#serversignature)
+* [Service attribute restart](http://docs.puppetlabs.com/references/latest/type.html#service-attribute-restart)
+* [mod_wsgi](https://modwsgi.readthedocs.org/en/latest/)
+* [mod_ssl](https://httpd.apache.org/docs/current/mod/mod_ssl.html)
