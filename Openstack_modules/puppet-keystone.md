@@ -74,9 +74,56 @@ class keystone逻辑非常复杂，我们先抛开大量的判断逻辑和类调
 * 管理keystone.conf中的核心参数
 * 管理keystone服务
 
+#### keystone软件包管理
 
+这里有一个非常有用的参数是$package_ensure，我们可以指定软件包的版本，或者将其标记为总是安装最新版本，我们将会在最佳实践部分去介绍它。
 
+```puppet
+# keystone软件包
+  package { 'keystone':
+    ensure => $package_ensure,
+    name   => $::keystone::params::package_name,
+    tag    => ['openstack', 'keystone-package'],
+  }
+# keystone-client软件包 
+  if $client_package_ensure == 'present' {
+    include '::keystone::client'
+  } else {
+    class { '::keystone::client':
+      ensure => $client_package_ensure,
+    }
+  }
+```
 
+#### keystone.conf核心参数管理
+
+class keystone里管理了大量的配置参数，比如cache,token,db,endpoint设置等相关参数，这里不一一列举。
+
+这里只一个代码片段为例来解释keystone_config的用法。keystone_config是一个自定义的resource type，其源码路径位于：
+
+* lib/puppet/type/keystone_config.rb   定义
+* lib/puppet/provider/keystone_config/ini_setting.rb  实现 
+
+在这里我们关注如何使用，在Advanced Puppet一书中我们将讲解如何编写custom resource type。
+
+keystone_config有多种使用方法:
+
+为指定参数赋值：
+``` puppet
+   keystone_config { 'section_name/option_name': value => option_value}
+   
+```
+
+```puppet
+  keystone_config {
+    'DEFAULT/admin_token':      value => $admin_token, secret => true;
+    'DEFAULT/public_bind_host': value => $public_bind_host;
+    'DEFAULT/admin_bind_host':  value => $admin_bind_host;
+    'DEFAULT/public_port':      value => $public_port;
+    'DEFAULT/admin_port':       value => $admin_port;
+    'paste_deploy/config_file': value => $paste_config;
+  }
+```
 
 
 
