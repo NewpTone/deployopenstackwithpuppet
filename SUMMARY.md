@@ -15,6 +15,7 @@
    * puppet-glance
    * puppet-cinder
    * [puppet-horizon](Openstack_modules/puppet-horizon.md)
+   * puppet-ceilometer
 * [公共库模块](Library_modules)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice)
