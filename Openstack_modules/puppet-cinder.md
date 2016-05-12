@@ -152,7 +152,7 @@ cinder可以作为一个服务启动，也可以启动在apache下
 同上
 ###Class cinder::backup
 同上
-###Class cinder::backends && define cinder::backend::
+###Class cinder::backends && Define cinder::backend::
 由于cinder支持多后端，这个类主要用来管理开启哪些cinder后端，而这些后端由cinder::backend::*backend_name* 来定义
 
 调用cinder_config来修改cinder.conf
@@ -186,7 +186,7 @@ class cinder::backends (
   }
 
 ```
-###define cinder::type
+###Define cinder::type
 cinder开启多后端后，如何确定要将卷创建到哪个后端呢，这就要有type来决定.
 ```puppet
 define cinder::type (
