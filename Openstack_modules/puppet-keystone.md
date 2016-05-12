@@ -108,12 +108,23 @@ class keystone里管理了大量的配置参数，比如cache,token,db,endpoint�
 
 keystone_config有多种使用方法:
 
-为指定参数赋值：
+对指定参数赋值：
 ``` puppet
    keystone_config { 'section_name/option_name': value => option_value}
-   
 ```
 
+对指定参数赋值，并设置为加密：
+``` puppet
+   keystone_config { 'section_name/option_name': value => option_value， secret => true}
+```
+我们知道puppet agent的所有输出默认都会被syslog打到系统日志/var/log/messages中，那么有心人只要用grep就能从中搜到许多敏感信息，例如：admin_token, user_password,  keystone_db_password等等。只要设置了secret为true后，那么就不会把该参数的相关日志打到系统日志中。
+
+删除指定参数:
+``` puppet
+   keystone_config { 'section_name/option_name': ensure => absent}
+```
+
+OK，讲解就到这里，我们来看代码。
 ```puppet
   keystone_config {
     'DEFAULT/admin_token':      value => $admin_token, secret => true;
@@ -124,7 +135,68 @@ keystone_config有多种使用方法:
     'paste_deploy/config_file': value => $paste_config;
   }
 ```
+#### keystone服务管理
+   puppet支持keystone以单进程模式运行或者跑在Apache上，请注意，如果需要将keystone运行在Apache上，那么需要添加keystone::wsgi::apache，代码如下：
+   
+```puppet
+   class { 'keystone':
+      ...
+      service_name => 'httpd',
+      ...
+   }
+   class { 'keystone::wsgi::apache':
+      ...
+   }
+```
+```puppet
+ if $service_name == $::keystone::params::service_name {
+    $service_name_real = $::keystone::params::service_name
+    if $validate_service {
+      if $validate_auth_url {
+        $v_auth_url = $validate_auth_url
+      } else {
+        $v_auth_url = $admin_endpoint
+      }
 
+      class { '::keystone::service':
+        ensure         => $service_ensure,
+        service_name   => $service_name,
+        enable         => $enabled,
+        hasstatus      => true,
+        hasrestart     => true,
+        validate       => true,
+        admin_endpoint => $v_auth_url,
+        admin_token    => $admin_token,
+        insecure       => $validate_insecure,
+        cacert         => $validate_cacert,
+      }
+    } else {
+      class { '::keystone::service':
+        ensure       => $service_ensure,
+        service_name => $service_name,
+        enable       => $enabled,
+        hasstatus    => true,
+        hasrestart   => true,
+        validate     => false,
+      }
+    }
+    warning('Keystone under Eventlet has been deprecated during the Kilo cycle. Support for deploying under eventlet will be dropped as of the M-release of OpenStack.')
+  } elsif $service_name == 'httpd' {
+    include ::apache::params
+    class { '::keystone::service':
+      ensure       => 'stopped',
+      service_name => $::keystone::params::service_name,
+      enable       => false,
+      validate     => false,
+    }
+    $service_name_real = $::apache::params::service_name
+    # leave this here because Ubuntu packages will start Keystone and we need it stopped
+    # before apache can run
+    Service['keystone'] -> Service[$service_name_real]
+  } else {
+      fail('Invalid service_name. Either keystone/openstack-keystone for running as a standalone service, or httpd for being run by a httpd server')
+  }
+```
 
 
 
