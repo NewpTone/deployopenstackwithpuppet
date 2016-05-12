@@ -330,5 +330,6 @@ if $configure_user {
 
 1. 配置token_flush的cron job，使得可以定期清理Keystone数据库的token表中token失效数据。
 2. 将keystone服务运行在Apache上
-3. 开启keystone的debug日志级别
+3. 如何开启keystone的debug日志级别
+4. 接第3问，在keystone和keystone::loging里都存在$verbose变量，这种代码冗余的原因是出于什么考虑？可以移除吗？
 
