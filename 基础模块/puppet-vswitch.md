@@ -79,4 +79,4 @@ vswitch::params为别的class提供参数，在vswitch::params里根据不同的
 
 ## 动手练习
 1. 部署openvswitch服务
-2. 创建一个port，名字是br-tun,并且把eth1加入到br
+2. 创建一个bridge，名字是br-tun,并且把eth1加入到br-tun
