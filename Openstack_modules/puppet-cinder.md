@@ -232,7 +232,9 @@ ok，核心代码的解析就到这里，后面的像cinder::quota,cinder::polic
 
 ##动手练习
 1.配置LVM作为cinder后端
+
 2.同时使LVM和ceph作为cinder的后端
+
 3.将cinder运行在apache下
 
 
