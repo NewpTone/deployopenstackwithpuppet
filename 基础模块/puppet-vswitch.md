@@ -9,7 +9,7 @@
 ## 先睹为快
 puppet-vswitch是管理openvswitch的模块，部署超级简单.
 编辑一个test.pp，输入以下内容：
-```
+```puppet
 class { 'vswitch':
   provider  => 'ovs',
 }
