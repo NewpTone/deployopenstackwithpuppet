@@ -1,11 +1,19 @@
 # Openstack自动化部署最佳实践
 
+
+> Fools ignore complexity. Pragmatists suffer it. Some can avoid it. Geniuses remove it.  
+>                     — Alan J. Perlis, “Epigrams in Programming” (1982)
+
+
+
+
+
 我们在介绍了大量的基础模块，Openstack模块以及公共库模块后，我们是否就可以开始做大规模的线上部署了?
 答案是No。
 哎，有话好好说，你们别丢臭鸡蛋啊...
 读者：%#@($#@!，你骗我读了那么长的文档，竟然不能用于线上部署！
 
-部署其实是一项系统工程，前期的架构设计，硬件规划和兼容性和性能测试，采购，上架，裸机操作系统安装，网络配置，这些都完成了，才到了软件部署阶段。
+部署其实是一项复杂的系统工程，前期的架构设计，硬件规划和兼容性和性能测试，采购，上架，裸机操作系统安装，网络配置，这些都完成了，才到了软件部署阶段。
 那么在开始决定使用PuppetOpenstack用于部署线上Openstack集群前，除了熟悉Puppet modules，还需要做好哪些准备工作呢？
 
 
