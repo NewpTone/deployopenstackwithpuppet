@@ -9,12 +9,13 @@
    * [模块剖析](Introduction/module_structure.md)
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
+   * puppet-vswitch
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
    * puppet-cinder
    * puppet-horizon
 * [公共库模块](Library_modules)
-  * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
+   * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice)
 
