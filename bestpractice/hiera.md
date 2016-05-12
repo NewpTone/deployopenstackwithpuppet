@@ -95,8 +95,6 @@ hiera.yaml是Hiera唯一的配置文件，它其中只有少数几个配置参�
 :deep_merge_options: {}
 ```
 
-
-
 | 参数名称 | 类型 | 说明 |
 | --- | --- | --- |
 | :hierarchy | str或array | 每一行表示静态或动态的数据源，动态源是指使用了%{variable}格式的变量，hiera采用从上往下的顺序读取数据源。 |
@@ -148,12 +146,13 @@ myclass::parameter_one: 'ustack'
 ```
 
 在代码中，调用myclass 类：
+```puppet
+include myclass
+```
 
-| include myclass |
-| --- |
-
-这里不用对myclass 传递参数，myclass 会自动读取Hiera 中对parameter\_one 定义的值，即$parameter\_one 的值在调用时为'ustack'
+这里不用对myclass 传递参数，myclass 会自动读取Hiera 中对parameter_one 定义的值，即$parameter_one 的值在调用时为'ustack'
 
 
+# 参考文档
 
 [http://docs.puppetlabs.com/hiera/latest/](http://docs.puppetlabs.com/hiera/latest/)
