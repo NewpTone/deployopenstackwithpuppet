@@ -5,7 +5,7 @@
 [2.关于Openstack](#关于Openstack)
 [3.关于Puppet](#关于Puppet)
 [4.关于PuppetOpenstack](#关于PuppetOpenstack)
-[5.相同和不同-Fuel/Packstack/Ctask和PuppetOpenstack的区别](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)
+[5.相同和不同 - Fuel/Packstack/Ctask和PuppetOpenstack的关联](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)
 [6.为什么要学? - 不要甘于做一个只会使用工具的人](#为什么要学习PuppetOpenstack)
  
 ## 关于本书
@@ -58,7 +58,7 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 
 第二，Fuel和Packstack项目的部署逻辑直接使用的是PuppetOpenstack项目。所以，你可以理解为有近乎一半的用户选择使用PuppetOpenstack部署Openstack，这对于百花齐放的开源世界来说，是非常可观而且有说服力的数字。
 
-### Fuel/Packstack/Ctask和PuppetOpenstack的区别
+### Fuel/Packstack/Ctask和PuppetOpenstack的关系
 
 - Packstack封装了PuppetOpenstack，使得用户在终端下可以通过交互式问答或者非交互式YAML格式文件的方式去部署Openstack集群，使得用户无需了解Puppet和PuppetOpenstack。
 
