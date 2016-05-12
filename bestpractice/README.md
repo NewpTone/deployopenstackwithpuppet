@@ -28,3 +28,6 @@
 
  - ClusterShell
  - Ansible
+
+运维原则相关:
+
