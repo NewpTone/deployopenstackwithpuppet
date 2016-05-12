@@ -1,5 +1,8 @@
 # Puppet-keystone模块介绍
 
+1. [Overview - What is the keystone module?](#overview)
+
+
 puppet-keystone是用来配置和管理keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中 keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
 
 
@@ -137,7 +140,6 @@ OK，讲解就到这里，我们来看代码。
 ```
 #### keystone服务管理
    puppet支持keystone以单进程模式运行或者跑在Apache上，请注意，如果需要将keystone运行在Apache上，那么需要添加keystone::wsgi::apache，代码如下：
-   
 ```puppet
    class { 'keystone':
       ...
@@ -148,6 +150,7 @@ OK，讲解就到这里，我们来看代码。
       ...
    }
 ```
+我们来看一下管理keystone服务的逻辑：
 ```puppet
  if $service_name == $::keystone::params::service_name {
     $service_name_real = $::keystone::params::service_name
@@ -157,7 +160,8 @@ OK，讲解就到这里，我们来看代码。
       } else {
         $v_auth_url = $admin_endpoint
       }
-
+      
+      #这里调用了keystone::service类，用于管理keystone服务的具体配置
       class { '::keystone::service':
         ensure         => $service_ensure,
         service_name   => $service_name,
@@ -182,6 +186,7 @@ OK，讲解就到这里，我们来看代码。
     }
     warning('Keystone under Eventlet has been deprecated during the Kilo cycle. Support for deploying under eventlet will be dropped as of the M-release of OpenStack.')
   } elsif $service_name == 'httpd' {
+    # 在这里，我们可以看到当$service_name为httpd时，将keystone service的状态设置为了stopped。
     include ::apache::params
     class { '::keystone::service':
       ensure       => 'stopped',
@@ -197,6 +202,41 @@ OK，讲解就到这里，我们来看代码。
       fail('Invalid service_name. Either keystone/openstack-keystone for running as a standalone service, or httpd for being run by a httpd server')
   }
 ```
+
+### class keystone::service
+
+我们在class keystone中就遇到了keystone::service，那么来看看其代码。值得一讲有两块代码：
+
+第一段是管理keystone服务：
+```puppet
+  service { 'keystone':
+    ensure     => $ensure,
+    name       => $service_name,
+    enable     => $enable,
+    hasstatus  => $hasstatus,
+    hasrestart => $hasrestart,
+    tag        => 'keystone-service',
+  }
+```
+第二段代码比较有意思，类似于smoketest，简单调用keystone的user list接口来验证keystone服务是否正常运行：
+```puppet
+  if $validate and $admin_token and $admin_endpoint {
+    $cmd = "openstack --os-auth-url ${admin_endpoint} --os-token ${admin_token} ${insecure_s} ${cacert_s} user list"
+    $catch = 'name'
+    exec { 'validate_keystone_connection':
+      path        => '/usr/bin:/bin:/usr/sbin:/sbin',
+      provider    => shell,
+      command     => $cmd,
+      subscribe   => Service['keystone'],
+      refreshonly => true,
+      tries       => $retries,
+      try_sleep   => $delay,
+      notify      => Anchor['keystone::service::end'],
+    }
+  }
+```
+
+### class keystone::endpoint 
 
 
 
