@@ -326,7 +326,7 @@ if $configure_user {
 ## 小结
   在这里，我们介绍了puppet-keystone的核心代码，当然该module还有许多重要的class我们并没有涉及，例如：keystone::deps，keystone::policy等等。这些就留给读者自己去阅读代码了，当然在后期的版本中，我也会进一步去完善puppet-keystone的核心代码内容。
 
-## 课后习题
+## 动手练习
 
 1. 使用puppet-keystone配置一个token_flush的cron job，使得可以定期清理Keystone数据库的token表中过去的token数据。
 2. 将keystone运行在Apache上
