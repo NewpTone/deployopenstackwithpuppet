@@ -21,5 +21,5 @@
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice/README.md)
    * [Hiera](bestpractice/hiera.md)
-   * Environment
+   * [Environment](bestpractice/environment.md)
 
