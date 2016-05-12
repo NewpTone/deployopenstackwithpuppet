@@ -20,3 +20,4 @@ puppet apply -e 'class {'horizon': secret_key => 'big'}'
 ```
 在puppet执行结束后，horizon就部署完成，并运行在Apache上了。
 
+## 核心代码讲解
