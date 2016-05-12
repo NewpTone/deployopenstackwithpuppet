@@ -15,7 +15,7 @@ class { 'vswitch':
 }
 ```
 在终端下输入:
-```
+```bash
 puppet apply -v test.pp
 ```
 Openvswitch服务就装好了（其实也就是安装一个包，启动一个服务。。。）
@@ -23,7 +23,7 @@ Openvswitch服务就装好了（其实也就是安装一个包，启动一个服
 ## 核心代码讲解
 ### class vswitch
 class vswitch的逻辑很简单，只需要传入provider的值，然后include对应的class，目前只有vswitch::ovs一个。
-```
+```puppet
 class vswitch (
   $provider = $vswitch::params::provider
 ) {
@@ -38,7 +38,7 @@ class vswitch::ovs
 在一个系统版本下对应的代码只有很少的一部分，例如，在CentOS中有用的代码为只是安装一个openvswitch的软件包，
 并且启动服务。
 service管理的代码如下：
-```
+```puppet
     'Redhat': {
       service { 'openvswitch':
         ensure => true,
@@ -48,7 +48,7 @@ service管理的代码如下：
     }
 ```
 软件包管理代码如下，包的名称调用的params中的参数，并且指定安装软件的顺序在启动服务之前。
-```
+```puppet
   package { $::vswitch::params::ovs_package_name:
     ensure => $package_ensure,
     before => Service['openvswitch'],
@@ -56,13 +56,13 @@ service管理的代码如下：
 ```
 puppet-vswitch模块提供了vs_port和vs_bridge两个provider，如果想要创建一个名为br-ex的ovs bridge，
 我们可以使用vs_bridge来创建：
-```
+```puppet
 vs_bridge { 'br-ex':
   ensure => present,
 }
 ```
 而如果想要把端口绑到br-ex上，我们可以是用vs_port来实现：
-```
+```puppet
 vs_port { 'eth2':
   ensure => present,
   bridge => 'br-ex',
