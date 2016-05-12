@@ -5,8 +5,8 @@
 哎，有话好好说，你们别丢臭鸡蛋啊...
 读者：%#@($#@!，你骗我读了那么长的文档，竟然不能用于线上部署！
 
-
 那么在开始决定使用PuppetOpenstack用于部署线上Openstack集群前，除了熟悉Puppet modules，还需要做好哪些准备工作呢？
+
 
  - Hiera
  - Node Definition
