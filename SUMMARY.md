@@ -9,7 +9,7 @@
    * [模块剖析](Introduction/module_structure.md)
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
-   * puppet-vswitch
+   * [puppet-vswitch](基础模块/puppet-vswitch.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
