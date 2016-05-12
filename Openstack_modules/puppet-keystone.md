@@ -328,7 +328,7 @@ if $configure_user {
 
 ## 动手练习
 
-1. 使用puppet-keystone配置一个token_flush的cron job，使得可以定期清理Keystone数据库的token表中过去的token数据。
-2. 将keystone运行在Apache上
+1. 配置token_flush的cron job，使得可以定期清理Keystone数据库的token表中token失效数据。
+2. 将keystone服务运行在Apache上
 3. 开启keystone的debug日志级别
 
