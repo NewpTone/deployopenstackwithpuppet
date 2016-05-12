@@ -66,7 +66,7 @@ ok，恭喜你，已经有了一个使用ceph作为后端的cinder服务，敢�
 
 
 ## 核心代码讲解
-### class cinder
+### Class cinder
 class cinder非常简单主要做了两件核心工作
 * 安装cinder基础包
 * 配置cinder.conf中的核心参数
@@ -107,7 +107,7 @@ OK，讲解就到这里，我们来看代码。
   }
 ```
 
-### class cinder::api
+### Class cinder::api
 class cinder::api 主要配置和管理cinder的api服务
 
 ####管理服务
@@ -145,14 +145,14 @@ cinder可以作为一个服务启动，也可以启动在apache下
   }
 ```
 
-###class cinder::scheduler
+###Class cinder::scheduler
 这个class没什么好讲的，无非是装包，改配置，起服务三板斧
 
-###class cinder::volume
+###Class cinder::volume
 同上
-###class cinder::backup
+###Class cinder::backup
 同上
-###class cinder::backends && define cinder::backend::
+###Class cinder::backends && define cinder::backend::
 由于cinder支持多后端，这个类主要用来管理开启哪些cinder后端，而这些后端由cinder::backend::*backend_name* 来定义
 
 调用cinder_config来修改cinder.conf
