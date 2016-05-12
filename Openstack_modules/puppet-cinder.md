@@ -7,7 +7,7 @@
 
 **建议阅读时间 1小时**
 
-# 先睹为快
+## 先睹为快
 在讲解cinder模块之前让我们先部署一个cinder服务先
 
 > 本示例依赖面部署的 keystone/myql/ceph/rabbitmq 4个服务
@@ -65,14 +65,14 @@ ok，恭喜你，已经有了一个使用ceph作为后端的cinder服务，敢�
 你已经创建了一个1G大小的cinder卷
 
 
-# 核心代码讲解
-## class cinder
+## 核心代码讲解
+### class cinder
 class cinder非常简单主要做了两件核心工作
 * 安装cinder基础包
 * 配置cinder.conf中的核心参数
 
 
-### cinder软件包管理
+#### cinder软件包管理
 这里有一个非常有用的参数是$package_ensure，我们可以指定软件包的版本，或者将其标记为总是安装最新版本，我们将会在最佳实践部分去介绍它。
 ```puppet
   package { 'cinder':
@@ -82,7 +82,7 @@ class cinder非常简单主要做了两件核心工作
     require => Anchor['cinder-start'],
   }
 ```
-### cinder核心参数管理
+#### cinder核心参数管理
 class cinder里管理了大量的配置参数，比如db,rpc,az设置等相关参数，这里不一一列举。
 这里只一个代码片段为例来解释cinder_config的用法。和前面介绍的keystone_config类似cinder_config是一个自定义的resource type，其源码路径位于：
 lib/puppet/type/cinder_config.rb 定义
@@ -107,10 +107,10 @@ OK，讲解就到这里，我们来看代码。
   }
 ```
 
-## class cinder::api
+### class cinder::api
 class cinder::api 主要配置和管理cinder的api服务
 
-###管理服务
+####管理服务
 cinder可以作为一个服务启动，也可以启动在apache下
 ```puppet
   if $service_name == $::cinder::params::api_service {
@@ -145,14 +145,14 @@ cinder可以作为一个服务启动，也可以启动在apache下
   }
 ```
 
-##class cinder::scheduler
+###class cinder::scheduler
 这个class没什么好讲的，无非是装包，改配置，起服务三板斧
 
-##class cinder::volume
+###class cinder::volume
 同上
-##class cinder::backup
+###class cinder::backup
 同上
-##class cinder::backends && define cinder::backend::
+###class cinder::backends && define cinder::backend::
 由于cinder支持多后端，这个类主要用来管理开启哪些cinder后端，而这些后端由cinder::backend::*backend_name* 来定义
 
 调用cinder_config来修改cinder.conf
@@ -186,7 +186,7 @@ class cinder::backends (
   }
 
 ```
-##define cinder::type
+###define cinder::type
 cinder开启多后端后，如何确定要将卷创建到哪个后端呢，这就要有type来决定.
 ```puppet
 define cinder::type (
@@ -226,11 +226,11 @@ define cinder::type (
 lib/puppet/type/cinder_type.rb
 lib/puppet/provider/cinder_type/openstack.rb
 
-#小结
+##小结
 ok，核心代码的解析就到这里，后面的像cinder::quota,cinder::policy,cinder::logging等配置就不在一一解析,留给读者课后去学习.总之puppet-cinder除了多后端配置和其他模块略有不同之外,其余部分都十分相似，是一个比较容易学习的模块.
 
 
-#动手练习
+##动手练习
 1.配置LVM作为cinder后端
 2.同时使LVM和ceph作为cinder的后端
 3.将cinder运行在apache下
