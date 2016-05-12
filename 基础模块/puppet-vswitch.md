@@ -22,7 +22,8 @@ Openvswitch服务就装好了（其实也就是安装一个包，启动一个服
 ## 核心代码讲解
 ### class vswitch
 class vswitch的逻辑很简单，只需要传入provider的值，然后include对应的class，目前只有vswitch::ovs一个。
-```
+
+```puppet
 class vswitch (
   $provider = $vswitch::params::provider
 ) {
@@ -32,12 +33,11 @@ class vswitch (
 ```
 
 ### class vswitch::ovs
-class vswitch::ovs
-看起来代码不少，大多数为兼容不同的系统版本的代码，L版的代码中支持的系统为：Debian、Redhat、FreeBSD,
+class vswitch::ovs看起来代码不少，大多数为兼容不同的系统版本的代码，L版的代码中支持的系统为：Debian、Redhat、FreeBSD,
 在一个系统版本下对应的代码只有很少的一部分，例如，在CentOS中有用的代码为只是安装一个openvswitch的软件包，
 并且启动服务。
 service管理的代码如下：
-```
+```puppet
     'Redhat': {
       service { 'openvswitch':
         ensure => true,
@@ -71,7 +71,7 @@ vswitch::ovs 在最后定义了执行顺序，创建ovs bridge和绑定port，�
 
 ### class vswitch::params
 vswitch::params为别的class提供参数，在vswitch::params里根据不同的系统指定了不同的软件包、
-服务等名称
+服务等名称。
 
 ## 小结
 我们在本章里介绍了puppet-vswitch的核心代码，这个模块相对简单，大家可以自己练习一下，对照代码，
