@@ -15,8 +15,9 @@ class { 'vswitch':
 }
 ```
 在终端下输入:
+```
 puppet apply -v test.pp
-
+```
 Openvswitch服务就装好了（其实也就是安装一个包，启动一个服务。。。）
 
 ## 核心代码讲解
