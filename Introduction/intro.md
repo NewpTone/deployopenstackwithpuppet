@@ -1,5 +1,12 @@
 # 概览
 
+[0.关于本书 - 章节简介](#关于本书)  
+[1.关于讲与不讲 - 取和舍的艺术](#关于讲与不讲)  
+[2.关于Openstack](#关于Openstack)
+[3.关于Puppet](#关于Puppet)
+[4.关于PuppetOpenstack](#关于PuppetOpenstack)
+[5.相同和不同-Fuel/Packstack/Ctask和PuppetOpenstack的区别](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)
+[6.为什么要学? - 不要甘于做一个只会使用工具的人](#为什么要学习PuppetOpenstack)
  
 ## 关于本书
 本书的目的是介绍如何使用自动化配置管理工具puppet和开源社区项目PuppetOpenstack来完成Openstack的部署和管理工作，本书大致划分为三大部分：
@@ -20,19 +27,15 @@
    像reference books那样事无巨细地讲解每个模块的每个class,define,custom resource,facter，每个params的说明。因为我们不是超人，你也不是机器人。
 
 
-
 ## 关于Openstack
 
 Openstack目前已经成为开源IaaS项目的翘楚。在去年Openstack推出BigTent战略后，在Openstack名下的项目已经多达百个。那么在面对如此复杂的架构和众多服务，我们该如何去面对？
-
-
 
 ## 关于Puppet
 
 Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于IT服务的自动化管理。由于良好的声明式语言和易于扩展的框架设计以及可重用可共享的模块，使得Google、Cisco、Twitter、RedHat、New York Stock Exchange等众多公司和机构在其数据中心的自动化管理中用到了puppet。半年一度的PuppetConf大会也跻身于重要技术会议之列。AWS的CloudFormation文档中有一段关于Puppet的介绍，其开头是这么说的:
 
 > Puppet has become the de facto industry standard for IT automation。
-
 
 
 ## 关于PuppetOpenstack
@@ -63,7 +66,7 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 
 - Ctask类似于Packstack，封装了PuppetOpenstack，不同点在于整合了内部开发的网络检查工具，分布式存储检查脚本，确保每步的输出符合预期，并能快速定位到问题的根源。
 
-## 为什么要学习PuppetOpenstack?
+## 为什么要学PuppetOpenstack?
 
 因为我们的目标读者是DevOps工程师，是一个不甘于只会使用工具的人，喜欢探索新的事物，喜欢去刨根问底。
 
