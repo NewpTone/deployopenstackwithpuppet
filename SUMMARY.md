@@ -13,8 +13,8 @@
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
    * puppet-cinder
-   * puppet-horizon
+   * [puppet-horizon](Openstack_modules/puppet-horizon.md)
 * [公共库模块](Library_modules)
-  * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
+   * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice)
 
