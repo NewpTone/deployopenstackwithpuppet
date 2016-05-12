@@ -5,8 +5,11 @@
     - [class keystone](###class keystone)
     - [class keystone::service](###class keystone::service)
     - [class keystone::endpoint](###class keystone::endpoint)
-    - [define keystone::resource::service_identity](###define keystone::resource::service_identity）
+    - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
     - [class keystone::config](###class keystone::config) 
+3. [小结](##小结)
+4. [动手练习 - 光看不练假把式](##动手练习)
+
 
 puppet-keystone是用来配置和管理keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中 keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
 
@@ -320,4 +323,12 @@ if $configure_user {
        value: newValue
 ```
 
+## 小结
+  在这里，我们介绍了puppet-keystone的核心代码，当然该module还有许多重要的class我们并没有涉及，例如：keystone::deps，keystone::policy等等。这些就留给读者自己去阅读代码了，当然在后期的版本中，我也会进一步去完善puppet-keystone的核心代码内容。
+
+## 课后习题
+
+1. 使用puppet-keystone配置一个token_flush的cron job，使得可以定期清理Keystone数据库的token表中过去的token数据。
+2. 将keystone运行在Apache上
+3. 开启keystone的debug日志级别
 
