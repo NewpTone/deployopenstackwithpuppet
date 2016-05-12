@@ -53,13 +53,29 @@ service管理的代码如下：
     before => Service['openvswitch'],
   }
 ```
-puppet-vswitch模块提供了vs_port和vs_bridge两个provider，
+puppet-vswitch模块提供了vs_port和vs_bridge两个provider，如果想要创建一个名为br-ex的ovs bridge，
+我们可以使用vs_bridge来创建：
+```
+vs_bridge { 'br-ex':
+  ensure => present,
+}
+```
+而如果想要把端口绑到br-ex上，我们可以是用vs_port来实现：
+```
+vs_port { 'eth2':
+  ensure => present,
+  bridge => 'br-ex',
+}
+```
+vswitch::ovs 在最后定义了执行顺序，创建ovs bridge和绑定port，都要在启动服务之后。
+
 ### class vswitch::params
 vswitch::params为别的class提供参数，在vswitch::params里根据不同的系统指定了不同的软件包、
 服务等名称
 
 ## 小结
-
+我们在本章里介绍了puppet-vswitch的核心代码，这个模块相对简单，大家可以自己练习一下，对照代码，
+了解每一步是怎么实现的。
 
 ## 动手练习
 1. 部署openvswitch服务
