@@ -5,10 +5,9 @@
     - [class keystone](###class keystone)
     - [class keystone::service](###class keystone::service)
     - [class keystone::endpoint](###class keystone::endpoint)
-    - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
-    - [class keystone::config](###class keystone::config) 
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
 
-puppet-keystone是用来配置和管理keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中 keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
+这是轻松又欢快的一章，因为这章特别容易。
+puppet-horizon是用来配置和管理horzion服务，包括软件包，配置文件和服务，其中horizon将运行在Apache上。
