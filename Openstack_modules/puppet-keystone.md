@@ -2,10 +2,11 @@
 
 1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
 2. [核心代码讲解 - 如何做到管理keystone服务？](#核心代码讲解)
-3.  - [class keystone](###class keystone)
-3. 
-3. 
-
+    - [class keystone](###class keystone)
+    - [class keystone::service](###class keystone::service)
+    - [class keystone::endpoint](###class keystone::endpoint)
+    - [define keystone::resource::service_identityt](###define keystone::resource::service_identity)
+    - [class keystone::config](###class keystone::config) 
 
 puppet-keystone是用来配置和管理keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中 keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
 
@@ -242,7 +243,81 @@ OK，讲解就到这里，我们来看代码。
 
 ### class keystone::endpoint 
 
+顾名思义，用于创建和管理keystone的service,endpoint。
 
+来看一段使用样例：
 
+```puppet
+  class { 'keystone::endpoint':
+    public_url   => 'https://154.10.10.23:5000',
+    internal_url => 'https://11.0.1.7:5000',
+    admin_url    => 'https://10.0.1.7:35357',
+  }
+````
+那么它是如何实现的呢？继续往下看，它又调用了一个define。
+
+```puppet
+  keystone::resource::service_identity { 'keystone':
+    configure_user      => false,
+    configure_user_role => false,
+    service_type        => 'identity',
+    service_description => 'OpenStack Identity Service',
+    public_url          => $public_url_real,
+    admin_url           => $admin_url_real,
+    internal_url        => $internal_url_real,
+    region              => $region,
+    user_domain         => $user_domain,
+    project_domain      => $project_domain,
+    default_domain      => $default_domain,
+  }
+```
+### define keystone::resource::service_identity
+
+少侠莫慌，我们接着来看keystone::resource::service_identity，终于到路的尽头了，我们来看看它是怎么实现的。
+我先看看它是如何实现管理user的。
+```puppet
+if $configure_user {
+    if $user_domain_real {
+      # We have to use ensure_resource here and hope for the best, because we have
+      # no way to know if the $user_domain is the same domain passed as the
+      # $default_domain parameter to class keystone.
+      ensure_resource('keystone_domain', $user_domain_real, {
+        'ensure'  => 'present',
+        'enabled' => true,
+      })
+    }
+    ensure_resource('keystone_user', $auth_name, {
+      'ensure'                => 'present',
+      'enabled'               => true,
+      'password'              => $password,
+      'email'                 => $email,
+      'domain'                => $user_domain_real,
+    })
+    if ! $password {
+      warning("No password had been set for ${auth_name} user.")
+    }
+  }
+```
+这里的关键是keystone_user，这又是一个自定义resource type，其源码路径为:
+
+* lib/puppet/type/keystone_config.rb   定义
+* lib/puppet/provider/keystone_config/ini_setting.rb  实现 
+
+通过keystone_user，puppet完成了user的管理工作（包括创建和修改）。
+同理，我们还看到了keystone_domain，目的是完成对domain的管理。
+剩下的代码同理，就不一一解读了。
+
+### class keystone::config
+
+这个类最初是由我(xingchao)提出用于自定义参数管理，自定义参数是指所有未被puppet-keystone模块管理的参数。怎么理解？
+打个比方，keystone在Mitaka版本新增了一个参数称为new_mitaka_op（虚构），那么在puppet-keystone模块里并没有该参数，这时候，我们只要使用keystone::config就可以轻松完成参数的管理。
+在hiera文件中添加如下代码：
+
+```yaml
+---
+   keystone::config::keystone_config:
+     DEFAULT/new_mitaka_opt:
+       value: newValue
+```
 
 
