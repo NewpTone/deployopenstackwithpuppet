@@ -60,7 +60,7 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 
 - Ctask类似于Packstack，封装了PuppetOpenstack，不同点在于整合了内部开发的网络检查工具，分布式存储检查脚本，确保每步的输出符合预期，并能快速定位到问题的根源。
 
-辣么我们为什么还要学习PuppetOpenstack?
+## 为什么要学习PuppetOpenstack?
 
 因为我们的目标读者是DevOps工程师，是一个不甘于只会使用工具的人，喜欢探索新的事物，喜欢去刨根问底。
 
