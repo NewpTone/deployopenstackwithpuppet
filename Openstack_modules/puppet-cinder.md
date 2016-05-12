@@ -186,15 +186,54 @@ class cinder::backends (
   }
 
 ```
+##define cinder::type
+cinder开启多后端后，如何确定要将卷创建到哪个后端呢，这就要有type来决定.
+```puppet
+define cinder::type (
+  $set_key        = undef,
+  $set_value      = undef,
+  # DEPRECATED PARAMETERS
+  $os_password    = undef,
+  $os_tenant_name = undef,
+  $os_username    = undef,
+  $os_auth_url    = undef,
+  $os_region_name = undef,
+  ) {
+
+  if $os_password or $os_region_name or $os_tenant_name or $os_username or $os_auth_url {
+    warning('Parameters $os_password/$os_region_name/$os_tenant_name/$os_username/$os_auth_url are not longer required')
+    warning('Auth creds will be used from env or /root/openrc file or cinder.conf')
+  }
+
+  if ($set_value and $set_key) {
+    if is_array($set_value) {
+      $value = join($set_value, ',')
+    } else {
+      $value = $set_value
+    }
+    cinder_type { $name:
+      ensure     => present,
+      properties => ["${set_key}=${value}"],
+    }
+  } else {
+    cinder_type { $name:
+      ensure     => present,
+    }
+  }
+}
+```
+这个关键的是cinder_type,其源码路径为
+lib/puppet/type/cinder_type.rb
+lib/puppet/provider/cinder_type/openstack.rb
+
+#小结
+ok，核心代码的解析就到这里，后面的像cinder::quota,cinder::policy,cinder::logging等配置就不在一一解析,留给读者课后去学习.总之puppet-cinder除了多后端配置和其他模块略有不同之外,其余部分都十分相似，是一个比较容易学习的模块.
 
 
-ok，核心代码的解析就到这里，后面的像quota,policy,logging等配置就不在一一解析
-
-
-
-
-
-##sdfsdfsf
+#动手练习
+1.配置LVM作为cinder后端
+2.同时使LVM和ceph作为cinder的后端
+3.将cinder运行在apache下
 
 
 
