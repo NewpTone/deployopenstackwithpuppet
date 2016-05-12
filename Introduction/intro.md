@@ -1,6 +1,4 @@
 # 关于本书
-
-
 本书的目的是介绍如何使用自动化配置管理工具puppet和开源社区项目PuppetOpenstack来完成Openstack的部署和管理工作，本书大致划分为三大部分：
 
 * 介绍部分 将包含前期的准备工作，相关约定，术语说明，项目概览，模块剖析等等基础知识给读者从全局上的认识。
@@ -36,6 +34,9 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 
 ## 关于PuppetOpenstack
 
+
+> 说明： **本书以Mitaka版本为基础**
+
 [PuppetOpenstack](https://wiki.openstack.org/wiki/Puppet)是Openstack社区推出的Puppet Modules项目，隶属于Openstack Goverance项目。引用官方对其目标的描述：
 
 > to bring scalable and reliable IT automation to OpenStack cloud deployments.
@@ -43,9 +44,11 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 
 目前部署Openstack的工具辣么多，为什么不使用Fuel，Packstack或者偏偏要选择它？
 原因有两点：
-第一，请看2016年4月新鲜出炉的Openstack User survey
+
+第一，请看2016年4月新鲜出炉的Openstack User Survey (还没看过？[请点我](https://www.openstack.org/user-survey/survey-2016-q1/landing))
+下图选自这份报告中，关于目前主流部署工具使用情况的调研：
 
 ![](../images/01/puppet.png)
 
-第二，Fuel和Packstack项目的部署逻辑直接使用的是PuppetOpenstack项目。所以，你可以理解为有近乎一半的公司选择使用PuppetOpenstack部署Openstack，这对于百花齐放的开源世界来说，是非常可观而且有说服力的数字。
+第二，Fuel和Packstack项目的部署逻辑直接使用的是PuppetOpenstack项目。所以，你可以理解为有近乎一半的用户选择使用PuppetOpenstack部署Openstack，这对于百花齐放的开源世界来说，是非常可观而且有说服力的数字。
 ￼
