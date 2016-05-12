@@ -144,7 +144,7 @@ class myclass ($parameter_one = "default text") {
 上面的方法2 是Puppet 最有趣的地方，因为Puppet 会自动从Hiera 中查找参数的值，我们可以在代码中使用include 语句来调用一个类，不需要对其传递任何参数值，所有的参数传递都可以将参数值写到Hiera 中，Puppet 会自动从Hiera 中读取类的参数。例如，我想调用上面定义的myclass 类，并且$parameter\_one 的参数值为"ustack"，参数的传递使用Hiera 来完成。那么我需要在Hiera 中写入下面的值：
 
 ```yaml
-myclass::parameter\_one: 'ustack'
+myclass::parameter_one: 'ustack'
 ```
 
 在代码中，调用myclass 类：
