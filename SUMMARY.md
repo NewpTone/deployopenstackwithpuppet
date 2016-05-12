@@ -16,7 +16,7 @@
    * [puppet-horizon](Openstack_modules/puppet-horizon.md)
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
-   * puppet-cinder
+   * [puppet-cinder](Openstack_modules/puppet-cinder.md)
 * [公共库模块](Library_modules)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice/README.md)
