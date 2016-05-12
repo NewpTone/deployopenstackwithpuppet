@@ -1,7 +1,7 @@
 # puppet-horizon
 
 1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理keystone服务？](#核心代码讲解)
+2. [核心代码讲解 - 如何做到管理horizon服务？](#核心代码讲解)
    - [class horizon](###class horizon)
    - [class horzion::wsgi::apache](###class horizon::wsgi::apache)
 3. [小结](##小结)
