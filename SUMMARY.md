@@ -12,7 +12,7 @@
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
-   * [puppet-cinder](puppet-cinder.md)
+   * [puppet-cinder](Openstack-modules/puppet-cinder.md)
    * puppet-horizon
 * [公共库模块](Library_modules)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
