@@ -6,13 +6,18 @@
 
 无数次惨痛的教训告诉我：决心虽然重要，但是坚持更加可贵。让我重新拾起笔（键盘）的原因是源于今晚的一顿饭。今晚注定是一个平凡的夜晚，DevOps组的同学们像往常一样忙到晚上8点多已是饥肠辘辘，正纷纷收拾东西下班，大家站在公司门前讨论去哪里吃饭，这时我走出来，虽刚从纽约飞回到空气清新的帝都，时差还没有倒回来，脑袋浑浑噩噩，但又担心这帮邋遢的家伙站在公司大门口持续影响公司形象，于是忙把他们连哄带骗全都打包上车，拉到了附近的一家馆子里，几口飘香的云南饭菜入肚，大家就开始天南地北地扯东扯西，无外乎是谁谁谁今天又看了一本MySQL从删库到跑路，谁谁谁今天又当了一回Puppet背锅侠，谁谁谁的项目又埋了一个大坑。
 
-不知不觉，我们就聊到了OpenStack自动化部署这个话题上。作为一名从2011年开始接触Openstack的老油条，在2013年混进了PuppetOpenstack社区项目成为了core develeloper，我深深地感觉到是时候召(忽)唤（悠）这帮孩子来一起填这个史诗级别的远古巨坑了。
+不知不觉，我们就聊到了OpenStack自动化部署这个话题上。作为一名从2011年开始接触Openstack的老油条，在13年幸运地混进了PuppetOpenstack社区项目成了一名core develeloper，我深深地感觉到是时候召(忽)唤（悠）这帮孩子来一起填这个史诗级别的远古巨坑了。
 
-UnitedStack DevOps Team从13年伊始就全身心投入到Openstack持续交付和持续集成事业中，目前使用了86个puppet module, 6台PuppetMaster, 持续管理着约60个Openstack线上集群和12个Openstack开发测试集群近7种不同环境，支撑了近3000台Openstack集群服务器，独立开发了UOS部署工具(CTask)， 软件包管理工具(Packforge, Specforge, Repoforge)， IaaS虚拟资源池(Chameleon）, Openstack平滑升级工具(Screenwriter)，这里面涉及到了大量的自动化运维工具，例如：Ansible, Foreman, Puppet, ClusterShell, Mcollective；同时还有编写了大量的脚本，包含了多种语言，如：Shell, Ruby, Python, Puppet。
+UnitedStack DevOps Team从13年伊始就全身心投入到持续交付和持续集成事业中，目前使用了**96**个puppet module, **6**台PuppetMaster, 集中管理着约**87**个Openstack集群,**7**种不同环境，支撑了近**3500**台Openstack集群服务器。   
+独立开发了UOS部署工具(CTask)， 软件包管理工具(Packforge/Specforge/Repoforge)， IaaS虚拟资源池(Chameleon）, Openstack升级套件(Screenwriter)，这里面涉及到了大量的自动化运维工具，例如：Ansible, Foreman, Puppet, ClusterShell, Mcollective；同时还有大量运维脚本，包含了多种语言，如：Shell, Ruby, Python, Puppet。
 
-说实话，DevOps团队里每个人平时都有忙不完的事情，从早上还没到公司到晚上回到家中，随时随刻会被人on call，就像今天吃饭那样，维宇同学站在门口等我上个wc，就被其他同事喊回去处理问题去了。但并不是说因此就有理由说，我们很忙，忙得没有时间写一本书。我们的确需要停下脚步，回头看一看过去三年的努力，然后做一个系统性的梳理和总结了。
+说实话，DevOps团队里每个人平时都有忙不完的事情，从早上还没到公司到晚上回到家中，随时随刻会被人on call，就像今天吃饭那样，维宇同学正站在门口等我上个wc的时间，就被其他同事喊回去处理问题去了。但并不是说因此就有理由说，我们很忙，忙得没有时间写一本书。我们的确需要停下脚步，回头看一看过去三年的努力，然后做一个系统性的梳理和总结了。
 
-这本书涉及的是我们过去三年时间里对于Openstack自动化部署工作的最核心部分：PuppetOpenstack核心库和模块的详细使用说明。我们规划每天晚上抽出2到3小时的不固定时间，计划在2个星期内（是不是很crazy）完成第一版的初稿工作，然后开始进入稳定的迭代周期。
+这本书讲得的是我们对于Openstack自动化部署工作核心部分的讲解：
+
+> PuppetOpenstack核心模块和基础模块的详细介绍和最佳实践
+
+我们规划每天晚上抽出3到4小时的不固定时间，计划在2个星期内（Crazy Plan）完成第一版的初稿工作，然后开始进入稳定的迭代周期。
 
 期望各位关注此书的读者可以从中有所思，有所得。
 
