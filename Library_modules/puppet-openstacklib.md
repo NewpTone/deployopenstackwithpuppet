@@ -14,4 +14,35 @@
 * 用于定义各个服务配置的自定义资源所用的基础类
 
 ## 使用范例
-这里以 `puppet-nova` 模块为例，来看看 openstack 模块如何去使用 `puppet-openstacklib` 模块中的资源。例如，在配置数据库用户，权限以及数据库的创建时，nova 模块使用了
+这里以 `puppet-nova` 模块为例，来看看 openstack 模块如何去使用 `puppet-openstacklib` 模块中的资源。例如，在配置数据库用户，权限以及数据库的创建时，nova 模块中的 nova::db::mysql 使用了 `openstacklib::db::mysql` 来创建数据库，用户，以及对用户授权：
+
+```puppet
+  ::openstacklib::db::mysql { 'nova':
+    user          => $user,
+    password_hash => mysql_password($password),
+    dbname        => $dbname,
+    host          => $host,
+    charset       => $charset,
+    collate       => $collate,
+    allowed_hosts => $allowed_hosts,
+  }
+ ```
+
+nova 模块中的 nova::api 类调用了 `openstacklib::service::validation` 这个资源，用户可以自己定义服务的检查脚本，来对服务进行健康检查：
+
+```puppet
+  if $validate {
+    $defaults = {
+      'nova-api' => {
+        'command'  => "nova --os-auth-url ${auth_uri} --os-tenant-name ${admin_tenant_name} --os-username ${admin_user} --os-password ${admin_password} flavor-list",
+      }
+    }
+    $validation_options_hash = merge ($defaults, $validation_options)
+    create_resources('openstacklib::service_validation', $validation_options_hash, {'subscribe' => 'Service[nova-api]'})
+  }
+```
+
+如果想自己定义 policy.json 文件，可以使用 nova::policy 这个类，在这个类的代码中，实际是通过调用 `openstacklib::policy::base` 这个资源来完成对 policy.json 文件的配置。
+
+
+
