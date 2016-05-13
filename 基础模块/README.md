@@ -14,7 +14,7 @@
 * puppet-rabbitmq  @luyuan
 * puppet-rsync   @luyuan  low
 * puppet-sysctl  @weiyu  
-* puppet-vswitch @liangliang
+* puppet-vswitch @liangliang   已完成
 * puppet-xinetd @luyuan  low
 
 
