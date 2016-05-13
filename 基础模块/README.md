@@ -7,7 +7,7 @@
 
 * puppet-apache   @xingchao  已完成
 * puppet-corosync  
-* puppet-firewall  @weiyu
+* puppet-firewall  @weiyu 已完成，等待review
 * puppet-memcached  @weiyu
 * puppet-mongodb  @liangliang low 
 * puppet-mysql  @penghui
