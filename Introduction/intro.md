@@ -2,11 +2,11 @@
 
 [0.关于本书 - 章节简介](#关于本书)  
 [1.关于讲与不讲 - 取和舍的艺术](#关于讲与不讲)  
-[2.关于Openstack](#关于Openstack)
-[3.关于Puppet](#关于Puppet)
-[4.关于PuppetOpenstack](#关于PuppetOpenstack)
-[5.相同和不同 - Fuel/Packstack/Ctask和PuppetOpenstack的关联](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)
-[6.为什么要学? - 不要甘于做一个只会使用工具的人](#为什么要学习PuppetOpenstack)
+[2.关于Openstack](#关于Openstack)  
+[3.关于Puppet](#关于Puppet)  
+[4.关于PuppetOpenstack](#关于PuppetOpenstack)  
+[5.相同和不同 - Fuel/Packstack/Ctask和PuppetOpenstack的关联](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)  
+[6.为什么要学? - 不要甘于做一个只会使用工具的人](#为什么要学习PuppetOpenstack)  
  
 ## 关于本书
 本书的目的是介绍如何使用自动化配置管理工具puppet和开源社区项目PuppetOpenstack来完成Openstack的部署和管理工作，本书大致划分为三大部分：
