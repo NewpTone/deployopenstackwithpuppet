@@ -9,7 +9,7 @@
 * puppet-corosync  
 * puppet-firewall  @weiyu 已完成，等待review
 * puppet-memcached  @weiyu
-* puppet-mongodb  @liangliang low 
+* puppet-mongodb  @liangliang low
 * puppet-mysql  @penghui
 * puppet-rabbitmq  @luyuan
 * puppet-rsync   @luyuan  low
