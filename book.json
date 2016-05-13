@@ -1,6 +1,24 @@
 {
-    "plugins": [
-        "add-header",
-        "anchor-navigation"
-    ]
+  "output": null,
+  "generator": "site",
+  "title": "Openstack自动化部署 —— 从入门到放弃",
+  "plugins": ["autocover","add-header","anchor-navigation"],
+  "pluginsConfig": {
+      "autocover": {
+          "title": "Openstack自动化部署 —— 从入门到放弃",
+          "author": "余兴超 廖鹏辉 陆源 周维宇 韩亮亮",
+          "font": {
+              "size": null,
+              "family": "Impact",
+              "color": "#FFF"
+          },
+          "size": {
+              "w": 1800,
+              "h": 2360
+          },
+          "background": {
+              "color": "#09F"
+          }
+      }
+  }
 }
