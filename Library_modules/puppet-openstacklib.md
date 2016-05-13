@@ -42,7 +42,18 @@ nova 模块中的 nova::api 类调用了 `openstacklib::service::validation` 这
   }
 ```
 
-如果想自己定义 policy.json 文件，可以使用 nova::policy 这个类，在这个类的代码中，实际是通过调用 `openstacklib::policy::base` 这个资源来完成对 policy.json 文件的配置。
+如果想自己定义 policy.json 文件，可以使用 nova::policy 这个类，在这个类的代码中，实际是通过调用 `openstacklib::policy::base` 这个资源来完成对 policy.json 文件的配置：
 
+```puppet
+  $policy_defaults = {
+    'file_path' => $policy_path,
+    'require'   => Anchor['nova::config::begin'],
+    'notify'    => Anchor['nova::config::end'],
+  }
+
+  create_resources('openstacklib::policy::base', $policies, $policy_defaults)
+```
+
+上面的代码使用 `create_resource` 函数动态的创建 `openstacklib::policy::base` 资源，实现配置 policy.json 文件的目的。
 
 
