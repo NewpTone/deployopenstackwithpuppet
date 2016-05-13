@@ -7,6 +7,7 @@
    * [术语表](Introduction/term.md)
    * [项目概览](Introduction/project_overview.md)
    * [模块剖析](Introduction/module_structure.md)
+   * 阅读指北
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
    * [puppet-vswitch](基础模块/puppet-vswitch.md)
