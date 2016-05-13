@@ -10,7 +10,7 @@
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
    * [puppet-vswitch](基础模块/puppet-vswitch.md)
-   * puppet-memcache
+   * [puppet-memcache](基础模块/puppet-memcache.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
