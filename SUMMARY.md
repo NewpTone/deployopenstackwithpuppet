@@ -2,12 +2,12 @@
 
 * [前言](README.md)
 * [概览](Introduction/intro.md)
+   * [阅读指北](Introduction/read_guide.md) 
    * [准备工作](Introduction/requirement.md)
    * [相关约定](Introduction/convention.md)
    * [术语表](Introduction/term.md)
    * [项目概览](Introduction/project_overview.md)
    * [模块剖析](Introduction/module_structure.md)
-   * [阅读指北](Introduction/read_guide.md)
 * [基础模块](基础模块/README.md)
    * [puppet-apache](基础模块/puppet-apache.md)
    * [puppet-vswitch](基础模块/puppet-vswitch.md)
