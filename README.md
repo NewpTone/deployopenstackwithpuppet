@@ -9,7 +9,7 @@
 不知不觉，我们就聊到了OpenStack自动化部署这个话题上。作为一名从2011年开始接触Openstack的老油条，在13年幸运地混进了PuppetOpenstack社区项目成了一名core develeloper，我深深地感觉到是时候召(忽)唤（悠）这帮孩子来一起填这个史诗级别的远古巨坑了。
 
 UnitedStack DevOps Team从13年伊始就全身心投入到持续交付和持续集成事业中，目前使用了**96**个puppet module, **6**台PuppetMaster, 集中管理着约**87**个Openstack集群,**7**种不同环境，支撑了近**3500**台Openstack集群服务器。   
-独立开发了UOS部署工具(CTask)， 软件包管理工具(Packforge/Specforge/Repoforge)， IaaS虚拟资源池(Chameleon）, Openstack平滑升级工具(Screenwriter)，这里面涉及到了大量的自动化运维工具，例如：Ansible, Foreman, Puppet, ClusterShell, Mcollective；同时还有编写了大量脚本，包含了多种语言，如：Shell, Ruby, Python, Puppet。
+独立开发了UOS部署工具(CTask)， 软件包管理工具(Packforge/Specforge/Repoforge)， IaaS虚拟资源池(Chameleon）, Openstack升级套件(Screenwriter)，这里面涉及到了大量的自动化运维工具，例如：Ansible, Foreman, Puppet, ClusterShell, Mcollective；同时还有编写了大量脚本，包含了多种语言，如：Shell, Ruby, Python, Puppet。
 
 说实话，DevOps团队里每个人平时都有忙不完的事情，从早上还没到公司到晚上回到家中，随时随刻会被人on call，就像今天吃饭那样，维宇同学站在门口等我上个wc，就被其他同事喊回去处理问题去了。但并不是说因此就有理由说，我们很忙，忙得没有时间写一本书。我们的确需要停下脚步，回头看一看过去三年的努力，然后做一个系统性的梳理和总结了。
 
