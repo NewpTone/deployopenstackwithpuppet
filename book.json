@@ -1,7 +1,7 @@
 {
   "output": null,
   "generator": "site",
-  "title": "Openstack自动化部署 —— 从入门到放弃",
+  "title": "Openstack自动化部署",
   "plugins": ["autocover","add-header","anchor-navigation"，“exercises”],
   "pluginsConfig": {
       "autocover": {
