@@ -76,5 +76,5 @@ puppet-memcached只有一个Class
   ##小结
   这个模块比较简单，只有一个Class，为什么呢？因为memcached部署起来就是很简单啊。。
   ##动手练习
-  1. 限制memcached最大使用内存为2G
+  1. 限制memcached最大使用内存为50%
   2. 关闭对防火墙规则的管理
