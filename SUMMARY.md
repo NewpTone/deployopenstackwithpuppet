@@ -2,7 +2,7 @@
 
 * [前言](README.md)
 * [概览](Introduction/intro.md)
-   * [阅读指北](Introduction/read_guide.md) 
+   * [阅读指北](Introduction/read_guide.md)
    * [准备工作](Introduction/requirement.md)
    * [相关约定](Introduction/convention.md)
    * [术语表](Introduction/term.md)
@@ -13,6 +13,7 @@
    * [puppet-vswitch](基础模块/puppet-vswitch.md)
    * [puppet-memcache](基础模块/puppet-memcache.md)
    * [puppet-sysctl](基础模块/puppet-sysctl.md)
+   * puppet-rsync
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * puppet-glance
