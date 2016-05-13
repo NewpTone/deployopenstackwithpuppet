@@ -15,7 +15,7 @@ UnitedStack DevOps Team从13年伊始就全身心投入到持续交付和持续�
 
 这本书讲得的是我们对于Openstack自动化部署工作核心部分的讲解：
 
-> PuppetOpenstack核心模块和基础模块的细节介绍和最佳实践
+> PuppetOpenstack核心模块和基础模块的详细介绍和最佳实践
 
 我们规划每天晚上抽出3到4小时的不固定时间，计划在2个星期内（Crazy Plan）完成第一版的初稿工作，然后开始进入稳定的迭代周期。
 
