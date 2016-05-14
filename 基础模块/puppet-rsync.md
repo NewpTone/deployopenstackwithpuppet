@@ -110,7 +110,7 @@ class rsync::server(
 }
 ```
 ### define rsync::server::module
-####定义一个rsync服务
+####定义一个rsync服务的仓库
 ```puppet
 $path  = '/var/testrsync',
 rsync::server::module { 'repo':
@@ -118,11 +118,35 @@ rsync::server::module { 'repo':
   require => File[$path],
   }
 ```
-很简答,path在这里设置成一个变量。
+很简答,path这里设置成一个变量,即可搭建成一个rsync的服务
 ### Class: rsync::repo
-####创建一个存放数据的rsync的仓库
+####创建一个存放数据的rsync仓库
+```puppet
+class rsync::repo {
+  include rsync::server
+  $base = '/data/rsync'
+  file { $base:
+    ensure  => directory,
+  }
+  # setup default rsync repository
+  rsync::server::module { 'repo':
+    path    => $base,
+    require => File[$base],
+  }
+```
+类主的作用是创建一个rsync的仓库，仓库位置默认设置在/data/rsync的目录下。
+
 ### define rsync::put
 #### 从本地服务器传输文件拷贝到远端
+```puppet
+$rsyncDestHost  = 192.168.1.222,
+rsync::put { '${rsyncDestHost}:/repo/foo':
+  user    => 'user',
+  source  => "/repo/foo/",
+} 
+```
+本实例中只需要设置一个远程服务器的地址即可。
+
 ### define rsync::get
 #### 从远端服务器获取文件
 
