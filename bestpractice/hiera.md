@@ -2,7 +2,7 @@
 
 # 1.简介和历史
 
-Hiera是基于键值查询的数据配置工具，Hiera是一个可选工具，它的目标是：Hiera makes Puppet better by keeping site-specific data out of your manifests **.**
+Hiera是基于键值查询的数据配置工具，Hiera是一个可选工具，它的目标是：Hiera makes Puppet better by keeping site-specific data out of your manifests
 
 它的出现使得代码逻辑和数据可以分离管理。
 
