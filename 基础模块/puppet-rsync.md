@@ -15,8 +15,8 @@ puppet-rsync由puppetlabs开发，此模块可管理rsync的客户端、服务�
 fine，有木有很too simple？既然这样，我们需要知道它是如何实现的。so...
 
 ## 核心代码讲解
-#Class: rsync
-#软件包管理
+###Class: rsync
+####软件包管理
 ```puppet
 class rsync(
   $package_ensure    = 'installed',
@@ -35,6 +35,97 @@ class rsync(
   create_resources(rsync::get, $gets)
 }
 ```
+
+###Class: rsync::server
+####服务管理
+```puppet
+class rsync::server(
+  $use_xinetd = true,
+  $address    = '0.0.0.0',
+  $motd_file  = 'UNSET',
+  $use_chroot = 'yes',
+  $uid        = 'nobody',
+  $gid        = 'nobody',
+  $modules    = {},
+) inherits rsync {
+
+  $conf_file = $::osfamily ? {
+    'Debian' => '/etc/rsyncd.conf',
+    'suse'   => '/etc/rsyncd.conf',
+    'RedHat' => '/etc/rsyncd.conf',
+    default  => '/etc/rsync.conf',
+  }
+  $servicename = $::osfamily ? {
+    'suse'   => 'rsyncd',
+    'RedHat' => 'rsyncd',
+    default  => 'rsync',
+  }
+
+  if $use_xinetd {
+    include xinetd
+    xinetd::service { 'rsync':
+      bind        => $address,
+      port        => '873',
+      server      => '/usr/bin/rsync',
+      server_args => "--daemon --config ${conf_file}",
+      require     => Package['rsync'],
+    }
+  } else {
+    service { $servicename:
+      ensure     => running,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+      subscribe  => Concat[$conf_file],
+    }
+
+    if ( $::osfamily == 'Debian' ) {
+      file { '/etc/default/rsync':
+        source => 'puppet:///modules/rsync/defaults',
+        notify => Service['rsync'],
+      }
+    }
+  }
+
+  if $motd_file != 'UNSET' {
+    file { '/etc/rsync-motd':
+      source => 'puppet:///modules/rsync/motd',
+    }
+  }
+
+  concat { $conf_file: }
+
+  # Template uses:
+  # - $use_chroot
+  # - $address
+  # - $motd_file
+  concat::fragment { 'rsyncd_conf_header':
+    target  => $conf_file,
+    content => template('rsync/header.erb'),
+    order   => '00_header',
+  }
+
+  create_resources(rsync::server::module, $modules)
+
+}
+```
+### define rsync::server::module
+####定义一个rsync服务
+```puppet
+$path  = '/var/testrsync',
+rsync::server::module { 'repo':
+  path    => $path,
+  require => File[$path],
+  }
+```
+很简答,path在这里设置成一个变量。
+### Class: rsync::repo
+####创建一个存放数据的rsync的仓库
+### define rsync::put
+#### 从本地服务器传输文件拷贝到远端
+### define rsync::get
+#### 从远端服务器获取文件
+
 
 ## 小结
 
