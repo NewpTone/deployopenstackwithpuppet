@@ -7,13 +7,15 @@
 
 **建议阅读时间 30分钟**
 ## 先睹为快
-puppet-rsync 是由puppetlabs开发，通过此模块可以管理rsync的客户端、服务器，并且通过provider自定义define轻松获取远程服务器的数据。学习本模块前咱们先快刀斩乱马（rsync），在命令行执行如下命令:
+puppet-rsync由puppetlabs开发，此模块可管理rsync的客户端、服务器，并且通过provider自定义define轻松获取远程服务器的数据。学习本模块前咱们先快刀斩乱马（rsync），在命令行执行如下命令:
 
-'''
+```puppet
   puppet apply -e "class { 'rsync': }"
-'''
+```
+fine，有木有很too simple？既然这样，我们需要知道它是如何实现的。so...
 
 ## 核心代码讲解
+
 
 ## 小结
 
