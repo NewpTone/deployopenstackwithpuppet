@@ -24,9 +24,10 @@
 * [公共库模块](Library_modules)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice/README.md)
+   * 版本控制
+   * 代码管理
    * [Hiera](bestpractice/hiera.md)
    * [Environment](bestpractice/environment.md)
    * [转发层模块](bestpractice/Composition.md)
-   * 版本控制
-   * 代码管理
+
 
