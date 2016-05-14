@@ -14,6 +14,7 @@
 * 用于定义各个服务配置的自定义资源所用的基础类
 
 ## 使用范例
+#### openstacklib::db::mysql
 这里以 `puppet-nova` 模块为例，来看看 openstack 模块如何去使用 `puppet-openstacklib` 模块中的资源。例如，在配置数据库用户，权限以及数据库的创建时，nova 模块中的 nova::db::mysql 使用了 `openstacklib::db::mysql` 来创建数据库，用户，以及对用户授权：
 
 ```puppet
@@ -28,6 +29,7 @@
   }
  ```
 
+#### openstacklib::service::validation
 nova 模块中的 nova::api 类调用了 `openstacklib::service::validation` 这个资源，用户可以自己定义服务的检查脚本，来对服务进行健康检查：
 
 ```puppet
@@ -42,6 +44,7 @@ nova 模块中的 nova::api 类调用了 `openstacklib::service::validation` 这
   }
 ```
 
+#### openstacklib::policy::base
 如果想自己定义 policy.json 文件，可以使用 nova::policy 这个类，在这个类的代码中，实际是通过调用 `openstacklib::policy::base` 这个资源来完成对 policy.json 文件的配置：
 
 ```puppet
@@ -56,4 +59,6 @@ nova 模块中的 nova::api 类调用了 `openstacklib::service::validation` 这
 
 上面的代码使用 `create_resource` 函数动态的创建 `openstacklib::policy::base` 资源，实现配置 policy.json 文件的目的。
 
+## 自定义 facter/type/provider
+openstack 中大部分项目的配置文件都使用 `ini` 格式的配置文件，puppet-openstack 社区为每个服务提供了自定义资源，用来完成对这些配置文件的管理，例如 `nova.conf` 中需要在 `[DEFAULT]` 这个 section 中添加一条配置如下：
 
