@@ -10,13 +10,9 @@ Puppet Modules使用git做版本控制工具，因此我们这里不会去重复
   - commit message的格式应该怎么写？
   - 代码提交是否应该和其他系统管理？
 
-本文档参考社区的GitCommitMsg规范制定 
+# 1.代码规范说明
 
-
-# 1.commit规范说明
-
-- 每次提交只包含相关的代码逻辑和单元测试
-- 
+- 每次提交只包含相关的Puppet代码逻辑和单元测试
 - 第一行是commit的简短描述
 - 在第一行和后面段落之间插入一个空行
 - 提供针对本次commit的详细描述（可选）
@@ -44,11 +40,24 @@ Puppet Modules使用git做版本控制工具，因此我们这里不会去重复
 
 ## 1.3 格式样例
 
-| commit 7c027d40e2b616ba57f7c69f8162a6311461a566Author: [removed]Date:   Fri Aug 28 10:14:28 2015 -0700    Ensure setuptools is somewhat recent    Due to bugs in older setuptools version parsing    we need to set a relatively new version of setuptools    so that parsing works better (and/or correctly).    This seems especially important on 2.6 which due to    a busted setuptools (and associated pkg\_resources) seems    to be matching against incorrect versions.    Type: BF    Jira: DEVOPS-453    Change-Id: Ib859c7df955edef0f38c5673bd21a4767c781e4a |
-| --- |
-
-| commit 7c027d40e2b616ba57f7c69f8162a6311461a566Author: [removed]Date:   Fri Aug 28 10:14:28 2015 -0700    Ensure setuptools is somewhat recent    Due to bugs in older setuptools version parsing    we need to set a relatively new version of setuptools    so that parsing works better (and/or correctly).    This seems especially important on 2.6 which due to    a busted setuptools (and associated pkg\_resources) seems    to be matching against incorrect versions.    Type: NF    Jira: DEVOPS-453    FC: /info API is changed        Change-Id: Ib859c7df955edef0f38c5673bd21a4767c781e4a |
-| --- |
+```git
+commit 7c027d40e2b616ba57f7c69f8162a6311461a566
+Author: [removed]
+Date:   Fri Aug 28 10:14:28 2015 -0700
+    Ensure setuptools is somewhat recent
+ 
+    Due to bugs in older setuptools version parsing
+    we need to set a relatively new version of setuptools
+    so that parsing works better (and/or correctly).
+ 
+    This seems especially important on 2.6 which due to
+    a busted setuptools (and associated pkg_resources) seems
+    to be matching against incorrect versions.
+ 
+    Type: BF
+    Jira: DEVOPS-453
+    Change-Id: Ib859c7df955edef0f38c5673bd21a4767c781e4a
+```
 
 
 
