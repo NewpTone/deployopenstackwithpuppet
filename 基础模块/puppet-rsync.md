@@ -15,7 +15,26 @@ puppet-rsync由puppetlabs开发，此模块可管理rsync的客户端、服务�
 fine，有木有很too simple？既然这样，我们需要知道它是如何实现的。so...
 
 ## 核心代码讲解
+#Class: rsync
+#软件包管理
+```puppet
+class rsync(
+  $package_ensure    = 'installed',
+  $manage_package    = true,
+  $puts              = {},
+  $gets              = {},
+) {
 
+  if $manage_package {
+    package { 'rsync':
+      ensure => $package_ensure,
+    } -> Rsync::Get<| |>
+  }
+
+  create_resources(rsync::put, $puts)
+  create_resources(rsync::get, $gets)
+}
+```
 
 ## 小结
 
