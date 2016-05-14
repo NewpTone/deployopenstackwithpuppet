@@ -27,4 +27,5 @@
    * [Hiera](bestpractice/hiera.md)
    * [Environment](bestpractice/environment.md)
    * [转发层模块](bestpractice/Composition.md)
+   * 版本控制
 
