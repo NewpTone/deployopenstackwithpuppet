@@ -118,8 +118,8 @@ rsync::server::module { 'repo':
   require => File[$path],
   }
 ```
-很简答,path这里设置成一个变量,即可搭建成一个rsync的服务
-### Class: rsync::repo
+path这里设置成一个变量,即可搭建成一个rsync的服务
+### Class rsync::repo
 ####创建一个存放数据的rsync仓库
 ```puppet
 class rsync::repo {
@@ -134,7 +134,7 @@ class rsync::repo {
     require => File[$base],
   }
 ```
-类主的作用是创建一个rsync的仓库，仓库位置默认设置在/data/rsync的目录下。
+rsync::repo类主的作用是创建一个rsync的仓库，仓库位置默认设置在/data/rsync的目录下。
 
 ### define rsync::put
 #### 从本地服务器传输文件拷贝到远端
@@ -145,10 +145,18 @@ rsync::put { '${rsyncDestHost}:/repo/foo':
   source  => "/repo/foo/",
 } 
 ```
-本实例中只需要设置一个远程服务器的地址即可。
+本实例中只需要设置一个远程服务器的地址，即可轻松同步本地目录到远程服务器的目录
 
 ### define rsync::get
 #### 从远端服务器获取文件
+```puppet
+$rsyncServer  = 192.168.1.223
+rsync::get { '/foo':
+  source  => "rsync://${rsyncServer}/repo/foo/",
+  require => File['/foo'],
+}
+```
+本实例中只需要设置一个rsync服务器的地址，即可从远端服务器的目录同步到指定的本地目录。
 
 
 ## 小结
