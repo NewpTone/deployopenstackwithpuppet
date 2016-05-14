@@ -2,7 +2,7 @@
   "output": null,
   "generator": "site",
   "title": "Openstack自动化部署",
-  "plugins": ["autocover","add-header","anchor-navigation",“exercises”],
+  "plugins": ["autocover","add-header","anchor-navigation"],
   "pluginsConfig": {
       "autocover": {
           "title": "Openstack自动化部署",
