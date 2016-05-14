@@ -7,7 +7,7 @@
 
 **建议阅读时间 30分钟**
 ## 先睹为快
-puppet-rsync由puppetlabs开发，此模块可管理rsync的客户端、服务器，并且通过provider自定义define轻松获取远程服务器的数据。学习本模块前咱们先快刀斩乱马（rsync），在命令行执行如下命令:
+puppet-rsync 由puppetlabs开发，此模块可管理rsync的客户端、服务器，并且通过provider自定义define轻松获取远程服务器的数据。学习本模块前咱们先快刀斩乱马（rsync），在命令行执行如下命令:
 
 ```puppet
   puppet apply -e "class { 'rsync': }"
@@ -158,6 +158,11 @@ rsync::get { '/foo':
 ```
 本实例中只需要设置一个rsync服务器的地址，即可从远端服务器的目录同步到指定的本地目录。
 ## 小结
-
+rsync模块分为几个部分，
+1、安装rsync服务 
+2、配置rsync服务 
+3、启动rsync服务 
+4、定义rsync服务的数据库存放端
+5、定义rsync如何同步远程和本地的数据
 
 ## 动手练习
