@@ -14,8 +14,9 @@ Directory environments 将会在未来取代config file environment，因此，�
 
 在Puppet Master 上启用Directory Environment，需要在配置文件中定义：
 
-| environmentpath = /etc/puppet/environments |
-| --- |
+> environmentpath = /etc/puppet/environments
+
+
 
 此参数定义了一个目录，此目录下的每一个子目录都是一个environment，例如有如下结构
 
@@ -33,8 +34,6 @@ Directory environments 将会在未来取代config file environment，因此，�
 - .包含一个modules 的子目录，此目录为所属环境的默认模块查询路径
 - .包含一个manifests 的子目录，作为此环境的节点定义路径
 - .可以包含一个conf 的配置文件，用于自定义当前环境的modulepath 和manifeset 参数
-
- ![](https://confluence.ustack.com/download/attachments/16092176/image2016-4-6%2014%3A9%3A0.png?version=1&modificationDate=1459923030804&api=v2)
 
 在environment.conf 中，可以自己定义modulepath 和manifest 参数来指定此环境的模块查找路径和节点定义路径。
 
