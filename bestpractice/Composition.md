@@ -25,3 +25,25 @@ class sunfire::api(){
 }
 ```
 ## 数据和逻辑分离
+
+我们在早期使用Puppet时并没有使用到Hiera，因此转发层承载了大量参数的默认值设置。这样做的好处是，我们需要使用到的参数都赋有一个合理默认值，但是坏处是数据和逻辑没有完全分离开。
+比如说，我想查询一下目前线上集群$keystone_user_password的值，可能是在转发层的代码中，也可能是记录在hieradata中。另外一个不好的地方就是代码会变得非常冗余。
+
+打个比方:
+
+```puppet
+  class sunfire::api(
+    $nova_db_password = 'nova',     #先定义一个参数
+  ){
+   class {'nova::db::mysql':
+     db_password => $nova_db_password, #把该参数值传给真正需要赋值的参数
+   }
+  }
+```
+
+完全分离的写法:
+```puppet
+  class sunfire::api(){
+   include ::nova::db::mysql
+  }
+```
