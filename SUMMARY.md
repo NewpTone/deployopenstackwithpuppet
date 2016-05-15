@@ -17,6 +17,7 @@
    * [puppet-xinetd](基础模块/puppet-xinetd.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
+   * [puppet-nova](Openstack_modules/puppet-nova.md)
    * puppet-glance
    * [puppet-horizon](Openstack_modules/puppet-horizon.md)
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
