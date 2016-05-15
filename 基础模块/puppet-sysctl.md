@@ -17,5 +17,50 @@ puppet apply -e 'sysctl::value { "net.ipv4.tcp_syncookies": value => "1"}'
 这将打开tcp_syscookieds功能来防止syn flood攻击。结下来我们看看是如何实现的吧
 
 ## 核心代码讲解
-这个模块真的非常easy，复杂的地方是
+
+### Class sysctl::base
+easy吧
+```puppet
+class sysctl::base {
+  file { '/etc/sysctl.conf':
+    ensure => 'present',
+    owner  => 'root',
+    group  => '0',
+    mode   => '0644',
+  }
+}
+```
+### define sysctl::value
+通过sysctl和sysctl_runtime两个type来管理参数,后面我们会讲到这两个type
+```puppet
+define sysctl::value (
+  $value,
+  $key    = $name,
+  $target = undef,
+) {
+  require sysctl::base
+  $val1 = inline_template("<%= String(@value).split(/[\s\t]/).reject(&:empty?).flatten.join(\"\t\") %>")
+
+  sysctl { $key :
+    val    => $val1,
+    target => $target,
+    before => Sysctl_runtime[$key],
+  }
+  sysctl_runtime { $key:
+    val => $val1,
+  }
+}
+```
+### Class sysctl::values
+```puppet
+class sysctl::values($args, $defaults = {}) {
+  create_resources(sysctl::value, $args, $defaults)
+}
+```
+
+### type sysctl
+### type sysctl_runtime
+
+
+
 
