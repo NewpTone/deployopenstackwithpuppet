@@ -6,7 +6,7 @@
 
 那么关于它的最佳实践是什么？
 
-2016年1月份，我们刚完成了对转发层sunfire的重构，甩掉了许多的历史包袱。关于转发层，我们有以下几点特别需要指出:
+2016年1月份，我们刚完成了对转发层sunfire的重构，甩掉了许多的历史包袱。关于转发层，我们有以下几点原则需要严格遵守:
 
 
 ## 逻辑清晰
@@ -46,4 +46,32 @@ class sunfire::api(){
   class sunfire::api(){
    include ::nova::db::mysql
   }
+```
+## 角色松耦合
+
+我们习惯把转发层中的每个class称之为角色，这样比较形象，例如:
+
+ - sunfire::api 表示API节点
+ - sunfire::mq  表示MQ节点
+ - sunfire::loadbalancer::l7 表示7层负载均衡
+
+那么API角色中，又包含了nova/cinder/neutron/glance/... api,keystone等大量的服务。同时我们又要满足某些情况下，某些服务不启用的需求。例如，某用户表示，他们不需要使用neutron server而启用nova-network。
+有两种方式来满足这种要求：
+
+- 在sunfire::api添加开关:
+```puppet
+  class sunfire::api(
+    $enable_neutron = true,
+  ){
+    if $enable_neutron {
+      include ::neutron::server
+    }
+  }
+```
+
+- 在main manifests文件中声明：
+```puppet
+'xxx api node' {
+  include ::neutron::server
+}
 ```
