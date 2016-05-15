@@ -1,9 +1,9 @@
 # puppet-sysctl
 
-1. 先睹为快－一言不和，立马动手？
-2. 核心代码讲解
-3. 小结
-4. 动手练习－光看不练假把式
+1. [先睹为快－一言不和，立马动手？](#先睹为快)
+2. [核心代码讲解](＃核心代码讲解)
+3. [小结](＃小结)
+4. [动手练习－光看不练假把式](#动手练习)
 
 建议阅读时间： 0.5小时
 
@@ -31,7 +31,7 @@ class sysctl::base {
 }
 ```
 ### define sysctl::value
-通过sysctl和sysctl_runtime两个type来管理参数,后面我们会讲到这两个type
+通过sysctl和sysctl_runtime两个type来管理参数
 ```puppet
 define sysctl::value (
   $value,
@@ -58,8 +58,11 @@ class sysctl::values($args, $defaults = {}) {
 }
 ```
 
-### type sysctl
-### type sysctl_runtime
+## 小结
+## 动手练习
+1. 设置net.ipv4.tcp_timestamps参数为0
+2. 设置net.ipv4.icmp_echo_ignore_broadcasts参数为1
+
 
 
 
