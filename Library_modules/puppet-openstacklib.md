@@ -118,7 +118,7 @@ nova_config { 'DEFAULT/memcached_servers':
 }
 ```
 
-可以看到两种代码传递的参数不同，因此我们在模块中往往看到这种风格的代码：
+可以看到两种代码传递的参数不同，因此我们在 openstack 模块中往往看到这种风格的代码：
 
 ```puppet
 if $memcached_servers {
