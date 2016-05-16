@@ -12,7 +12,7 @@
 * puppet-mongodb  @liangliang low 
 * puppet-mysql  @penghui
 * puppet-rabbitmq  @luyuan
-* puppet-rsync   @luyuan  low
+* puppet-rsync   @luyuan       已完成
 * puppet-sysctl  @weiyu  
 * puppet-vswitch @liangliang   已完成
 * puppet-xinetd @luyuan  low
