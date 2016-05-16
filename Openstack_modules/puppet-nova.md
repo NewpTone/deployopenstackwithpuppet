@@ -48,5 +48,43 @@ Nova 是一个有多个内部组件的 OpenStack 服务，这些服务可以分�
 ### class nova::keystone::auth
 这个类的主要功能是添加 keystone 用户，以及用户和角色的关联，它通过调用 keystone 模块的 `keystone::resource::service_identity` 这个 define 资源来完成所有 keystone 中资源的创建。
 
+```puppet
+  keystone::resource::service_identity { "nova service, user ${auth_name}":
+    configure_user      => $configure_user,
+    configure_user_role => $configure_user_role,
+    configure_endpoint  => $configure_endpoint,
+    service_type        => 'compute',
+    service_description => $service_description,
+    service_name        => $real_service_name,
+    region              => $region,
+    auth_name           => $auth_name,
+    password            => $password,
+    email               => $email,
+    tenant              => $tenant,
+    public_url          => $public_url_real,
+    admin_url           => $admin_url_real,
+    internal_url        => $internal_url_real,
+  }
+```
+
+### class nova::api
+nova::api 这个类用来配置和管理 nova-api 服务以及相应的配置，其中比较重要的是用于 keystone 认证的相关配置。
+
+首先，代码中会使用 `nova::generic_service` 来完成 nova-api 这个软件包的安装和服务的管理，`nova::generic_service` 这个资源主要的作用是管理 nova 中各个组件的软件包安装和服务的启动： `  
+
+```puppet
+nova::generic_service { 'api':
+    enabled        => $service_enabled,
+    manage_service => $manage_service,
+    ensure_package => $ensure_package,
+    package_name   => $::nova::params::api_package_name,
+    service_name   => $::nova::params::api_service_name,
+    subscribe      => Class['cinder::client'],
+}
+```
+
+然后通过 `nova_config` 和 `nova_paste_api_ini` 这个两个自定义资源来对 `/etc/nova/nova.conf` 和 `/etc/nova/api-paste.ini` 进行一系列的配置，并通过 `nova::db` 来进行数据库相关的配置。
 
 
+### class nova::conductor
+nova::conductor 这个类比较简单，主要使用 `nova::generic_service` 来完成
