@@ -8,6 +8,7 @@
 **建议阅读时间 1小时**
 ## 先睹为快
 学习本章前，先“触（kai）摸(you)”一下神秘模块glance软件部署资源环节，这只是冰山的一角，更多的冰山请继续阅读核心代码章节。撸起你的袖子，开始吧。
+
 > 本示例依赖面部署的 keystone/myql/ceph/rabbitmq 4个服务
 
 
@@ -62,8 +63,11 @@ class { 'glance::notify::rabbitmq':
   rabbit_use_ssl                => false,
 }
 ```
-
-
+在终端执行以下命令:
+```puppet
+puppet apply -v puppet_glance.pp
+```
+> 如果想让
 
 ## 核心代码讲解
 
