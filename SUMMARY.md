@@ -25,6 +25,7 @@
 * [公共库和工具类模块](Library_modules/readme.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
+   * puppet-openstack-integration
 * [最佳实践](bestpractice/README.md)
    * [代码规范](bestpractice/version_control.md)
    * [代码管理](bestpractice/code_management.md)
