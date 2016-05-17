@@ -23,7 +23,7 @@
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
    * [puppet-cinder](Openstack_modules/puppet-cinder.md)
-* [公共库模块](Library_modules/README.md)
+* [公共库模块](Library_modules/readme.md)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
 * [最佳实践](bestpractice/README.md)
    * [代码规范](bestpractice/version_control.md)
