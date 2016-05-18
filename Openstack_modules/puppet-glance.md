@@ -14,7 +14,7 @@
 
 编写puppet_glance.pp
 
-**1.Define a glance node**
+**1.定义一个Glance节点**
 ```puppet
 class { 'glance::api':
   verbose             => true,
@@ -33,14 +33,14 @@ class { 'glance::registry':
 }
 class { 'glance::backend::file': }
 ```
-**2.Setup mysql node for glance**
+**2.设置一个Glance的数据库**
 ```puppet
 class { 'glance::db::mysql':
   password      => '12345',
   allowed_hosts => '%',
 }
 ```
-**3.Setup up keystone endpoints for glance on keystone node**
+**3.添加glance的认证服务**
 ```puppet
 class { 'glance::keystone::auth':
   password         => '12345'
@@ -51,7 +51,7 @@ class { 'glance::keystone::auth':
   region           => 'example-west-1',
 }
 ```
-**4.Setup up notifications for multiple RabbitMQ nodes**
+**4.配置Glance使用多节点的rabbitMQ**
 
 ```puppet
 class { 'glance::notify::rabbitmq':
