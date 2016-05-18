@@ -67,7 +67,6 @@ class { 'glance::notify::rabbitmq':
 ```puppet
 puppet apply -v puppet_glance.pp
 ```
-> 如果想让
 
 ## 核心代码讲解
 
