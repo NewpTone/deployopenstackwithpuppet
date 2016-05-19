@@ -3,7 +3,7 @@
 2. [核心代码讲解 - 如何做到管理 Nova 服务？](##核心代码讲解)
     - [class nova](###class nova)
     - [class nova::keystone::auth](###class nova::keystone::auth)
-    - [class nova::api](###class keystone::endpoint)
+    - [class nova::api](###class nova::api)
     - [class nova::conductor](###class nova::conductor)
     - [class nova::compute](###class nova::compute)
     - [class nova::network::neutron](###class nova::network::neutron)
