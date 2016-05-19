@@ -2,7 +2,7 @@
 1. [先睹为快 - 一言不合，立马动手?](##先睹为快)
 2. [核心代码讲解 - 如何做到管理 Nova 服务？](##核心代码讲解)
     - [class nova](###class nova)
-    - [class nova::keystone::auth](###class keystone::service)
+    - [class nova::keystone::auth](###class nova::keystone::auth)
     - [class nova::api](###class keystone::endpoint)
     - [class nova::conductor](###class nova::conductor)
     - [class nova::compute](###class nova::compute)
