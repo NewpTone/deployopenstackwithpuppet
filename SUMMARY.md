@@ -18,6 +18,7 @@
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
+   * [puppet-neutron](Openstack_modules/puppet-neutron.md)
    * [puppet-glance](puppet-glancemd.md)
    * [puppet-horizon](Openstack_modules/puppet-horizon.md)
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
