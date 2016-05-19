@@ -4,8 +4,9 @@
     - [class nova](###class nova)
     - [class nova::keystone::auth](###class keystone::service)
     - [class nova::api](###class keystone::endpoint)
-    - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
-    - [class keystone::config](###class keystone::config) 
+    - [class nova::conductor](###class nova::conductor)
+    - [class nova::compute](###class nova::compute)
+    - [class nova::network::neutron](###class nova::network::neutron)
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
@@ -87,4 +88,54 @@ nova::generic_service { 'api':
 
 
 ### class nova::conductor
-nova::conductor 这个类比较简单，主要使用 `nova::generic_service` 来完成
+nova::conductor 这个类比较简单，主要使用 `nova::generic_service` 来完成 conductor 服务和软件包的管理，并配置了 workers 参数。
+
+### class nova::compute
+nova::compute 这个类用来配置 nova-compute 服务，nova-compute 服务一般部署在计算节点，用于完成虚拟机的创建。
+
+nova::compute 中主要完成了：
+
+* nova-compute 相关配置的管理，如 VNC，网络相关的配置
+* 管理 nova-compute 的软件包和服务
+
+这些服务和配置的管理都是通过 `nova_config` 和 `nova::generic_service` 两个资源来完成的。
+
+### class nova::migration::libvirt
+nova 可以控制 Libvirt 来完成虚拟机的迁移，配置虚拟机迁移除了需要配置 nova 的配置之外，还需要配置 Libvirt 相关的配置，因此在 nova 模块中专门有一个 `nova::migration::libvirt` 的类来进行 libvirt 相关的配置，这个类中，使用了 `augeas` 和 `file_line` 资源来配置 `/etc/libvirt/libvirtd.conf`：
+
+```puppet
+    augeas { 'libvirt-conf-uuid':
+      context => '/files/etc/libvirt/libvirtd.conf',
+      changes => [
+        "set host_uuid ${host_uuid}",
+      ],
+      notify  => Service['libvirt'],
+      require => Package['libvirt'],
+    }
+  }
+```
+
+`augeas` 能够将配置文件当做树形的结构来进行处理，详细的使用说明可以参考[这里](https://projects.puppetlabs.com/projects/1/wiki/puppet_augeas)。同时，也使用了 `file_line` 来进行 libvirtd.conf 的配置：
+
+```puppet
+      file_line { '/etc/libvirt/libvirtd.conf listen_tls':
+        path  => '/etc/libvirt/libvirtd.conf',
+        line  => "listen_tls = ${listen_tls}",
+        match => 'listen_tls =',
+        tag   => 'libvirt-file_line',
+      }
+  ```
+  
+ ## 小结
+ puppet-nova 模块中的内容众多，按照 nova 中的各个服务和功能进行了拆分，每个服务都有对应的 puppet 类进行管理，模块中还包含了 neutron, nova cell 等资源的管理，感兴趣的读者可以自行研究其余的代码。
+
+
+
+
+
+
+
+
+
+
+
