@@ -1,8 +1,8 @@
 # puppet-neutron 模块介绍
 1. [先睹为快 - 一言不合，立马动手?](##先睹为快)
 2. [核心代码讲解 - 如何做到管理各 Neutron 服务？](##核心代码讲解)
-    - [class nova](###class nova)
-    - [class nova::keystone::auth](###class keystone::service)
+    - [class neutron](###class neutron)
+    - [class neutron::keystone::auth](###class neutron::keystone::auth)
     - [class nova::api](###class keystone::endpoint)
     - [class nova::conductor](###class nova::conductor)
     - [class nova::compute](###class nova::compute)
@@ -42,60 +42,58 @@ Neutron 是一个分布式的服务，它由 neutron-server 和不同功能的 a
 
 这里使用了 `neutron`，`neutron::client`，`neutron::server`，`neutron::keystone::auth` 四个类，分别用于完成服务的基础配置，客户端的安装，neutron-server 服务的配置和管理，以及 keystone 的认证。
 
+## 核心代码讲解
+### class neutron
+这个类主要完成一些通用的 neutron 配置，主要包括有：
 
-### class nova
-Nova 是一个有多个内部组件的 OpenStack 服务，这些服务可以分开部署在不同的节点中，服务之间使用消息队列进行通信，有些组件会使用到数据库，还可能和 keystone 服务进行交互。nova 虽然服务众多，但是配置文件只有一份，这个配置文件中所有服务通用的配置项，也有某个服务特有的配置项，对于通用的这些配置项，主要使用 `nova` 这类来进行管理，这个类主要管理了这些选项：
-
-* 数据库相关的配置
 * 消息队列相关的配置
 * 日志相关的配置
 * SSL 相关的配置
 
-这个类主要使用 `nova_config` 来对这些配置进行管理，它的使用也非常简单，只用传递相关的参数就可以了。
+这个类主要使用 `neutron_config` 来对这些配置进行管理，同时还使用了 `oslo` 模块来完成消息队列相关的配置管理。
 
-### class nova::keystone::auth
+### class neutron::keystone::auth
 这个类的主要功能是添加 keystone 用户，以及用户和角色的关联，它通过调用 keystone 模块的 `keystone::resource::service_identity` 这个 define 资源来完成所有 keystone 中资源的创建。
 
 ```puppet
-  keystone::resource::service_identity { "nova service, user ${auth_name}":
+  keystone::resource::service_identity { $auth_name:
     configure_user      => $configure_user,
     configure_user_role => $configure_user_role,
     configure_endpoint  => $configure_endpoint,
-    service_type        => 'compute',
+    service_type        => $service_type,
     service_description => $service_description,
     service_name        => $real_service_name,
     region              => $region,
-    auth_name           => $auth_name,
     password            => $password,
     email               => $email,
     tenant              => $tenant,
-    public_url          => $public_url_real,
-    admin_url           => $admin_url_real,
-    internal_url        => $internal_url_real,
+    public_url          => $public_url,
+    admin_url           => $admin_url,
+    internal_url        => $internal_url,
+  }
+
+```
+
+### class neutron::server
+nova::server 用来管理 neutron-server 服务，这个服务是 neutron 的核心服务，用于处理 API 请求。代码中主要使用 `neutron_config` 来完成 keystone 用户认证相关的配置，数据库连接相关的配置，以及一些 agent 的基础配置。
+
+这个类的代码中多次了 `ensure_resource` 函数来创建资源，这样做的好处是 `ensure_resource` 在创建资源前会检查是否有重复的资源定义，如果有重复的资源定义那么就不再重复创建资源，可以避免资源的重复定义，我们来看一些这个函数是如何被使用的：
+
+```puppet
+  if $ensure_vpnaas_package {
+    ensure_resource( 'package', 'neutron-vpnaas-agent', {
+      'ensure' => $package_ensure,
+      'name'   => $::neutron::params::vpnaas_agent_package,
+      'tag'    => ['openstack', 'neutron-package'],
+    })
   }
 ```
 
-### class nova::api
-nova::api 这个类用来配置和管理 nova-api 服务以及相应的配置，其中比较重要的是用于 keystone 认证的相关配置。
-
-首先，代码中会使用 `nova::generic_service` 来完成 nova-api 这个软件包的安装和服务的管理，`nova::generic_service` 这个资源主要的作用是管理 nova 中各个组件的软件包安装和服务的启动： `  
-
-```puppet
-nova::generic_service { 'api':
-    enabled        => $service_enabled,
-    manage_service => $manage_service,
-    ensure_package => $ensure_package,
-    package_name   => $::nova::params::api_package_name,
-    service_name   => $::nova::params::api_service_name,
-    subscribe      => Class['cinder::client'],
-}
-```
-
-然后通过 `nova_config` 和 `nova_paste_api_ini` 这个两个自定义资源来对 `/etc/nova/nova.conf` 和 `/etc/nova/api-paste.ini` 进行一系列的配置，并通过 `nova::db` 来进行数据库相关的配置。
+这里使用了 package 资源来进行软件包的管理，如果相同的资源已经定义过了，那么 `ensure_resource` 函数将不再重复创建此资源。
 
 
-### class nova::conductor
-nova::conductor 这个类比较简单，主要使用 `nova::generic_service` 来完成 conductor 服务和软件包的管理，并配置了 workers 参数。
+### class neutron::plugins::ml2
+neutron::plugins::ml2 用于配置 ml2 plugin 相关的配置，包括 `/etc/neutron/plugin.ini` 软链接的创建，服务配置项的管理等等。
 
 ### class nova::compute
 nova::compute 这个类用来配置 nova-compute 服务，nova-compute 服务一般部署在计算节点，用于完成虚拟机的创建。
