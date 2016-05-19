@@ -1,6 +1,6 @@
 # puppet-neutron 模块介绍
-1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理各 Neutron 服务？](#核心代码讲解)
+1. [先睹为快 - 一言不合，立马动手?](##先睹为快)
+2. [核心代码讲解 - 如何做到管理各 Neutron 服务？](##核心代码讲解)
     - [class nova](###class nova)
     - [class nova::keystone::auth](###class keystone::service)
     - [class nova::api](###class keystone::endpoint)
@@ -17,24 +17,31 @@ neutron 组件是 OpenStack 各组件中最为复杂的组件，puppet-neutron �
 ## 先睹为快
 Neutron 是一个分布式的服务，它由 neutron-server 和不同功能的 agent 组成。neutron-server 用于处理 API 请求，agent 用来完成各种网络功能。
 
-以部署 neutron 为例：
+以部署 neutron-server 为例：
 
 ```puppet
-class { 'nova':
-  rabbit_host         => 'localhost',
-  rabbit_password     => 'password',
-  rabbit_userid       => 'user',
-  database_connection => 'mysql://nova:nova_pass@localhost/nova?charset=utf8',
-}
-class nova::keystone::auth {
-  password => 'password',
-}
-class nova::api {
-  admin_password => 'password',
-}
+  class { '::neutron::keystone::auth':
+    public_url   => "http:/localhost:9696",
+    internal_url => "http://localhost:9696",
+    admin_url    => "http://localhost:9696",
+    password     => 'a_big_secret',
+  }
+  class { '::neutron':
+    rabbit_user           => 'neutron',
+    rabbit_password       => 'an_even_bigger_secret',
+    rabbit_host           => localhost,
+    rabbit_port           => 5672,
+    core_plugin           => 'ml2',
+  }
+  class { '::neutron::client': }
+  class { '::neutron::server':
+    database_connection => 'mysql+pymysql://neutron:neutron@127.0.0.1/neutron?charset=utf8',
+    password            => 'a_big_secret',
+  }
 ```
 
-即可完成 nova-api 的基本部署。其中 `nova` 这个类主要负责所有 nova 服务通用配置项的配置，`nova::keystone::auth` 用于创建 keystone 用户，服务，endpoint，以及角色和用户的关联，`nova::api` 用于部署 nova-api 服务，管理相关的配置文件，并管理 nova-api 服务。
+这里使用了 `neutron`，`neutron::client`，`neutron::server`，`neutron::keystone::auth` 四个类，分别用于完成服务的基础配置，客户端的安装，neutron-server 服务的配置和管理，以及 keystone 的认证。
+
 
 ### class nova
 Nova 是一个有多个内部组件的 OpenStack 服务，这些服务可以分开部署在不同的节点中，服务之间使用消息队列进行通信，有些组件会使用到数据库，还可能和 keystone 服务进行交互。nova 虽然服务众多，但是配置文件只有一份，这个配置文件中所有服务通用的配置项，也有某个服务特有的配置项，对于通用的这些配置项，主要使用 `nova` 这类来进行管理，这个类主要管理了这些选项：
