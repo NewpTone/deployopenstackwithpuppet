@@ -113,6 +113,7 @@ class glance的逻辑非常简单，简单到没有逻辑
   }
 ```
 **管理/etc/glance/glance-cache.conf**
+在glance api中我们可以打开glance的缓存功能来加速镜像的下载速度(在我们使用ceph作为glance,cinder,nova的后端时，这个功能没有必要)
 ```puppet
   glance_cache_config {
     'DEFAULT/image_cache_stall_time': value => $image_cache_stall_time;
