@@ -9,6 +9,11 @@
 4. [动手练习 - 光看不练假把式](##动手练习)
 
 ## 先睹为快
+ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生的大部分事件，为计费和监控以及其它服务提供数据支撑。由于ceilometer依赖很多服务，所以最好先部署一个
+
+```bash
+# puppet apply examples/site.pp
+```
 
 ## 核心代码讲解
 
