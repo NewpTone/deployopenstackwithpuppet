@@ -133,3 +133,4 @@ nova 可以控制 Libvirt 来完成虚拟机的迁移，配置虚拟机迁移除
 1. nova 中的各个服务是通过哪个统一的自定义资源进行管理的？阅读这个 define 资源的代码，查看它的实现方式。
 2. 部署 nova-api, nova-scheduler, nova-conductor 服务
 3. 如何设置 nova-compute 服务的宿主机内存分配比，这些资源分配比例的设定是在哪个类中进行管理的？
+4. 如何将 nova-compute
