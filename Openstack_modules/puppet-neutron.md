@@ -142,7 +142,7 @@ l3-agent 通常部署在网络节点，提供网络间转发与路由的功能�
   }
 ```
 
-这个函数是在 [puppet-openstacklib](Library_modules/puppet-openstacklib.md) 中，定义的，它的作用是判断一个变量的值是否等于 $::os_service_default 这个 facter 的值，即这个变量是否为默认值。这里对一些废弃参数的值进行了判断，如果用户修改了这些废弃参数的值，那么将会收到 warning 警告信息，告诉用户这个参数已经被废弃了。我们可以看到 `is_service_default` 这个函数的定义如下：
+这个函数是在 [puppet-openstacklib](../Library_modules/puppet-openstacklib.md) 中，定义的，它的作用是判断一个变量的值是否等于 $::os_service_default 这个 facter 的值，即这个变量是否为默认值。这里对一些废弃参数的值进行了判断，如果用户修改了这些废弃参数的值，那么将会收到 warning 警告信息，告诉用户这个参数已经被废弃了。我们可以看到 `is_service_default` 这个函数的定义如下：
 
 ```puppet
 module Puppet::Parser::Functions
