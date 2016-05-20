@@ -1,9 +1,9 @@
 # puppet-nova 模块介绍
-1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理 Nova 服务？](#核心代码讲解)
+1. [先睹为快 - 一言不合，立马动手?](##先睹为快)
+2. [核心代码讲解 - 如何做到管理 Nova 服务？](##核心代码讲解)
     - [class nova](###class nova)
-    - [class nova::keystone::auth](###class keystone::service)
-    - [class nova::api](###class keystone::endpoint)
+    - [class nova::keystone::auth](###class nova::keystone::auth)
+    - [class nova::api](###class nova::api)
     - [class nova::conductor](###class nova::conductor)
     - [class nova::compute](###class nova::compute)
     - [class nova::network::neutron](###class nova::network::neutron)
@@ -15,7 +15,7 @@
 puppet-nova 是用来配置和管理 nova 服务，包括服务，软件包，配置文件，flavor，nova cells 等等。其中 nova flavor, cell 等资源的管理是使用自定义的resource type来实现的。
 
 ## 先睹为快
-Nova 服务内部有很多组件，其中最重要的组件是 nova-api 和 nova-compute，这两个服务的部署可以使用 nova 模块中的类来完成，当然在部署之前环境中需要有 keystone 来为 nova 提供认证服务。
+Nova 服务内部有很多组件，其中最重要的组件是 nova-api 和 nova-compute，这两个服务的部署在 nova 模块中都有专门的类来完成，当然在部署之前环境中需要有 keystone 来为 nova 提供认证服务。
 
 以部署 nova-api 为例：
 
@@ -36,6 +36,7 @@ class nova::api {
 
 即可完成 nova-api 的基本部署。其中 `nova` 这个类主要负责所有 nova 服务通用配置项的配置，`nova::keystone::auth` 用于创建 keystone 用户，服务，endpoint，以及角色和用户的关联，`nova::api` 用于部署 nova-api 服务，管理相关的配置文件，并管理 nova-api 服务。
 
+## 核心代码讲解
 ### class nova
 Nova 是一个有多个内部组件的 OpenStack 服务，这些服务可以分开部署在不同的节点中，服务之间使用消息队列进行通信，有些组件会使用到数据库，还可能和 keystone 服务进行交互。nova 虽然服务众多，但是配置文件只有一份，这个配置文件中所有服务通用的配置项，也有某个服务特有的配置项，对于通用的这些配置项，主要使用 `nova` 这类来进行管理，这个类主要管理了这些选项：
 
