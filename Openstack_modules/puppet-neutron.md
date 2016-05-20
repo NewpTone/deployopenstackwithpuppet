@@ -142,15 +142,36 @@ l3-agent 通常部署在网络节点，提供网络间转发与路由的功能�
   }
 ```
 
-这个函数是在 [puppet-openstacklib]()
-  
- ## 小结
- puppet-nova 模块中的内容众多，按照 nova 中的各个服务和功能进行了拆分，每个服务都有对应的 puppet 类进行管理，模块中还包含了 neutron, nova cell 等资源的管理，感兴趣的读者可以研究模块中其余的代码。
+这个函数是在 [puppet-openstacklib](Library_modules/puppet-openstacklib.md) 中，定义的，它的作用是判断一个变量的值是否等于 $::os_service_default 这个 facter 的值，即这个变量是否为默认值。这里对一些废弃参数的值进行了判断，如果用户修改了这些废弃参数的值，那么将会收到 warning 警告信息，告诉用户这个参数已经被废弃了。我们可以看到 `is_service_default` 这个函数的定义如下：
+
+```puppet
+module Puppet::Parser::Functions
+  newfunction(:is_service_default, :type => :rvalue, :doc => <<-EOS
+Returns true if the variable passed to this function is '<SERVICE DEFAULT>'
+  EOS
+  ) do |arguments|
+    raise(Puppet::ParseError, "is_service_default(): Wrong number of arguments" +
+          "given (#{arguments.size} for 1)") if arguments.size != 1
+
+    value = arguments[0]
+
+    unless value.is_a?(String)
+      return false
+    end
+
+    return (value == '<SERVICE DEFAULT>')
+  end
+end
+```
+
+这个函数首先对传递的参数个数进行了检查，然后比较了参数类型是否为字符串，最后将参数与 `'<SERVICE DEFAULT>'` 进行比较，并返回布尔值。
+
+
+## 小结
+puppet-neutron 模块管理了 neutron 的 neutron-server 服务，各种 plugin以及不同的 agent 服务，同时模块总还有管理其他服务如 lbaas, vpnaas 等服务的专用类，读者可以自行去探究其代码。 
  
  ## 动手练习
-1. nova 中的各个服务是通过哪个统一的自定义资源进行管理的？阅读这个 define 资源的代码，查看它的实现方式。
-2. 部署 nova-api, nova-scheduler, nova-conductor 服务
-3. 如何设置 nova-compute 服务的宿主机内存分配比，这些资源分配比例的设定是在哪个类中进行管理的？
-4. 如何将 nova-compute
+1. 部署 neutron lbaas 服务，查看 neutron 模块中有哪些类是用来管理这个服务相关组件的
+2. 使用 `neutron_port` 和 `neutron_router` 自定义资源来创建 neutron port 和 router 
 
 
