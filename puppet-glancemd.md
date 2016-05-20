@@ -133,6 +133,7 @@ class glance的逻辑非常简单，简单到没有逻辑
   }
 ```
 **验证服务部署是否成功**
+调用glance image-list命令来验证glance是否work
 ```puppet
   if $validate {
     $defaults = {
@@ -145,12 +146,75 @@ class glance的逻辑非常简单，简单到没有逻辑
   }
 ```
 ### Class glance::registry
+Class glance::registry主要结构和Class glance::api结构类似，我们不在进行详细讲解（???如果不打开glance api v1的话，是不需要部署该服务的???）
 ### Class glance::client
+只做了一件事，安装python-glanceclient软件包,这个资源用到的不多，如果程序需要使用glanceclient的话，会在软件包的依赖关系中声明,在使用yum\apt等软件包管理工具安装包时会自动安装glanceclient
+
+```puppet
+  package { 'python-glanceclient':
+    ensure => $ensure,
+    name   => $::glance::params::client_package_name,
+    tag    => ['openstack'],
+  }
+```
 ### Class glance::notify::rabbitmq
+通过在glance－api glance-registry中打开notifications功能，可以在创建镜像，更新镜像源数据等事件发生时发送通知到rabbitmq给其他服务使用
+**调用puppet-oslo来配置glance-api.conf和glance-registry**
+```puppet
+  oslo::messaging::rabbit { ['glance_api_config', 'glance_registry_config']:
+    rabbit_password             => $rabbit_password,
+    rabbit_userid               => $rabbit_userid,
+    rabbit_host                 => $rabbit_host,
+    rabbit_port                 => $rabbit_port,
+    rabbit_hosts                => $rabbit_hosts,
+    rabbit_virtual_host         => $rabbit_virtual_host,
+    rabbit_ha_queues            => $rabbit_ha_queues,
+    heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
+    heartbeat_rate              => $rabbit_heartbeat_rate,
+    rabbit_use_ssl              => $rabbit_use_ssl,
+    kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
+    kombu_ssl_certfile          => $kombu_ssl_certfile,
+    kombu_ssl_keyfile           => $kombu_ssl_keyfile,
+    kombu_ssl_version           => $kombu_ssl_version,
+    kombu_reconnect_delay       => $kombu_reconnect_delay,
+    amqp_durable_queues         => $amqp_durable_queues,
+    kombu_compression           => $kombu_compression,
+  }
+
+
+  oslo::messaging::notifications { ['glance_api_config', 'glance_registry_config']:
+    driver => $notification_driver,
+    topics => $rabbit_notification_topic,
+  }
+
+```
 ### Class glance::backend::rbd
+glance可以支持多种存储后端，比如cinder,swift,file,ceph,s3，接下来我们聊聊如何配置ceph作为glance后端存储主要是改下glance-api的配置并且安装python-ceph软件包
+```puppet
+  glance_api_config {
+    'glance_store/rbd_store_ceph_conf':    value => $rbd_store_ceph_conf;
+    'glance_store/rbd_store_user':         value => $rbd_store_user;
+    'glance_store/rbd_store_pool':         value => $rbd_store_pool;
+    'glance_store/rbd_store_chunk_size':   value => $rbd_store_chunk_size;
+    'glance_store/rados_connect_timeout':  value => $rados_connect_timeout;
+  }
 
+  if !$multi_store {
+    glance_api_config { 'glance_store/default_store': value => 'rbd'; }
+    if $glare_enabled {
+      glance_glare_config { 'glance_store/default_store': value => 'rbd'; }
+    }
+  }
+
+  package { 'python-ceph':
+    ensure => $package_ensure,
+    name   => $::glance::params::pyceph_package_name,
+  }
+
+```
+##TODO 介绍glare模块
 ## 小结
-
+本章我们主要介绍的如何使用puppet-glance模块，并就几个主要的class做了解析，相信jizhihuiyumeimaoyuyishen的你已经掌握的很好，如果对glance不太熟悉，可以阅读glance的文档来深入学习一下glance
 ## 动手练习
 1. 配置glance使用file作为存储后端
 2. 设置token的缓存时间为5分钟
