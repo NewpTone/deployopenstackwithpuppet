@@ -93,43 +93,56 @@ nova::server 用来管理 neutron-server 服务，这个服务是 neutron 的核
 
 
 ### class neutron::plugins::ml2
-neutron::plugins::ml2 用于配置 ml2 plugin 相关的配置，包括 `/etc/neutron/plugin.ini` 软链接的创建，服务配置项的管理等等。
-
-### class nova::compute
-nova::compute 这个类用来配置 nova-compute 服务，nova-compute 服务一般部署在计算节点，用于完成虚拟机的创建。
-
-nova::compute 中主要完成了：
-
-* nova-compute 相关配置的管理，如 VNC，网络相关的配置
-* 管理 nova-compute 的软件包和服务
-
-这些服务和配置的管理都是通过 `nova_config` 和 `nova::generic_service` 两个资源来完成的。
-
-### class nova::migration::libvirt
-nova 可以控制 Libvirt 来完成虚拟机的迁移，配置虚拟机迁移除了需要配置 nova 的配置之外，还需要配置 Libvirt 相关的配置，因此在 nova 模块中专门有一个 `nova::migration::libvirt` 的类来进行 libvirt 相关的配置，这个类中，使用了 `augeas` 和 `file_line` 资源来配置 `/etc/libvirt/libvirtd.conf`：
+neutron::plugins::ml2 用于配置 ml2 plugin 相关的配置，包括 `/etc/neutron/plugin.ini` 软链接的创建，服务配置项的管理等等。关于 ml2 plugin 的配置，在 neutron 中有专用的自定义资源 `neutron_plugin_ml2` 用来配置 ml2 的配置文件：
 
 ```puppet
-    augeas { 'libvirt-conf-uuid':
-      context => '/files/etc/libvirt/libvirtd.conf',
-      changes => [
-        "set host_uuid ${host_uuid}",
-      ],
-      notify  => Service['libvirt'],
-      require => Package['libvirt'],
-    }
+  neutron_plugin_ml2 {
+    'ml2/type_drivers':                     value => join(any2array($type_drivers), ',');
+    'ml2/tenant_network_types':             value => join(any2array($tenant_network_types), ',');
+    'ml2/mechanism_drivers':                value => join(any2array($mechanism_drivers), ',');
+    'ml2/path_mtu':                         value => $path_mtu;
+    'ml2/extension_drivers':                value => join(any2array($extension_drivers), ',');
+    'securitygroup/enable_security_group':  value => $enable_security_group;
+    'securitygroup/firewall_driver':        value => $firewall_driver;
   }
 ```
 
-`augeas` 能够将配置文件当做树形的结构来进行处理，详细的使用说明可以参考[这里](https://projects.puppetlabs.com/projects/1/wiki/puppet_augeas)。同时，也使用了 `file_line` 来进行 libvirtd.conf 的配置：
+并且，还控制了 ml2-plugin 软件包的安装顺序，在安装完软件包之后才应该配置其相关配置文件：
+
+``` puppet
+  if $::neutron::params::ml2_server_package {
+    package { 'neutron-plugin-ml2':
+      ensure => $package_ensure,
+      name   => $::neutron::params::ml2_server_package,
+      tag    => 'openstack',
+    }
+    Package['neutron-plugin-ml2'] -> File['/etc/neutron/plugin.ini']
+    Package['neutron-plugin-ml2'] -> File['/etc/default/neutron-server']
+    Package['neutron-plugin-ml2'] -> Neutron_plugin_sriov<||>
+  } else {
+    Package['neutron'] -> File['/etc/neutron/plugin.ini']
+    Package['neutron'] -> File['/etc/default/neutron-server']
+    Package['neutron'] -> Neutron_plugin_sriov<||>
+  }
+```
+
+### class neutron::agents::ml2::ovs
+openvswitch-agent 是使用 neutron 使最常用的 agent，它通常被部署在网络节点和计算节点，用来完成 ovs bridge 的管理，ovs-agent 由 neutron::agents::ml2::ovs 这个类来进行管理，neutron 模块中为 ovs-agent 的配置提供了专门的自定义资源 `neutron_agent_ovs` 用于管理其配置文件，这个类中，主要使用了 `neutron_agnet_ovs` 来完成  ovs-agent 的配置，并管理了 ovs-agent 的软件包和服务。与这个类类似的，还有 `neutron::agents::ml2::linuxbridge` 用来管理 linuxbridge-agent 相关的配置和服务。
+
+### class neutron::agents::l3
+l3-agent 通常部署在网络节点，提供网络间转发与路由的功能，`neutron::agents::l3` 这个类用于完成 L3-agent 的配置与管理。值得注意的是，它在代码中，使用了 `is_service_default` 这个函数：
 
 ```puppet
-      file_line { '/etc/libvirt/libvirtd.conf listen_tls':
-        path  => '/etc/libvirt/libvirtd.conf',
-        line  => "listen_tls = ${listen_tls}",
-        match => 'listen_tls =',
-        tag   => 'libvirt-file_line',
-      }
-  ```
+  if ! is_service_default ($external_network_bridge) {
+    warning('parameter external_network_bridge is deprecated')
+  }
+
+  if ! is_service_default ($router_id) {
+    warning('parameter router_id is deprecated and will be removed in future release')
+  }
+```
+
+这个函数是在 [puppet-openstacklib]()
   
  ## 小结
  puppet-nova 模块中的内容众多，按照 nova 中的各个服务和功能进行了拆分，每个服务都有对应的 puppet 类进行管理，模块中还包含了 neutron, nova cell 等资源的管理，感兴趣的读者可以研究模块中其余的代码。
