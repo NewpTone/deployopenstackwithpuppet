@@ -4,7 +4,10 @@
 2. [核心代码讲解 - 如何做到管理ceilometer服务？](#核心代码讲解)
     - [class ceilometer](###class ceilometer)
     - [class ceilometer::api](###class ceilometer::api)
-    - 
+    - [class ceilometer::collector](###class ceilometer::collector)
+    - [class ceilometer::db](###class ceilometer::db)
+    - [class ceilometer::keystone::auth](###class ceilometer::keystone::auth)
+    - [class ceilometer::logging](###class ceilometer::logging)
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
@@ -35,8 +38,7 @@ ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生�
 ### ceilometer::collector
 ### ceilometer::db
 ### ceilometer::keystone::auth
-### ceilometer::wsgi::apache
 ### ceilometer::logging
 ## 小结
-expirer policy client gnocchi config
+expirer policy client gnocchi config apache
 ## 动手练习
