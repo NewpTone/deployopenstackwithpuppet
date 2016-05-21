@@ -11,7 +11,7 @@
 ## 先睹为快
 ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生的大部分事件，为计费和监控以及其它服务提供数据支撑。由于ceilometer依赖很多服务，所以最好先部署一个openstack，我们可以使用下一站章节的puppet-openstack-integration或devstack部署一套简易版openstack。
 部署ceilometer：
-在examples/site.pp里添加下面的代码
+在examples/site.pp里添加下面的代码,因为默认的site.pp里没有创建endpoint,role。
 ```puppet
   class { 'ceilometer::keystone::auth':
     password      => 'tralalayouyou'        #这个参数是puppet-openstack-integratioin中默认的。
@@ -22,9 +22,25 @@ ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生�
 ```bash
 # puppet apply examples/site.pp
 ```
+等一会ceilometer就安装完成了。
+验证：
+```bash
+# source openrc
+# ceilometer event-list
+```
 
 ## 核心代码讲解
-
+### ceilometer
+### ceilometer::api
+### ceilometer::client
+### ceilometer::collector
+### ceilometer::config
+### ceilometer::db
+### ceilometer::dispatcher::gnocchi
+### ceilometer::expirer
+### ceilometer::keystone::auth
+### ceilometer::policy
+### ceilometer::wsgi::apache
 ## 小结
 
 ## 动手练习
