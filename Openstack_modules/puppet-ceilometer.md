@@ -40,5 +40,5 @@ ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生�
 ### ceilometer::keystone::auth
 ### ceilometer::logging
 ## 小结
-expirer policy client gnocchi config apache
+在puppet-ceilometer模块中还有一些其他的class,如：expirer policy client gnocchi config apache
 ## 动手练习
