@@ -32,15 +32,11 @@ ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生�
 ## 核心代码讲解
 ### ceilometer
 ### ceilometer::api
-### ceilometer::client
 ### ceilometer::collector
-### ceilometer::config
 ### ceilometer::db
-### ceilometer::dispatcher::gnocchi
-### ceilometer::expirer
 ### ceilometer::keystone::auth
-### ceilometer::policy
 ### ceilometer::wsgi::apache
+### ceilometer::logging
 ## 小结
-
+expirer policy client gnocchi config
 ## 动手练习
