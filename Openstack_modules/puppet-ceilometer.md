@@ -33,15 +33,15 @@ ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生�
 ```
 
 ## 核心代码讲解
-### ceilometer
-
+### class ceilometer
+class ceilometer中包括ceilometer组、用户的创建、软件包的安装，
 ### ceilometer::api
 
-### ceilometer::collector
+### class ceilometer::collector
 
-### ceilometer::db
+### class ceilometer::db
 
-### ceilometer::keystone::auth
+### class ceilometer::keystone::auth
 ceilometer::keystone::auth模块是用来创建ceilometer的endpoint和role，其中有这么一段代码：
 ```puppet
   ::keystone::resource::service_identity { $auth_name:
@@ -80,7 +80,7 @@ class B inherits A {
 
 返过来看我们这段代码， ::keystone::resource::service_identity 这个调用前面使用::是在顶级域中搜索
 keystone模块，这么看是不是就清晰多了。
-### ceilometer::logging
+### class ceilometer::logging
 
 ## 小结
 在puppet-ceilometer模块中还有一些其他的class,如：ceilometer::policy、 ceilometer::client、  ceilometer::config等，就留给读者自己去阅读了
