@@ -34,7 +34,8 @@ ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生�
 
 ## 核心代码讲解
 ### class ceilometer
-class ceilometer中包括ceilometer组、用户的创建、软件包的安装，
+class ceilometer中包括ceilometer组、用户的创建、软件包的安装，AMQP的选择及配置。
+
 ### ceilometer::api
 
 ### class ceilometer::collector
