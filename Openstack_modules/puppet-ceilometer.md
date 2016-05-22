@@ -79,7 +79,7 @@ class B inherits A {
 那么我们可以在class B中通过$::A::variable的方式调用该变量.
 
 返过来看我们这段代码， ::keystone::resource::service_identity 这个调用前面使用::是在顶级域中搜索
-keystone模块。
+keystone模块，这么看是不是就清晰多了。
 ### ceilometer::logging
 
 ## 小结
