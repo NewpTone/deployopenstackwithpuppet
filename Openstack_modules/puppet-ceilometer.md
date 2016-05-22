@@ -7,7 +7,7 @@
     - [class ceilometer::collector](###class ceilometer::collector)
     - [class ceilometer::db](###class ceilometer::db)
     - [class ceilometer::keystone::auth](###class ceilometer::keystone::auth)
-    - [class ceilometer::logging](###class ceilometer::logging)
+    - [class ceilometer::agent::polling](###class ceilometer::agent::polling)
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
