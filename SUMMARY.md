@@ -18,10 +18,12 @@
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
-   * puppet-glance
+   * [puppet-neutron](Openstack_modules/puppet-neutron.md)
+   * [puppet-glance](puppet-glancemd.md)
    * [puppet-horizon](Openstack_modules/puppet-horizon.md)
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
    * [puppet-cinder](Openstack_modules/puppet-cinder.md)
+   * [puppet-neutron](Openstack_modules/puppet-neutron.md)
 * [公共库和工具类模块](Library_modules/readme.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)

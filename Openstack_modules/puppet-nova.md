@@ -1,11 +1,12 @@
 # puppet-nova 模块介绍
-1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理 Nova 服务？](#核心代码讲解)
+1. [先睹为快 - 一言不合，立马动手?](##先睹为快)
+2. [核心代码讲解 - 如何做到管理 Nova 服务？](##核心代码讲解)
     - [class nova](###class nova)
-    - [class nova::keystone::auth](###class keystone::service)
-    - [class nova::api](###class keystone::endpoint)
-    - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
-    - [class keystone::config](###class keystone::config) 
+    - [class nova::keystone::auth](###class nova::keystone::auth)
+    - [class nova::api](###class nova::api)
+    - [class nova::conductor](###class nova::conductor)
+    - [class nova::compute](###class nova::compute)
+    - [class nova::network::neutron](###class nova::network::neutron)
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
@@ -14,7 +15,7 @@
 puppet-nova 是用来配置和管理 nova 服务，包括服务，软件包，配置文件，flavor，nova cells 等等。其中 nova flavor, cell 等资源的管理是使用自定义的resource type来实现的。
 
 ## 先睹为快
-Nova 服务内部有很多组件，其中最重要的组件是 nova-api 和 nova-compute，这两个服务的部署可以使用 nova 模块中的类来完成，当然在部署之前环境中需要有 keystone 来为 nova 提供认证服务。
+Nova 服务内部有很多组件，其中最重要的组件是 nova-api 和 nova-compute，这两个服务的部署在 nova 模块中都有专门的类来完成，当然在部署之前环境中需要有 keystone 来为 nova 提供认证服务。
 
 以部署 nova-api 为例：
 
@@ -35,6 +36,7 @@ class nova::api {
 
 即可完成 nova-api 的基本部署。其中 `nova` 这个类主要负责所有 nova 服务通用配置项的配置，`nova::keystone::auth` 用于创建 keystone 用户，服务，endpoint，以及角色和用户的关联，`nova::api` 用于部署 nova-api 服务，管理相关的配置文件，并管理 nova-api 服务。
 
+## 核心代码讲解
 ### class nova
 Nova 是一个有多个内部组件的 OpenStack 服务，这些服务可以分开部署在不同的节点中，服务之间使用消息队列进行通信，有些组件会使用到数据库，还可能和 keystone 服务进行交互。nova 虽然服务众多，但是配置文件只有一份，这个配置文件中所有服务通用的配置项，也有某个服务特有的配置项，对于通用的这些配置项，主要使用 `nova` 这类来进行管理，这个类主要管理了这些选项：
 
@@ -87,4 +89,49 @@ nova::generic_service { 'api':
 
 
 ### class nova::conductor
-nova::conductor 这个类比较简单，主要使用 `nova::generic_service` 来完成
+nova::conductor 这个类比较简单，主要使用 `nova::generic_service` 来完成 conductor 服务和软件包的管理，并配置了 workers 参数。
+
+### class nova::compute
+nova::compute 这个类用来配置 nova-compute 服务，nova-compute 服务一般部署在计算节点，用于完成虚拟机的创建。
+
+nova::compute 中主要完成了：
+
+* nova-compute 相关配置的管理，如 VNC，网络相关的配置
+* 管理 nova-compute 的软件包和服务
+
+这些服务和配置的管理都是通过 `nova_config` 和 `nova::generic_service` 两个资源来完成的。
+
+### class nova::migration::libvirt
+nova 可以控制 Libvirt 来完成虚拟机的迁移，配置虚拟机迁移除了需要配置 nova 的配置之外，还需要配置 Libvirt 相关的配置，因此在 nova 模块中专门有一个 `nova::migration::libvirt` 的类来进行 libvirt 相关的配置，这个类中，使用了 `augeas` 和 `file_line` 资源来配置 `/etc/libvirt/libvirtd.conf`：
+
+```puppet
+    augeas { 'libvirt-conf-uuid':
+      context => '/files/etc/libvirt/libvirtd.conf',
+      changes => [
+        "set host_uuid ${host_uuid}",
+      ],
+      notify  => Service['libvirt'],
+      require => Package['libvirt'],
+    }
+  }
+```
+
+`augeas` 能够将配置文件当做树形的结构来进行处理，详细的使用说明可以参考[这里](https://projects.puppetlabs.com/projects/1/wiki/puppet_augeas)。同时，也使用了 `file_line` 来进行 libvirtd.conf 的配置：
+
+```puppet
+      file_line { '/etc/libvirt/libvirtd.conf listen_tls':
+        path  => '/etc/libvirt/libvirtd.conf',
+        line  => "listen_tls = ${listen_tls}",
+        match => 'listen_tls =',
+        tag   => 'libvirt-file_line',
+      }
+  ```
+  
+ ## 小结
+ puppet-nova 模块中的内容众多，按照 nova 中的各个服务和功能进行了拆分，每个服务都有对应的 puppet 类进行管理，模块中还包含了 neutron, nova cell 等资源的管理，感兴趣的读者可以研究模块中其余的代码。
+ 
+ ## 动手练习
+1. nova 中的各个服务是通过哪个统一的自定义资源进行管理的？阅读这个 define 资源的代码，查看它的实现方式。
+2. 部署 nova-api, nova-scheduler, nova-conductor 服务
+3. 如何设置 nova-compute 服务的宿主机内存分配比，这些资源分配比例的设定是在哪个类中进行管理的？
+4. 如何将 nova-compute
