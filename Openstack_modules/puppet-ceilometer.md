@@ -200,3 +200,5 @@ inline_template用于在代码里使用嵌入式ruby，它里面的所有参数�
 在puppet-ceilometer模块中还有一些其他的class,如：ceilometer::policy、 ceilometer::client、  ceilometer::config等，就留给读者自己去阅读了
 ## 动手练习
 1. 安装ceilometer，并且安装compute和central两个客户端
+2. 配置ceilometer运行在httpd下
+3. 使用amqp替换RabbitMQ
