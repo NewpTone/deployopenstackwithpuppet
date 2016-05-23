@@ -7,9 +7,9 @@
     - [class ceilometer::collector](##class ceilometer::collector)
     - [class ceilometer::db](##class ceilometer::db)
     - [class ceilometer::keystone::auth](##class ceilometer::keystone::auth)
-    - [class ceilometer::agent::polling](##class ceilometer::agent::polling)
-3. [小结](##小结)
-4. [动手练习 - 光看不练假把式](##动手练习)
+    - [class ceilometer::agent::polling](#class ceilometer::agent::polling)
+3. [小结](#小结)
+4. [动手练习 - 光看不练假把式](#动手练习)
 
 ## 先睹为快
 ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生的大部分事件，为计费和监控以及其它服务提供数据支撑。由于ceilometer依赖很多服务，所以最好先部署一个openstack，我们可以使用下一站章节的puppet-openstack-integration或devstack部署一套简易版openstack。
