@@ -81,9 +81,9 @@ fi
 
 ## 核心代码讲解
 
-目前Openstack Intra一共使用了三个测试场景，用于跑puppetopenstack的集成测试: scenario001, scenario002 scenario003.
+目前Openstack Intra一共使用了三个测试场景，用于跑puppetopenstack的集成测试: scenario001, scenario002，scenario003.
 
-scenario-aio manifest是提供给想要了解和学习PuppetOpenstack项目的用户。
+而scenario-aio manifest是提供给想要了解和学习PuppetOpenstack项目的用户。它们之间的区别参见下表：
 
 |     -      | scenario001 | scenario002 | scenario003 | scenario-aio |
 |:----------:|:-----------:|:-----------:|:-----------:|:-------------:
