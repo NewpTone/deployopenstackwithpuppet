@@ -8,7 +8,6 @@
 
 Puppet Openstack integration项目确保我们可以持续地测试和验证使用Puppet modules部署的Openstack集群。
 
-
 > 建议在阅读其他module前，优先阅读本节内容。
 
 
@@ -80,18 +79,11 @@ fi
 ```
 
 
-
-
 ## 核心代码讲解
 
-OpenStack Infrastructure is deploying three jobs per supported Operating System
-(Ubuntu and CentOS): scenario001, scenario002 and scenario003.
+目前Openstack Intra一共使用了三个测试场景，用于跑puppetopenstack的集成测试: scenario001, scenario002 scenario003.
 
-OpenStack services are balanced between three scenarios because OpenStack
-Infastructure Jenkins slaves can not afford the load of running everything on
-the same node.
-One manifest (scenario-aio) is used for people who want to [run a simple All-In-One
-scenario](#All-In-One).
+scenario-aio manifest是提供给想要了解和学习PuppetOpenstack项目的用户。
 
 |     -      | scenario001 | scenario002 | scenario003 | scenario-aio |
 |:----------:|:-----------:|:-----------:|:-----------:|:-------------:
