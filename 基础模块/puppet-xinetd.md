@@ -17,9 +17,26 @@ puppet-xinetd 由puppetlabs开发，此模块可管理xinetd(超级进程管理�
 
 ## 核心代码讲解
 ###Class xinetd
-####软件包管理
+此类中主要包含了，对xinetd的软件包的安装、配置文件的生成、服务的管理
 ```puppet
-
+  package { $package_name:
+    ensure => $package_ensure,
+    before => Service[$service_name],
+  }
+  file { $conffile:
+    ensure  => file,
+    mode    => '0644',
+    content => template('xinetd/xinetd.conf.erb'),
+  }
+  service { $service_name:
+    ensure     => running,
+    enable     => true,
+    hasrestart => $service_hasrestart,
+    hasstatus  => $service_hasstatus,
+    restart    => $service_restart,
+    status     => $service_status,
+    require    => File[$conffile],
+}
 ```
 
 ###Class xinetd:service
