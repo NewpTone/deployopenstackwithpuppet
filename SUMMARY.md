@@ -15,7 +15,7 @@
    * [puppet-sysctl](基础模块/puppet-sysctl.md)
    * [puppet-rsync](基础模块/puppet-rsync.md)
    * [puppet-xinetd](基础模块/puppet-xinetd.md)
-   * puppet-rabbitmq
+   * [puppet-rabbitmq](基础模块/puppet-rabbitmq.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
