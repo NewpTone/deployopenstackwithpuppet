@@ -42,9 +42,7 @@ puppet-xinetd 由puppetlabs开发，此模块可管理xinetd(超级进程管理�
 ###define xinetd::service 
 ####服务管理
 咱们在基础章节介绍过define，咱们的代码通过调用 define xinetd::service类，来创建某个服务的xinetd配置的配置文件，实例如下：
-> Requires:
-> $server must be set
-> $port must be set
+> Requires： $server and $port must be set
 ```puppet
 xinetd::service { 'tftp':
   port        => '69',
@@ -58,10 +56,7 @@ xinetd::service { 'tftp':
   nice        => 19,
   }
 ```
-
-
-
-
+so,这样我们就创建一个tftp的xinted的服务。是不是很简（你在说啥？）单。
 ## 小结
 
 ## 动手练习
