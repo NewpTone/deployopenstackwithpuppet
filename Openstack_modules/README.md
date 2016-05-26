@@ -10,15 +10,15 @@ PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet�
 
 第一期我们将介绍以下Openstack modules：
 
-* Telemetry (Ceilometer)  @liangliang
-* Block Storage (Cinder)  @weiyu  已完成
-* Image service (Glance)  @weiyu  processing
+* Telemetry (Ceilometer)
+* Block Storage (Cinder)  
+* Image service (Glance)  
 * Time Series Database (Gnocchi)  
-* Dashboard (Horizon)   @xingchao  已完成
-* Identity (Keystone)   @xingchao  已完成
+* Dashboard (Horizon)   
+* Identity (Keystone)   
 * Application catalog (Murano)
-* Networking (Neutron)  @penghui
-* Compute (Nova)    @penghui
-* Oslo libraries (Oslo)   @xingchao  已完成
-* Object Storage (Swift)   @luyuan
+* Networking (Neutron)
+* Compute (Nova)    
+* Oslo libraries (Oslo)
+* Object Storage (Swift)
 * Testing (Tempest)    
