@@ -11,24 +11,24 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
 * [Alarming](https://github.com/openstack/puppet-aodh/) (Aodh)
 * Key Manager (Barbican)
 * Telemetry (Ceilometer)
-* Block Storage (Cinder)  @weiyu
+* Block Storage (Cinder)
 * DNS (Designate)
-* Image service (Glance)  @luyuan
+* Image service (Glance)
 * Time Series Database (Gnocchi)  
 * Orchestration (Heat)
-* Dashboard (Horizon)   @xingchao
+* Dashboard (Horizon)
 * Bare Metal (Ironic)
-* Identity (Keystone)   @xingchao
+* Identity (Keystone)
 * Shared Filesystems (Manila)   
 * Workflow service (Mistral)
 * Application catalog (Murano)
-* Networking (Neutron)  @penghui
-* Compute (Nova)    @penghui
+* Networking (Neutron)
+* Compute (Nova)
 * Load Balancer (Octavia)
-* Oslo libraries (Oslo)   @xingchao
+* Oslo libraries (Oslo)
 * Benchmarking (Rally)   
 * Data processing (Sahara)
-* Object Storage (Swift)   @luyuan
+* Object Storage (Swift)
 * Testing (Tempest)    
 * Deployment (TripleO)
 * Database service (Trove)  
