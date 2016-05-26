@@ -79,7 +79,6 @@ class { '::keystone::endpoint':
 
 ## 核心代码讲解
 
-
 ### class keystone
 
 class keystone逻辑非常复杂，我们先抛开大量的判断逻辑和类调用，它主要做了三件核心工作：
