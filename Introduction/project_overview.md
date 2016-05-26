@@ -10,7 +10,7 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
 
 * [Alarming](https://github.com/openstack/puppet-aodh/) (Aodh)
 * Key Manager (Barbican)
-* Telemetry (Ceilometer)  @liangliang
+* Telemetry (Ceilometer)
 * Block Storage (Cinder)  @weiyu
 * DNS (Designate)
 * Image service (Glance)  @luyuan
