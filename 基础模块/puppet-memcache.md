@@ -13,8 +13,11 @@ puppet-memcache 是由Steffen Zieger(saz)维护的一个模块，他还维护了
 puppet apply -e "class { 'memcached': }"
 ```
 ok,部署完成，赶紧来看下这是怎么实现的吧
+
 ##核心代码讲解
-puppet-memcached只有一个Class
+
+puppet-memcached只有一个Class:
+
 ### Class memcached
 
 ####软件包管理
@@ -74,7 +77,10 @@ puppet-memcached只有一个Class
   }
   ```
   ##小结
+  
   这个模块比较简单，只有一个Class，为什么呢？因为memcached部署起来就是很简单啊。。
+  
   ##动手练习
+  
   1. 限制memcached最大使用内存为50%
   2. 关闭对防火墙规则的管理
