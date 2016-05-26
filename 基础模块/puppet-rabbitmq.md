@@ -15,7 +15,7 @@ rabbitmq组件是此本书中重点章节，因为它与每个openstack服务都
 在终端下执行以下命令:
 
 ```bash
-puppet apply -v 
+puppet apply -e "class { 'rabbitmq': }"
 ```
 
 等待puppet执行完成后，在终端下试试吧：
