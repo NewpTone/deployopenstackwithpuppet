@@ -10,6 +10,17 @@ rabbitmq组件是此本书中重点章节，因为它与每个openstack服务都
 >  相关链接：http://docs.openstack.org/liberty/install-guide-rdo/environment-messaging.html
 
 #瞅啥瞅
+在解说puppet-rabbitmq模块前，让我们来使用它部署一个rabbitmq服务先吧。
+
+在终端下执行以下命令:
+
+```bash
+puppet apply -v 
+```
+
+等待puppet执行完成后，在终端下试试吧：
+
+```bash
 #核心代码讲解
 #小结
 #动手练习
