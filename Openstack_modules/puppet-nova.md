@@ -10,6 +10,8 @@
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
+**本节作者：廖鹏辉**    
+
 **建议阅读时间 1.5h**
 
 puppet-nova 是用来配置和管理 nova 服务，包括服务，软件包，配置文件，flavor，nova cells 等等。其中 nova flavor, cell 等资源的管理是使用自定义的resource type来实现的。
