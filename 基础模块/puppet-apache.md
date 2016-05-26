@@ -9,12 +9,12 @@
 
 **建议阅读时间 1h**
 
-puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。
+puppet-apache模块是由puppetlabs公司维护的官方模块，提供完善的apache管理能力。
 
 **puppet-apache module的管理范围:**
 
 - Apache配置文件和目录
-- Apache的Package/service/conf
+- Package/Service/Conf
 - Apache modules
 - Virtual hosts
 - Listened-to ports
