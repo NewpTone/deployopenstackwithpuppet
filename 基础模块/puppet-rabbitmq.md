@@ -22,6 +22,7 @@ puppet apply -e "class { 'rabbitmq': }"
 
 #核心代码讲解
 ## class rabbitmq
+此段代码主要负责参数rabbitmq服务中参数声明和一些逻辑判断，比如：它会判断参数值得类型是否符合预期、调用其它类（include）、继承params类、判断参数是否启用LADP验证，我们可以用一句话来概括它，它是一个入口类，可以调用当前模块中的所有资源。
 ``` puppet
 class rabbitmq(
   $admin_enable               = $rabbitmq::params::admin_enable,
@@ -44,6 +45,98 @@ class rabbitmq(
     }
   }
   ...
+
+}
+```
+
+## class rabbitmq::install
+此类主要负责rabbitmq服务端的软件部署。
+```puppet
+
+  $package_ensure   = $rabbitmq::package_ensure
+  $package_name     = $rabbitmq::package_name
+  $package_provider = $rabbitmq::package_provider
+  $package_require  = $rabbitmq::package_require
+  $package_source   = $rabbitmq::real_package_source
+
+  package { 'rabbitmq-server':
+    ensure   => $package_ensure,
+    name     => $package_name,
+    provider => $package_provider,
+    notify   => Class['rabbitmq::service'],
+    require  => $package_require,
+  }
+
+  if $package_source {
+    Package['rabbitmq-server'] {
+      source  => $package_source,
+    }
+  }
+
+  if $rabbitmq::environment_variables['MNESIA_BASE'] {
+    file { $rabbitmq::environment_variables['MNESIA_BASE']:
+      ensure  => 'directory',
+      owner   => 'root',
+      group   => 'rabbitmq',
+      mode    => '0775',
+      require => Package['rabbitmq-server'],
+    }
+  }
+}
+```
+## class rabbitmq::config
+config类主要是负责rabbitmq服务目录、配置文件、文件内容的写入等配置
+```puppet
+class rabbitmq::config {
+
+  $admin_enable               = $rabbitmq::admin_enable
+  $cluster_node_type          = $rabbitmq::cluster_node_type
+  $cluster_nodes              = $rabbitmq::cluster_nodes
+  $config                     = $rabbitmq::config
+  }
+  file { '/etc/rabbitmq':
+    ensure => directory,
+    owner  => '0',
+    group  => '0',
+    mode   => '0644',
+  }
+  file { '/etc/rabbitmq/ssl':
+    ensure => directory,
+    owner  => '0',
+    group  => '0',
+    mode   => '0644',
+  }
+```
+
+## Class rabbitmq::service
+上面我们说了软件包的安装、软件包配置文件的下发，既然准备工作已经做好，那么咱们需要让这个服务启动，service 这个类就是来负责触发服务的管理。
+```puppet
+class rabbitmq::service(
+  $service_ensure = $rabbitmq::service_ensure,
+  $service_manage = $rabbitmq::service_manage,
+  $service_name   = $rabbitmq::service_name,
+) inherits rabbitmq {
+
+  validate_re($service_ensure, '^(running|stopped)$')
+  validate_bool($service_manage)
+
+  if ($service_manage) {
+    if $service_ensure == 'running' {
+      $ensure_real = 'running'
+      $enable_real = true
+    } else {
+      $ensure_real = 'stopped'
+      $enable_real = false
+    }
+
+    service { 'rabbitmq-server':
+      ensure     => $ensure_real,
+      enable     => $enable_real,
+      hasstatus  => true,
+      hasrestart => true,
+      name       => $service_name,
+    }
+  }
 
 }
 ```
