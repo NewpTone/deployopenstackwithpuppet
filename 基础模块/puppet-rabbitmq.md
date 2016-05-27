@@ -20,9 +20,33 @@ puppet apply -e "class { 'rabbitmq': }"
 
 等待puppet执行完成后，在终端下试试吧：
 
-```bash
 #核心代码讲解
+## class rabbitmq
+``` puppet
+class rabbitmq(
+  $admin_enable               = $rabbitmq::params::admin_enable,
+  $cluster_nodes              = $rabbitmq::params::cluster_nodes,
+  $config                     = $rabbitmq::params::config,
+  $config_cluster             = $rabbitmq::params::config_cluster,
+  ...
+  ...
+)inherits rabbitmq::params {
+  validate_bool($admin_enable)
+  ...
+  include '::rabbitmq::install'
+  ...
+  
+  if ($ldap_auth) {
+    rabbitmq_plugin { 'rabbitmq_auth_backend_ldap':
+      ensure  => present,
+      require => Class['rabbitmq::install'],
+      notify  => Class['rabbitmq::service'],
+    }
+  }
+  ...
 
+}
+```
 #小结
 
 #动手练习
