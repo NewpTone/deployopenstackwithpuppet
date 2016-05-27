@@ -141,7 +141,9 @@ class rabbitmq::service(
 }
 ```
 #小结
-
+rabbitmq 模块也比较简单，需要注意是默认安装的时候有guest用户，一般情况下我们会删除此用户。
 #动手练习
+1.如何删除rabbitmq中guest用户？
+2.如何使用自定义资源rabbitmq_user来创建用户？
 
 
