@@ -22,7 +22,9 @@ puppet apply -e "class { 'rabbitmq': }"
 
 ```bash
 #核心代码讲解
+
 #小结
+
 #动手练习
 
 
