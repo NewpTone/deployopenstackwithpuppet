@@ -10,6 +10,8 @@
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
+**本节作者：廖鹏辉**    
+
 **建议阅读时间 1.5h**
 
 neutron 组件是 OpenStack 各组件中最为复杂的组件，puppet-neutron 模块提供了 neutron 各个组件的部署和管理，包括 neutron plugins 的管理和 neutron agents 的管理。

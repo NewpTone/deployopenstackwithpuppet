@@ -1,11 +1,20 @@
 # puppet-apache
 
-puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强大的apache管理能力。
+1. [先睹为快－一言不和，立马动手?](#先睹为快)
+2. [核心代码－如何管理apache服务](＃核心代码讲解)
+3. [小结](#小结) 
+4. [动手练习](#动手练习)
+
+**本节作者：余兴超**    
+
+**建议阅读时间 1h**
+
+puppet-apache模块是由puppetlabs公司维护的官方模块，提供完善的apache管理能力。
 
 **puppet-apache module的管理范围:**
 
 - Apache配置文件和目录
-- Apache的Package/service/conf
+- Package/Service/Conf
 - Apache modules
 - Virtual hosts
 - Listened-to ports
@@ -18,7 +27,7 @@ puppet-apache模块是由puppetlabs公司维护的官方模块，提供异常强
 
 我们主要以Openstack服务中使用到的类进行介绍。
 
-## class apache
+# 先睹为快
 
 不想往下看，已经跃跃欲试了？
 OK, let's rock!
@@ -37,6 +46,10 @@ class { 'apache': }
 
 在约1分钟内（取决于你的网速和虚拟机的性能），你就已经完成了Apache服务的安装，配置和启动了。
 如何做到的呢？我们打开puppet-apache模块下manifests/init.pp文件，看看是如何做的？
+
+# 核心代码讲解
+## class apache
+
 这里面有比较多的判断逻辑，我们直接关注class apache调用了哪几个关键的class和define:
 
 ---
@@ -185,3 +198,5 @@ apache::vhost { 'ssl.example.com':
 * [Service attribute restart](http://docs.puppetlabs.com/references/latest/type.html#service-attribute-restart)
 * [mod_wsgi](https://modwsgi.readthedocs.org/en/latest/)
 * [mod_ssl](https://httpd.apache.org/docs/current/mod/mod_ssl.html)
+
+## 动手练习

@@ -5,16 +5,16 @@
 
 本书的主旨是讲解Openstack的自动化部署，因此在这些模块中，我们只会去说明Openstack使用到的class或者define。
 
-* puppet-apache   @xingchao  已完成
+* puppet-apache
 * puppet-corosync  
-* puppet-firewall  @weiyu 已完成，等待review
-* puppet-memcached  @weiyu
-* puppet-mongodb  @liangliang low 
-* puppet-mysql  @penghui
-* puppet-rabbitmq  @luyuan     To do
-* puppet-rsync   @luyuan       已完成
-* puppet-sysctl  @weiyu  
-* puppet-vswitch @liangliang   已完成
-* puppet-xinetd @luyuan  low   已完成
+* puppet-firewall 
+* puppet-memcached 
+* puppet-mongodb 
+* puppet-mysql 
+* puppet-rabbitmq 
+* puppet-rsync
+* puppet-sysctl
+* puppet-vswitch
+* puppet-xinetd 
 
 
