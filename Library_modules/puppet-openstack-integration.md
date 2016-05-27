@@ -310,3 +310,12 @@ class openstack_integration::glance (
   }
 }
 ```
+## 小结
+
+puppet-openstack_integration模块为PuppetOpenstack项目提供了集成测试的功能，同时也为用户提供了快速部署AIO测试环境的脚本。如果你是刚开始了解该项目，那么这个模块是快速熟悉Openstack各个基础模块的一条路径。
+
+## 动手练习
+
+1. 在aio场景中添加sahara服务
+2. 在install_module.sh中的r10k命令的作用是？
+3. bundler的作用是什么？
