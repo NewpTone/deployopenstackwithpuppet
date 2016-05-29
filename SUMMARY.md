@@ -8,7 +8,7 @@
    * [术语表](Introduction/term.md)
    * [项目概览](Introduction/project_overview.md)
    * [模块剖析](Introduction/module_structure.md)
-* [基础模块](基础模块/README.md)
+* [基础模块](基础模块/readme.md)
    * [puppet-apache](基础模块/puppet-apache.md)
    * [puppet-memcache](基础模块/puppet-memcache.md)
    * [puppet-sysctl](基础模块/puppet-sysctl.md)
