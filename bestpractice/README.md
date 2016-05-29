@@ -1,5 +1,6 @@
 # Openstack自动化部署最佳实践
 
+**本章完成度:`30%`**
 
 > Fools ignore complexity. Pragmatists suffer it. Some can avoid it. Geniuses remove it.  
 >   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;                  — Alan J. Perlis, “Epigrams in Programming”
@@ -36,4 +37,4 @@
 
 运维原则相关:
 
- - 配置管理的几大准则
+ - 配置管理操作的基本守则
