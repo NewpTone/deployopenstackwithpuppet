@@ -16,6 +16,7 @@
    * [puppet-xinetd](基础模块/puppet-xinetd.md)
    * [puppet-rabbitmq](基础模块/puppet-rabbitmq.md)
    * [puppet-firewall](基础模块/puppet-firewall.md)
+   * [puppet-mysql](基础模块/puppet-mysql.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
