@@ -23,9 +23,9 @@
 
 例如，我们会在讲puppet-oslo的时候，会讲到为什么Puppet原生不支持迭代，如何去实现。当然，为了陷得太深，我们都只是点到为止，你可以打开我们之前已经设计好的参考链接，继续深陷其中。
 
-## 推荐阅读顺序
+## 推荐的阅读顺序
 
-如果您是第一次接触PuppetOpenstack，推荐从公共库和工具类模块的puppet-openstack-integration一节开始，这节会介绍如何使用PuppetOpenstack模块快速地部署一个All-in-One的Openstack服务。
+如果您是第一次接触PuppetOpenstack，推荐从`公共库和工具类模块`章节 的`puppet-openstack-integration`一节开始，这节会介绍如何使用PuppetOpenstack模块快速部署一个All-in-One的Openstack服务。
 
 ## 其他
 
