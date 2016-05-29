@@ -12,4 +12,5 @@
 * Blueprints (Puppet OpenStack Specs) (hosted here)
 * Compliant tool (Cookiebutter)
 * Sync tool (Modulesync)
+* Oslo libraries (Oslo)
 
