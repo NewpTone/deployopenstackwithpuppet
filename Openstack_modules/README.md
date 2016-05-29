@@ -1,5 +1,7 @@
 # OpenStack模块
 
+**本章完成度:`63%`**
+
 PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet的经典素材。它体现在以下几点：
 
 * 严格遵守Puppet Code Style
@@ -19,6 +21,5 @@ PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet�
 * Application catalog (Murano)
 * Networking (Neutron)
 * Compute (Nova)    
-* Oslo libraries (Oslo)
 * Object Storage (Swift)
 * Testing (Tempest)    
