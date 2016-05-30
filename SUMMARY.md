@@ -33,7 +33,7 @@
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
    * [puppet-openstack-integration](Library_modules/puppet-openstack-integration.md)
 * [最佳实践](bestpractice/README.md)
-   * [代码规范](bestpractice/version_control.md)
+   * [提交规范](bestpractice/version_control.md)
    * [代码管理](bestpractice/code_management.md)
    * [Hiera](bestpractice/hiera.md)
    * [Environment](bestpractice/environment.md)
