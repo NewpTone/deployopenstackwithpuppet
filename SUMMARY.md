@@ -24,7 +24,7 @@
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
    * [puppet-neutron](Openstack_modules/puppet-neutron.md)
-   * [puppet-glance](puppet-glancemd.md)
+   * [puppet-glance](Openstack_modules/puppet-glance.md)
    * [puppet-horizon](Openstack_modules/puppet-horizon.md)
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
    * [puppet-cinder](Openstack_modules/puppet-cinder.md)
