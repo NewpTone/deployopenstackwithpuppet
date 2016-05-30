@@ -38,5 +38,5 @@
    * [Hiera](bestpractice/hiera.md)
    * [Environment](bestpractice/environment.md)
    * [转发层模块](bestpractice/Composition.md)
-* [发布说明](release.md)
+* [版本日志](release.md)
 
