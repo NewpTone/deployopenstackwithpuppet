@@ -19,8 +19,6 @@
    * [puppet-vcsrepo](基础模块/puppet-vcsrepo.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [Openstack模块剖析](Introduction/module_structure.md)
-   * puppet-swift
-   * puppet-trove
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
    * [puppet-neutron](Openstack_modules/puppet-neutron.md)
@@ -29,6 +27,8 @@
    * [puppet-ceilometer](Openstack_modules/puppet-ceilometer.md)
    * [puppet-cinder](Openstack_modules/puppet-cinder.md)
    * [puppet-tempest](Openstack_modules/puppet-tempest.md)
+   * puppet-swift
+   * puppet-trove
 * [公共库和工具类模块](Library_modules/readme.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
    * [puppet-vswitch](基础模块/puppet-vswitch.md)
