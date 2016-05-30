@@ -20,6 +20,7 @@
 * [Openstack模块](Openstack_modules/README.md)
    * [Openstack模块剖析](Introduction/module_structure.md)
        * puppet-swift
+       * puppet-trove
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
    * [puppet-neutron](Openstack_modules/puppet-neutron.md)
