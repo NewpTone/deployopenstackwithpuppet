@@ -38,6 +38,6 @@
    * [Hiera](bestpractice/hiera.md)
    * [Environment](bestpractice/environment.md)
    * [转发层模块](bestpractice/Composition.md)
-   * 代码风格
+   * [代码风格](bestpractice/code_style.md)
 * [版本日志](release.md)
 
