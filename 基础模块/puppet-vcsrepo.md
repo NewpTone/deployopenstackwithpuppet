@@ -117,9 +117,29 @@ csrepo { '/path/to/repo':
 
 ## Git支持的特性和参数
 
-Features: `bare_repositories`, `depth`, `multiple_remotes`, `reference_tracking`, `ssh_identity`, `submodules`, `user`
+Features: 
+ - `bare_repositories`
+ -  `depth`
+ -  `multiple_remotes`
+ -  `reference_tracking`
+ -  `ssh_identity`
+ -  `submodules`
+ -  `user`
 
-Parameters: `depth`, `ensure`, `excludes`, `force`, `group`, `identity`, `owner`, `path`, `provider`, `remote`, `revision`, `source`, `user`
+Parameters: 
+ - `depth` 
+ - `ensure`
+ - `excludes`
+ - `force` 
+ - `group` 
+ - `identity`
+ - `owner`
+ - `path` 
+ - `provider` 
+ - `remote` 
+ - `revision` 
+ - `source`
+ - `user`
 
 ## 动手练习
 
