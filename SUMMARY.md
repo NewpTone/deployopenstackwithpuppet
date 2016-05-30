@@ -34,6 +34,7 @@
    * [puppet-openstack-integration](Library_modules/puppet-openstack-integration.md)
    * [puppet-openstack_specs](Library_modules/puppet-openstackspecs.md)
    * puppet-cookiebutter
+   * puppet-modulesync
 * [最佳实践](bestpractice/README.md)
    * [提交规范](bestpractice/version_control.md)
    * [代码管理](bestpractice/code_management.md)
