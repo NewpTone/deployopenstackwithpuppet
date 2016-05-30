@@ -17,3 +17,4 @@
 * puppet-sysctl
 * puppet-vswitch
 * puppet-xinetd 
+* puppet-vcsrepo
