@@ -41,10 +41,10 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
 
 第二大山脉是工具类相关的modules，分别有：
 
-* Common Puppet library (OpenStackLib)    @penghui
+* Common Puppet library (OpenStackLib)
 * Common Ruby helper library (puppet-openstack_spec_helper)
 * Puppet OpenStack helpers (OpenStackExtras)
-* Virtual Bridging (OpenvSwitch)  @liangliang
+* Virtual Bridging (OpenvSwitch)
 * Integration CI tools (Puppet OpenStack Integration)
 * Blueprints (Puppet OpenStack Specs) (hosted here)
 * Compliant tool (Cookiebutter)
