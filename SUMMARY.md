@@ -32,6 +32,7 @@
    * [puppet-vswitch](基础模块/puppet-vswitch.md)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
    * [puppet-openstack-integration](Library_modules/puppet-openstack-integration.md)
+   * puppet-openstack_specs
 * [最佳实践](bestpractice/README.md)
    * [提交规范](bestpractice/version_control.md)
    * [代码管理](bestpractice/code_management.md)
