@@ -40,6 +40,7 @@
    * puppet-cookiebutter
    * puppet-modulesync
    * puppet-openstack_spec_helper
+   * puppet-stdlib
 * [最佳实践](bestpractice/README.md)
    * [提交规范](bestpractice/version_control.md)
    * [代码管理](bestpractice/code_management.md)
