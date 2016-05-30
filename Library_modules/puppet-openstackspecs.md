@@ -1,0 +1,2 @@
+# puppet-openstack_specs
+
