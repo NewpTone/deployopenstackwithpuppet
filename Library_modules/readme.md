@@ -9,7 +9,7 @@
 * Puppet OpenStack helpers (OpenStackExtras)
 * Virtual Bridging (OpenvSwitch)
 * Integration CI tools (Puppet OpenStack Integration)
-* Blueprints (Puppet OpenStack Specs) (hosted here)
+* Blueprints (Puppet OpenStack Specs)
 * Compliant tool (Cookiebutter)
 * Sync tool (Modulesync)
 * Oslo libraries (Oslo)
