@@ -123,5 +123,5 @@ Parameters: `depth`, `ensure`, `excludes`, `force`, `group`, `identity`, `owner`
 
 ## 动手练习
 
-1.使用`vcsrepo`管理nova源码仓库，并使用stable/mitaka分支
+1.使用`vcsrepo`管理nova源码仓库，并使用stable/mitaka分支   
 2.使用`vcsrepo`管理一个带有submodule的项目，并指定管理submodule
