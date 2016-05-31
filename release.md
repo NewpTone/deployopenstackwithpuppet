@@ -7,16 +7,16 @@
 |页面维护人|余兴超|     
 
 ## 2016-6-03
-  - 添加puppet-swift @luyuan (todo)
-  - 添加puppet-trove @penghui (todo)
-  - 添加puppet-manila @weiyu (todo)
-  - 添加puppet-modulesync @xingchao (todo)
+  - 添加puppet-swift @luyuan (#todo)
+  - 添加puppet-trove @penghui (#todo)
+  - 添加puppet-manila @weiyu (#todo)
+  - 添加puppet-modulesync @xingchao (#todo)
 
 ## 2016-6-02
-  - 添加puppet-cookiebutter @xingchao (todo)
+  - 添加puppet-cookiebutter @xingchao (#todo)
 
 ## 2016-6-01
-  - 添加puppet-stdlib @xingchao (todo)
+  - 添加puppet-stdlib @xingchao (#todo)
 
 ## 2016-5-31
   - 添加puppet-heat
