@@ -11,6 +11,7 @@
   - 添加puppet-trove @penghui (#todo)
   - 添加puppet-manila @weiyu (#todo)
   - 添加puppet-modulesync @xingchao (#todo)
+  - 添加puppet-mongodb @hanliangliang (#todo)
 
 ## 2016-6-02
   - 添加puppet-cookiebutter @xingchao (#todo)
@@ -19,7 +20,8 @@
   - 添加puppet-stdlib @xingchao (#todo)
 
 ## 2016-5-31
-  - 添加puppet-heat
+  - 添加puppet-heat @xingchao (#todo)
+  - 更新puppet-ceilometer模块 @liangliang  (#todo)
 
 ## 2016-5-30
   - 添加puppet-vcsrepo模块
