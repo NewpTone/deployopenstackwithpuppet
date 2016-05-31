@@ -1,8 +1,25 @@
 # 版本日志
 
+以下为本书的更新日志和编写计划。
+
 |当前版本|`v0.1`| 
 |:---:|:---:|
 |维护人员|余兴超|     
+
+## 2016-6-03
+  - 添加puppet-swift @luyuan (todo)
+  - 添加puppet-trove @penghui (todo)
+  - 添加puppet-manila @weiyu (todo)
+  - 添加puppet-modulesync @xingchao (todo)
+
+## 2016-6-02
+  - 添加puppet-cookiebutter @xingchao (todo)
+
+## 2016-6-01
+  - 添加puppet-stdlib @xingchao (todo)
+
+## 2016-5-31
+  - 添加puppet-heat
 
 ## 2016-5-30
   - 添加puppet-vcsrepo模块
