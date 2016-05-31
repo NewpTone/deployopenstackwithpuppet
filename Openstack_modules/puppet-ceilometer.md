@@ -7,7 +7,9 @@
     - [class ceilometer::collector](##class ceilometer::collector)
     - [class ceilometer::db](##class ceilometer::db)
     - [class ceilometer::keystone::auth](##class ceilometer::keystone::auth)
+    - [class ceilometer::agent::auth](##class ceilometer::agent::auth)
     - [class ceilometer::agent::polling](#class ceilometer::agent::polling)
+    - [class ceilometer::agent::notification](#class ceilometer::agent::notification)
 3. [小结](#小结)
 4. [动手练习 - 光看不练假把式](#动手练习)
 
@@ -74,6 +76,7 @@ puppet-ceilometer中对rpc的选择主要提供了两种：RabbitMQ和amqp，所
 ```
 ceilometer通过调用oslo的oslo::messaging::notifications和oslo::cache两个define
 对oslo_messaging_notifications和cache两个section进行配置。
+
 ### class ceilometer::api
 在class ceilometer::api中先是定义了以下几个依赖关系：
 ```puppet
@@ -124,6 +127,7 @@ class ceilometer::collector用于安装ceilometer的collector服务，依然是�
     { ensure => $package_ensure }
   )
 ```
+
 ### class ceilometer::db
 class ceilometer::db应该和db目录下的几个文件放在一起看，ceilometer默认使用MySQL数据库，首先ceilometer::db::mysql调用::openstacklib::db::mysql创建ceilometer的数据库，代码如下:
 ```puppet
@@ -190,6 +194,11 @@ class B inherits A {
 返过来看我们这段代码， ::keystone::resource::service_identity 这个调用前面使用::是在顶级域中搜索
 keystone模块，这么看是不是就清晰多了。
 
+### class ceilometer::agent::auth
+class ceilometer::agent::auth用于配置ceilometer中的keystone配置，默认密码没有配置，所以在调用该
+class的时候必需传该参数。在class里会把传进的参数传到ceilometer_config,在class ceilometer::config
+里调用。
+
 ### class ceilometer::agent::polling
 class ceilometer::agent::polling用于安装ceilometer polling agent,当然主要的还是那三板斧，
 安装软件包、配置参数、启动服务。除这之外我们可以看到根据central_namespace、compute_namespace、ipmi_namespace三个参数，进行了不同的配置，并且通过inline_template调用ruby把namespaces这个数组转换
@@ -199,6 +208,10 @@ class ceilometer::agent::polling用于安装ceilometer polling agent,当然主�
   $namespaces_real = inline_template('<%= @namespaces.find_all {|x| x !~ /^undef/ }.join "," %>')
 ```
 inline_template用于在代码里使用嵌入式ruby，它里面的所有参数都会被传递并执行,在<%=和%>分隔符之间的所有代码都以Ruby代码来执行。
+
+### class ceilometer::agent::notification
+这个class用于配置ceilometer的notification agent，没有什么好讲的，三步：安装软件包，启动服务，配置参数。
+
 ## 小结
 在puppet-ceilometer模块中还有一些其他的class,如：ceilometer::policy、 ceilometer::client、  ceilometer::config等，就留给读者自己去阅读了
 ## 动手练习
