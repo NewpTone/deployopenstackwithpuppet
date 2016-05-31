@@ -11,4 +11,4 @@ AWS CloudFormation服务，为用户提供了编排AWS中的资源的能力。Op
 ![](../images/heat.png)
 
 我们来快速部署一个带有heat的all-in-one环境，我们需要一点hack：
-在fixtures/scenario-aio.pp文件中
+在`fixtures/scenario-aio.pp`文件中追加:
