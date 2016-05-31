@@ -2,9 +2,9 @@
 
 以下为本书的更新日志和编写计划。
 
-|当前版本|`v0.1`| 
-|:---:|:---:|
-|页面维护人|余兴超|     
+|Current Version|Next Milestone|Release Manager| 
+|:---:|:---:|:---:|
+|`v0.1`| 2016-6-03| Xingchao Yu  |
 
 ## 2016-6-03
   - 添加puppet-swift @luyuan (#todo)
