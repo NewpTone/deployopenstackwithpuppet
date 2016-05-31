@@ -10,4 +10,5 @@
 AWS CloudFormation服务，为用户提供了编排AWS中的资源的能力。Openstack社区在2012年推出了类似支持编排功能的服务Heat。Heat基本的workflow是这样的：
 ![](../images/heat.png)
 
-我们快速部署一个
+我们来快速部署一个带有heat的all-in-one环境，我们需要一点hack：
+在fixtures/scenario-aio.pp文件中
