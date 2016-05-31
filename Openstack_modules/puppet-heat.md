@@ -9,4 +9,4 @@
 
 AWS CloudFormation服务，为用户提供了编排AWS中的资源的能力。Openstack社区在2012年推出了类似支持编排功能的服务Heat。
 
-
+![](heat.png)
