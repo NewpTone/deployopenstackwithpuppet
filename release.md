@@ -1,6 +1,6 @@
 # 版本日志
 
-本页面维护着本书的更新日志和编写计划。
+本页面维护着本书的版本日志和编写计划。
 
 |Current Version|Next Milestone|Release Manager| 
 |:---:|:---:|:---:|
