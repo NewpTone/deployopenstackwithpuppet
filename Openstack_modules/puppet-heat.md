@@ -99,4 +99,11 @@ openstack stack create -t test.yaml test
    - heat::keystone::domain完成默认heat domain的创建
    - heat::db::mysql完成了heat数据库的创建
 
-##
+## 小结
+
+   Heat服务的架构比较简单，因此在配置上并没有太多复杂的地方，它的核心还是在于结合业务，完成HOT模板的编写。
+   
+## 动手练习
+
+1. 在keystone中添加heat-api-cfn user，service和endpoint
+2. 仅部署heat-api和heat-engine服务
