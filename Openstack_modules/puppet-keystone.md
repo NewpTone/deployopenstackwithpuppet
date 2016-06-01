@@ -56,10 +56,18 @@ Keystone v2 model
 Keystone v3 model: Domain
 ---
 ![](../images/03/keystone_v3.png)
+   - v3通过domain术语引入了多租户的概念。如上图，domain相当于是project的容器。
+   - 通过domain，一个云用户就可以创建属于自己的user，groups和roles。
 
 Keystone v3 model: Group
 ---
 ![](../images/03/keystone_v3_group.png)
+- 往常我们需要为user/project赋予role，现在domain owner就可以把role赋予group，然后把user添加到group里去。
+- role可以赋予到domain范围的group或者project范围的group 
+
+在上图中：
+- JohnB属于"domain1 sysadmins" group，拥有sysadmin role，并属于Bio,Aero,Compsci project。
+- LisaD属于"Big Engineers"group，拥有Engineer role，仅属于compsci project。
 
 
 ## 先睹为快
