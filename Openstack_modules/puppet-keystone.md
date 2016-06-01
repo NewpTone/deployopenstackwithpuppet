@@ -16,6 +16,36 @@
 
 puppet-keystone是用来配置和管理keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中 keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
 
+Identity
+---
+Keystone的认证部分包含：`user`和`group`，可以通过SQL或通用LDAP支持。
+
+| 名称 | 说明 |
+|--------|:-----:|
+| user | user表示独立的API消费者，user非全局唯一，必须属于某个domain，但在domain命名空间下唯一 |
+| group| group表示汇总user集合的容器，和user一样，group非全局唯一，group必须属于某个domain，在domain命名空间下唯一|
+
+Resources
+---
+Keystone的resources部分包含：`Projects`和`Domains`，通常存储在SQL中。
+
+| 名称 | 说明 |
+|--------|:-----:|
+|Project(Tenant)|Project(在v2.0时也称为Tenant)表示Openstack基本单位的所有权限，表示在Openstack中的资源必须归属于某个特定project。project同样的，非全局唯一，必须归属于某个domain，在domain命名空间下唯一。若一个project没有被指定domain，那么它的domain会被设置为default |
+|Domain|domain是project，user和group的更高层级的容器。每个domain定义了一个命名空间，keystone默认提供了一个名为'Default'的domain。Domain是全局唯一的。|
+
+Assignment
+---
+
+| 名称 | 说明 |
+|--------|:-----:|
+|Role|role指定了user能获取的授权级别，roles可以授予到domain或project级别，role可以被指定到单独的user或group级别。注意噢，role可是全局唯一的。|
+|Role Assignments|一个包含Role,Resource,Identity的三元组|
+
+我们给出图例来解释这些概念：
+
+
+
 
 ## 先睹为快
 
