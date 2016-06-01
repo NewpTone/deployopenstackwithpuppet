@@ -1,3 +1,5 @@
 # puppet-stdlib
 
-stdlib是由puppet官方提供的标准库模块，它提供了
+`Finish in v0.2`
+
+stdlib是由puppet官方提供的标准库模块。
