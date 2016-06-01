@@ -25,8 +25,6 @@
   - 添加puppet-stdlib @xingchao (#todo)
 
 
-
-
 ---
 # `v0.1`发布日志
 
