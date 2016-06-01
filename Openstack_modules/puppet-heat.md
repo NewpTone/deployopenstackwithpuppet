@@ -9,7 +9,7 @@
 ## 先睹为快
 
 AWS CloudFormation服务，为用户提供了编排AWS中的资源的能力。Openstack社区在2012年推出了类似支持编排功能的服务Heat。Heat基本的workflow是这样的：
-![](../images/heat.png)
+![](../images/03/heat.png)
                       
 
 在了解完Heat后，我们首先通过快速部署一个带有heat所有服务的环境来快速地上手，首先我们需要做一点hack，在`fixtures/scenario-aio.pp`文件中追加:
@@ -22,10 +22,10 @@ include ::openstack_integration::heat
 ```
 在执行完成后，我们通过systemctl命令，可以看到以下服务并启动：
 ```bash
- openstack-heat-api-cfn.service                                                                                 loaded    active   running   Openstack Heat CFN-compatible API Service
-  openstack-heat-api-cloudwatch.service                                                                          loaded    active   running   OpenStack Heat CloudWatch API Service
-  openstack-heat-api.service                                                                                     loaded    active   running   OpenStack Heat API Service
-  openstack-heat-engine.service                                                                                  loaded    active   running   Openstack Heat Engine Service
+ openstack-heat-api-cfn.service                                                   loaded    active   running   Openstack Heat CFN-compatible API Service
+  openstack-heat-api-cloudwatch.service                                           loaded    active   running   OpenStack Heat CloudWatch API Service
+  openstack-heat-api.service                                                      loaded    active   running   OpenStack Heat API Service
+  openstack-heat-engine.service                                                   loaded    active   running   Openstack Heat Engine Service
   ```
 
 先在终端下执行list命令，正常的返回值为空:
