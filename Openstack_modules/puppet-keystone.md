@@ -1,5 +1,6 @@
 # Puppet-keystone模块介绍
 
+0. 基础知识
 1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
 2. [核心代码讲解 - 如何做到管理keystone服务？](#核心代码讲解)
     - [class keystone](###class keystone)
@@ -13,6 +14,8 @@
 **本节作者：余兴超**    
 
 **建议阅读时间 2h**
+
+#基础知识
 
 puppet-keystone是用来配置和管理keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中 keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
 
