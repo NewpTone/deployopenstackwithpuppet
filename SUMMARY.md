@@ -48,6 +48,6 @@
    * [Environment](bestpractice/environment.md)
    * [转发层模块](bestpractice/Composition.md)
    * [代码风格](bestpractice/code_style.md)
-* 如何参与
+* [如何参与](howto.md)
 * [版本日志](release.md)
 
