@@ -50,5 +50,4 @@
    * [代码风格](bestpractice/code_style.md)
 * 如何参与
 * [版本日志](release.md)
-   * 如何参与
 
