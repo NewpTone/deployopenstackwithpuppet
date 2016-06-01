@@ -1,6 +1,6 @@
 # 关于写此书的动力
-
 人是很奇怪的动物，天生懒惰，但是在压力的驱使下，又能做成一些连自己都会觉得惊讶的成就。对于天生喜欢写写随笔和技术blog的我，在近三年的时间里，虽有多家出版社编辑的循循善诱，仍然不为所动，心想着有这闲时间我不如多吃几份美食，多打两盘DOTA。
+
 
 更深层次地讲其实是源于对于未知的恐惧，源于面对数十万文字工作量的害怕，这本就是一场体力和脑力并存的马拉松，普通人在看到终点的艰巨时，在起点就已经选择了放弃，然而我不是一个普通的人，因此早在6个月前我就富有先见之明地创建了这本书，并且写上了长达83个字节的详细介绍，然后就没有了下文。
 
@@ -27,10 +27,11 @@ UnitedStack DevOps Team从13年伊始就全身心投入到持续交付和持续�
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; 余兴超
 
 
+
 # 关于作者
 
 > * 余兴超 ([Newptone](http://weibo.com/nupta))  &emsp;UnitedStack R&D Director, 2011年开始接触Openstack，PuppetOpenstack官方项目core member，目前负责打酱油相关事宜。
 > * 廖鹏辉 ([大狗罗宾逊](http://weibo.com/aoLiii)） &emsp;与puppet-openstack社区和 puppetlabs 社区谈笑风声的 puppet 酱， UnitedStack 头号背锅侠。
 > * 陆源([小斯](http://weibo.com/2294179087/profile?topnav=1&wvr=6&is_all=1))  &emsp;UnitedStack DevOps成员，爱GW，不爱GFW。2012年开始埋坑，目前负责PuppetOpenstack和UOS部署工具开发。
-> * 周维宇(spunkzwy) &emsp;一个feng一般的男子，目前负责维护UOS持续集成系统。
+> * 周维宇(spunkzwy) &emsp;Unitedstack Devops成员，专注于云计算与容器技术,目前负责UOS持续集成系统。
 > * 韩亮亮(leon)  &emsp;专注于减肥和Devops，目前负责UOS部署工具开发。
