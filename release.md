@@ -20,8 +20,8 @@
   - 添加puppet-stdlib @xingchao (#todo)
 
 ## 2016-5-31
-  - 添加puppet-heat @xingchao (#todo)
-  - 更新puppet-ceilometer模块 @liangliang  (#todo)
+  - 添加puppet-heat @xingchao
+  - 更新puppet-ceilometer模块 @liangliang
 
 ## 2016-5-30
   - 添加puppet-vcsrepo模块
