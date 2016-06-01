@@ -6,6 +6,11 @@
 |:---:|:---:|:---:|
 |`v0.1`| 2016-6-03| Xingchao Yu  |
 
+
+
+---
+# `v0.2`编写计划
+
 ## 2016-6-23
   - 添加puppet-swift @luyuan (#todo)
   - 添加puppet-trove @penghui (#todo)
@@ -13,11 +18,18 @@
   - 添加puppet-modulesync @xingchao (#todo)
   - 添加puppet-mongodb @hanliangliang (#todo)
 
-## 2016-6-02
+## 2016-6-22
   - 添加puppet-cookiebutter @xingchao (#todo)
 
-## 2016-6-01
+## 2016-6-21
   - 添加puppet-stdlib @xingchao (#todo)
+
+
+
+
+---
+# `v0.1`发布日志
+
 
 ## 2016-5-31
   - 添加puppet-heat @xingchao
