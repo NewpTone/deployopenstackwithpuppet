@@ -18,7 +18,7 @@
    * [puppet-mysql](base_modules/puppet-mysql.md)
    * [puppet-vcsrepo](base_modules/puppet-vcsrepo.md)
 * [Openstack模块](Openstack_modules/README.md)
-   * [目录结构简介](Introduction/module_structure.md)
+   * [模块目录结构](Introduction/module_structure.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
    * [puppet-nova](Openstack_modules/puppet-nova.md)
    * [puppet-neutron](Openstack_modules/puppet-neutron.md)
