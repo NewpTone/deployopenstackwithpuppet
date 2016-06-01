@@ -42,8 +42,21 @@ Assignment
 |Role|role指定了user能获取的授权级别，roles可以授予到domain或project级别，role可以被指定到单独的user或group级别。注意噢，role可是全局唯一的。|
 |Role Assignments|一个包含Role,Resource,Identity的三元组|
 
-我们给出图例来解释这些概念：
+我们通过图例来解释这些比较复杂的概念：
 
+Keystone v2 model
+---
+![](../images/03/keystone_v2.png)
+ - user可以存在于不同的部门中（project），并且在各个部门中可以拥有不同的role。
+ - SandraD在Aerospace是个系统管理员，在Comp Sci就变身为客户支持。
+
+Keystone v3 model: Domain
+---
+![](../images/03/keystone_v3.png)
+
+Keystone v3 model: Group
+---
+![](../images/03/keystone_v3_group.png)
 
 
 ## 先睹为快
