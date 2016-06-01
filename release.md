@@ -6,7 +6,7 @@
 |:---:|:---:|:---:|
 |`v0.1`| 2016-6-03| Xingchao Yu  |
 
-## 2016-6-03
+## 2016-6-23
   - 添加puppet-swift @luyuan (#todo)
   - 添加puppet-trove @penghui (#todo)
   - 添加puppet-manila @weiyu (#todo)
