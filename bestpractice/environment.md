@@ -45,6 +45,7 @@ Environment这个概念是比较容易理解的，你可以联想到开发环境
 ## 在Agent 端指定Environment
 
 在Puppet master 上定义了多套环境之后，在agent 段需要指定本机使用的环境，否则就会使用默认的production 环境。在puppet.conf 中定义environment 参数来指定agent 所属的环境，例如指定agent 为liberty 环境：
+ 
+>    [agent]environment = liberty 
 
-| [agent]environment = liberty |
-| --- |
+
