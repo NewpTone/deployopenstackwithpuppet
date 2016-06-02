@@ -29,19 +29,19 @@
 # `v0.1`发布日志
 
 ## 2016-6-01
-  - 更新puppet-keystone模块，添加基础知识讲解
-  - 添加如何参与一节
+  - 更新`puppet-keystone`模块，添加基础知识讲解
+  - 添加`如何参与`一节
 ## 2016-5-31
-  - 添加puppet-heat @xingchao
-  - 更新puppet-ceilometer模块 @liangliang
+  - 添加`puppet-heat` @xingchao
+  - 更新`puppet-ceilometer`模块 @liangliang
 
 ## 2016-5-30
-  - 添加puppet-vcsrepo模块
-  - 添加puppet-tempest模块
-  - 添加代码风格小节
+  - 添加`puppet-vcsrepo`模块
+  - 添加`puppet-tempest`模块
+  - 添加`代码风格`小节
 
 ## 2016-5-29
-  - 添加puppet-mysql模块
+  - 添加`puppet-mysql`模块
   - 正式发布`v0.1`版本
 
 ## 2016-5-28
