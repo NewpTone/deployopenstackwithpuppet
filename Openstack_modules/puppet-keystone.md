@@ -71,6 +71,13 @@ Keystone v3 model: Group
 - JohnB属于"domain1 sysadmins" group，拥有sysadmin role，并属于Bio,Aero,Compsci project。
 - LisaD属于"Big Engineers"group，拥有Engineer role，仅属于compsci project。
 
+Keystone服务组件
+---
+| 组件 | 描述 |
+|--------|:-----:|
+|openstack-keystone|对外提供认证和授权服务，同时支持v2/v3 API|
+|keystone| 基于命令行的keystone客户端工具|
+
 
 ## 先睹为快
 
