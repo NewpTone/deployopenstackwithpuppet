@@ -1,19 +1,37 @@
 # puppet-cinder模块介绍
 
-1. [先睹为快－一言不和，立马动手？](#先睹为快)
-2. [核心代码讲解－如何管理cinder服务](#核心代码讲解)
-3. [小结](#小结)
-4. [动手练习－光看不练假把式](动手练习)
+1. [基础知识-快速了解keystone](#基础知识)
+2. [先睹为快－一言不和，立马动手？](#先睹为快)
+3. [核心代码讲解－如何管理cinder服务](#核心代码讲解)
+4. [小结](#小结)
+5. [动手练习－光看不练假把式](动手练习)
 
 **本节作者：周维宇**    
 
-**建议阅读时间 1小时**
+**建议阅读时间 2小时**
+
+## 基础知识
+### cinder概述
+* 它是一个资源管理系统，负责向虚拟机提供持久快存储资源
+* 它把不同的后端存储进行封装，向外提供统一的API
+* 它不是新开发的块设备存储系统，而是使用插件的方式结合不同后端存储的驱动提供块存储服务。主要核心是对卷的管理，允许对卷，卷的类型，卷的快照进行处理
+### cinder架构
+![](../images/cinder/cinder_arch.jpg)
+* cinder-api：: 主要服务接口, 负责接受和处理外界的API请求，并将请求放入消息队列，交由后端执行。
+* cinder-scheduer: 根据预定的策略选择合适的cinder－volume节点来处理用户的请求。如果用户请求中执行的具体的存储节点则不需要cinder-scheduler介入。
+* cinder-volume: 该服务运行在存储节点，通过driver负责实际的卷管理工作。
+* cinder-backup: 备份cinder卷到其他存储(swift,ceph等)。
+### 实验环境架构
+![](../images/cinder/cinder_example.png)
+* 所有组件都部署在同一个节点
+* 没有部署cinder-backup
+* 使用ceph作为cider-volume的后端存储
+* 使用rabbitmq作为消息队列
+* 使用mariadb做数据库
+* 本实验环境依赖前面章节部署的mariadb/keystone/ceph/rabbitmq
 
 ## 先睹为快
-在讲解cinder模块之前让我们先部署一个cinder服务先
-
-> 本示例依赖面部署的 keystone/myql/ceph/rabbitmq 4个服务
-
+在讲解cinder模块之前让我们先使用puppet把我们的实验环境部署起来,请根据你的具体环境修改learn_cinder.pp
 
 编写learn_cinder.pp
 ```puppet
@@ -46,7 +64,7 @@ cinder::backend::rbd {'rbd-images':
   rbd_user => 'images',
 }
 
-cinder_type {'rbd-images':
+cinder_type {'ceph':
   ensure     => present,
   properties => ['volume_backend_name=rbd-images'],
 }
@@ -233,14 +251,9 @@ ok，核心代码的解析就到这里，后面的像cinder::quota,cinder::polic
 
 
 ##动手练习
-1.配置LVM作为cinder后端
+1.在另外一个节点部署一个cinder-volume，并使用lvm作存储后端.
 
-2.同时使LVM和ceph作为cinder的后端
+2.创建一个新的volume-type lvm,将该type的卷存储到lvm后端.
 
-3.将cinder运行在apache下
-
-
-
-
-
+3.创建两个卷一个type为ceph,一个type为lvm
 
