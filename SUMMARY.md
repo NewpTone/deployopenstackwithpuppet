@@ -30,7 +30,7 @@
    * [puppet-heat](Openstack_modules/puppet-heat.md)
    * [puppet-swift](Openstack_modules/puppet-swift.md)
    * [puppet-trove](Openstack_modules/puppet-trove.md)
-   * puppet-manila
+   * [puppet-manila](Openstack_modules/puppet-manila.md)
 * [公共库和工具类模块](Library_modules/readme.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
    * [puppet-vswitch](base_modules/puppet-vswitch.md)
