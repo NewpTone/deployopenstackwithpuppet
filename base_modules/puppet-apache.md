@@ -200,3 +200,6 @@ apache::vhost { 'ssl.example.com':
 * [mod_ssl](https://httpd.apache.org/docs/current/mod/mod_ssl.html)
 
 ## 动手练习
+
+1. 使用puppet搭建一套LAMP环境（注意需要和puppet-mysql结合使用）
+2. 使用puppet-apache管理一个HTTPS站点
