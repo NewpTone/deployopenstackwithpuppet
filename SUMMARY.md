@@ -29,7 +29,7 @@
    * [puppet-tempest](Openstack_modules/puppet-tempest.md)
    * [puppet-heat](Openstack_modules/puppet-heat.md)
    * [puppet-swift](Openstack_modules/puppet-swift.md)
-   * puppet-trove
+   * [puppet-trove](Openstack_modules/puppet-trove.md)
    * puppet-manila
 * [公共库和工具类模块](Library_modules/readme.md)
    * [puppet-oslo](Openstack_modules/puppet-oslo.md)
