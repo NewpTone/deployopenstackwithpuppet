@@ -3,7 +3,7 @@
 * [前言](README.md)
 * [概览](Introduction/Intro.md)
    * [阅读指北](Introduction/read_guide.md)
-   * [0.2 准备工作](Introduction/requirement.md)
+   * [准备工作](Introduction/requirement.md)
    * [0.3 相关约定](Introduction/convention.md)
    * [0.4 术语表](Introduction/term.md)
    * [0.5 项目概览](Introduction/project_overview.md)
