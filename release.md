@@ -4,7 +4,7 @@
 
 |Current Version|Next Milestone|Release Manager| 
 |:---:|:---:|:---:|
-|`v0.1`| 2016-6-03| Xingchao Yu  |
+|`v0.1`| `2016-6-03`| Xingchao Yu  |
 
 
 
