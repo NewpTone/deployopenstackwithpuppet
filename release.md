@@ -28,6 +28,7 @@
 ## 2016-6-02
   - 更新`puppet-cinder`模块，添加图文说明
   - 增加了一个炫酷封面，移除autocover插件
+  - 更新`puppet-horizon`模块，添加基础知识
 
 ## 2016-6-01
   - 更新`puppet-keystone`模块，添加基础知识讲解
