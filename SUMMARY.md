@@ -28,7 +28,7 @@
    * [puppet-cinder](Openstack_modules/puppet-cinder.md)
    * [puppet-tempest](Openstack_modules/puppet-tempest.md)
    * [puppet-heat](Openstack_modules/puppet-heat.md)
-   * puppet-swift
+   * [puppet-swift](Openstack_modules/puppet-swift.md)
    * puppet-trove
    * puppet-manila
 * [公共库和工具类模块](Library_modules/readme.md)
