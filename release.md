@@ -30,6 +30,7 @@
 
 ## 2016-6-01
   - 更新puppet-keystone模块，添加基础知识讲解
+  - 添加如何参与一节
 ## 2016-5-31
   - 添加puppet-heat @xingchao
   - 更新puppet-ceilometer模块 @liangliang
