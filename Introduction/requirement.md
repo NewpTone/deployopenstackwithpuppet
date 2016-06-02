@@ -10,12 +10,17 @@ Openstack自动化部署的活儿不能说抡起袖子说干就干，首先你�
 * 对Openstack部署有所了解  推荐 [Installation Guide for Red Hat Enterprise Linux 7 and CentOS 7](http://docs.openstack.org/liberty/install-guide-rdo/)
 
 
-
 ## 资源准备
 
 * 请确保你至少有一台可用的虚拟机，2vcpu, 4G Ram, 30G Disk, 至少有一块NIC，操作系统为RHEL7/CentOS7，并且可以连接上Internet
 * 请确保操作系统上已安装了git命令行工具，并可以正常访问github.com
 
+## 环境搭建
+
+* 你可以使用我们为你准备的安装脚本来搭建实验环境，执行以下命令
+```bash
+sudo curl http://download.nops.cloud/install_example_environment.sh | bash
+```
 
 ## 其他准备
 
