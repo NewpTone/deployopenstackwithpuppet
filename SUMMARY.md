@@ -1,7 +1,7 @@
 # Summary
 
 * [前言](README.md)
-* [0.概览](Introduction/Intro.md)
+* [概览](Introduction/Intro.md)
    * [0.1 阅读指北](Introduction/read_guide.md)
    * [0.2 准备工作](Introduction/requirement.md)
    * [0.3 相关约定](Introduction/convention.md)
