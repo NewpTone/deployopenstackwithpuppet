@@ -13,6 +13,7 @@
 
 这是读者和作者都会感到轻松又欢快的一章，因为puppet-horizon模块比较简单...
 回到正题，puppet-horizon模块是用来配置和管理horzion服务，包括horzion软件包，配置文件和服务的管理，horizon将运行在Apache上。
+！[](../images/03/horizon.png "Horizon")
 
 ## 先睹为快
 
