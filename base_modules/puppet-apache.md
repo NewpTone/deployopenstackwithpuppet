@@ -201,5 +201,5 @@ apache::vhost { 'ssl.example.com':
 
 ## 动手练习
 
-1. 使用puppet搭建一套LAMP环境（注意需要和puppet-mysql结合使用）
+1. 使用puppet搭建一套LAMP环境（注：需和puppet-mysql结合使用）
 2. 使用puppet-apache管理一个HTTPS站点
