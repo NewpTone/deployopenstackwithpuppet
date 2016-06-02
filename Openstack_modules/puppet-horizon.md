@@ -1,5 +1,5 @@
 # puppet-horizon
-
+0. [基础知识 - 快速了解Horizon](#基础知识)
 1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
 2. [核心代码讲解 - 如何做到管理horizon服务？](#核心代码讲解)
    - [class horizon](###class horizon)
@@ -11,10 +11,19 @@
 
 **建议阅读时间 40m**
 
+## 基础知识
+
 这是读者和作者都会感到轻松又欢快的一章，因为puppet-horizon模块比较简单...
-回到正题，puppet-horizon模块是用来配置和管理horzion服务，包括horzion软件包，配置文件和服务的管理，horizon将运行在Apache上。
+回到正题，Horizon为用户提供了Web图形化的管理界面来完成一些常见的运维操作，例如创建虚拟机实例，管理网络，设置访问权限等等。下图给出了Horizon的预览页面的样例。
 
 ![](../images/03/horizon.png)
+
+而puppet-horizon模块则是用来配置和管理horzion服务，包括horzion软件包，配置文件和服务的管理，在生产环境下，horizon将运行在Apache上，而不是运行在horizon开发服务器上。
+
+
+> 注意，要正常运行horizon服务，至少需安装Nova,Keystone,Glance,Neutron服务
+
+
 
 ## 先睹为快
 
