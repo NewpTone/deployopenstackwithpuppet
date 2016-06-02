@@ -5,7 +5,7 @@
    * [阅读指北](Introduction/read_guide.md)
    * [准备工作](Introduction/requirement.md)
    * [相关约定](Introduction/convention.md)
-   * [0.4 术语表](Introduction/term.md)
+   * [术语表](Introduction/term.md)
    * [0.5 项目概览](Introduction/project_overview.md)
 * [1. 基础模块](base_modules/readme.md)
    * [puppet-apache](base_modules/puppet-apache.md)
