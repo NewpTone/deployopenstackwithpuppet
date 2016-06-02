@@ -25,9 +25,13 @@
 ---
 # `v0.1`发布日志
 
+## 2016-6-02
+  - 更新`puppet-cinder`模块，添加图文说明
+
 ## 2016-6-01
   - 更新`puppet-keystone`模块，添加基础知识讲解
   - 添加`如何参与`一节
+ 
 ## 2016-5-31
   - 添加`puppet-heat` @xingchao
   - 更新`puppet-ceilometer`模块 @liangliang
