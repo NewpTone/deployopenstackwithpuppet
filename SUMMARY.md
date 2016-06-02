@@ -7,7 +7,7 @@
    * [相关约定](Introduction/convention.md)
    * [术语表](Introduction/term.md)
    * [项目概览](Introduction/project_overview.md)
-* [1. 基础模块](base_modules/readme.md)
+* [基础模块](base_modules/readme.md)
    * [puppet-apache](base_modules/puppet-apache.md)
    * [puppet-memcache](base_modules/puppet-memcache.md)
    * [puppet-sysctl](base_modules/puppet-sysctl.md)
