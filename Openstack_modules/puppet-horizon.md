@@ -19,11 +19,16 @@
 ![](../images/03/horizon.png)
 
 而puppet-horizon模块则是用来配置和管理horzion服务，包括horzion软件包，配置文件和服务的管理，在生产环境下，horizon将运行在Apache上，而不是运行在horizon开发服务器上。
+除了四大核心项目以外，horizon还支持以下项目：
 
+* swift
+* cinder
+* heat
+* ceilometer
+* trove
+* sahara
 
-> 注意，要正常运行horizon服务，至少需安装Nova,Keystone,Glance,Neutron服务
-
-
+> 注：要正常运行horizon服务，至少需安装Nova,Keystone,Glance,Neutron服务
 
 ## 先睹为快
 
