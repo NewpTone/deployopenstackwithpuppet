@@ -2,6 +2,11 @@
 
 PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发起，发布在github上。当时只有几个核心项目的modules，但在3年多时间里，在大量贡献者的持续努力下，现在已经发展成为一个庞大而复杂的module系统。
 
+你可以通过以下链接找到PuppetOpenstack的更多细节说明：
+
+ -  Wiki（Out of date）: https://wiki.openstack.org/wiki/Puppet
+ -  Docs: http://docs.openstack.org/developer/puppet-openstack-guide/
+
 现在我们先站在最高的山峰上，来看看这些伟岸的群山把。
 
 ## OpenStack modules
