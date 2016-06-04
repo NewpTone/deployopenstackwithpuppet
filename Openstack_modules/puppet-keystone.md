@@ -47,6 +47,77 @@ Assignment
 |Role|role指定了user能获取的授权级别，roles可以授予到domain或project级别，role可以被指定到单独的user或group级别。注意噢，role可是全局唯一的。|
 |Role Assignments|一个包含Role,Resource,Identity的三元组|
 
+Token
+===
+Token服务验证和管理token，在完成对用户正确的认证请求后，Keystone会返回相应的token。token有时效期，在用户与Openstack服务的交互中，会使用token作为验证信息，提高系统的安全性。
+
+Catalog
+===
+Catalog提供了各service的endpoint注册入口，用于endpoint自动发现。
+以下是service catalog的样例：
+```json
+"catalog": [
+    {
+        "name": "Keystone",
+        "type": "identity",
+        "endpoints": [
+            {
+                "interface": "public",
+                "url": "https://identity.example.com:35357/"
+            }
+        ]
+    }
+]
+```
+通常，作为user是不用太关心这个列表的，catalog在以下情况下会出现在响应中：
+ - token creation response (`POST /v3/auth/tokens`)
+ - token validation response (`GET /v3/auth/tokens`)
+ - standalone resource (`GET /v3/auth/catalog`)
+
+Services
+===
+service catalog本身是由一组services组成，辣么service的定义是：
+
+
+> Service实体表示Openstack中的web服务。每个service可以有0个或以上的endpoint，当然有没有endpoint的service并没有什么卵用。完整描述请参见：[Identity API v3 spec](https://github.com/openstack/keystone-specs/blob/master/api/v3/identity-api-v3.rst#services-v3services)
+
+除了和endpoint相关以外，还有两个非常重要的属性：
+
+- name (string)
+
+> 面向用户的service名称
+
+这表示该参数的值不是为了让程序去解析的，而是作为一个终端用户可读的字符串。例如keystone服务的name，你可以设置为"Keystone"或者"UnitedStack Public Cloud Indetity Service"。因此，使用者可以根据实际需求来设置。
+
+- type (string)
+
+> 描述service所实现的API。该参数值只能在给定的列表中选择。目前Openstack支持的参数值是：`compute, image, ec2, identity, volume, network`。
+
+Endpoints
+===
+
+Endpoint表示API服务的基础URL，以及与其相关的metadata。每个服务应该有1个及以上相关的endpoint，例如：publicurl,adminurl,internalurl。
+
+> Endpoint实体表示Opestack web services的URL。
+
+- interface(string)
+
+根据设置的类型来决定endpoint的访问权限：
+
+  - `public`: 向终端用户提供可在公网上访问的网络接口
+  - `internal`: 向终端用户提供近可在内部网络访问的网络接口
+  - `admin`: 提供各个服务管理权限的访问，一般仅部署在内部并且加密的网络接口
+
+多数服务在实际使用时，只需要设置`public`URL即可。
+
+- url (string)
+
+> service enpoint的完整URL。
+
+这个完整URL应该由不带版本信息的基础URL加端口号组成。一个好例子是这样滴：
+`https://identity.example.com:35357/`，相反的,`https://identity.example.com:35357/v2.0/`就是一个反例，它引导所有的client去连接指定的v2.0版本，不管这些客户端能否处理哪里版本。
+
+
 我们通过图例来解释这些比较复杂的概念：
 
 Keystone v2 model
