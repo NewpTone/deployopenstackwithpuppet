@@ -25,6 +25,9 @@
 ---
 # `v0.1`发布日志
 
+## 2016-6-06
+  - 添加install_example_environment.sh
+
 ## 2016-6-03
   - 改善`阅读指北`中的阅读体验
   - 在`puppet-keystone`模块中添加对endpoint,service,catalog的介绍
