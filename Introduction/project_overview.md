@@ -7,7 +7,7 @@ PuppetOpenstack项目是在2013年开始由前PuppetLabs工程师的Dan Bode发�
  -  Wiki（Out of date）: https://wiki.openstack.org/wiki/Puppet
  -  Docs: http://docs.openstack.org/developer/puppet-openstack-guide/
 
-现在我们先站在最高的山峰上，来看看这些伟岸的群山把。
+现在我们先站在最高的山峰上，来看看这些伟岸的群山吧。
 
 ## OpenStack modules
 
