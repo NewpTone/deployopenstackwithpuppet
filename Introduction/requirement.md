@@ -19,7 +19,7 @@ Openstack自动化部署的活儿不能说抡起袖子说干就干，首先你�
 
 * 你可以使用我们为你准备的安装脚本来搭建实验环境，执行以下命令
 ```bash
-sudo curl http://download.nops.cloud/install_example_environment.sh | bash
+sudo curl http://pom.nops.cloud/scripts/install_example_environment.sh | bash
 ```
 
 ## 其他准备
