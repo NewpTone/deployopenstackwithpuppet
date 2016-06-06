@@ -6,3 +6,10 @@
 
 - 你可以使用`git clone`命令来下载代码，并在完成修改后发起pull request请求，我们会在第一时间去处理你的提交代码。
 
+## 项目地址
+ `Gitbook地址`：https://gitbook.com/book/newptone/deployopenstackwithpuppet/details
+ 
+ `Github地址`: https://github.com/NewpTone/deployopenstackwithpuppet
+ 
+ `eBook地址`: http://pom.nops.cloud
+
