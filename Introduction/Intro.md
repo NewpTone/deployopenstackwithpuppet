@@ -6,7 +6,7 @@
 [2.关于Openstack](#关于Openstack)  
 [3.关于Puppet](#关于Puppet)  
 [4.关于PuppetOpenstack](#关于PuppetOpenstack)  
-[5.相同和不同 - Fuel/Packstack/Ctask和PuppetOpenstack的关联](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)  
+[5.相同和不同 - Fuel/Packstack/TripleO/Ctask和PuppetOpenstack的关联](#Fuel/Packstack/Ctask和PuppetOpenstack的区别)  
 [6.为什么要学? - 不要甘于做一个只会使用工具的人](#为什么要学习PuppetOpenstack)  
  
 ## 关于本书
@@ -59,11 +59,13 @@ Puppet是由Puppetlabs公司开发的系统管理框架和工具集，被用于I
 
 第二，Fuel和Packstack项目的部署逻辑直接使用的是PuppetOpenstack项目。所以，你可以理解为有近乎一半的用户选择使用PuppetOpenstack部署Openstack，这对于百花齐放的开源世界来说，是非常可观而且有说服力的数字。
 
-### Fuel/Packstack/Ctask和PuppetOpenstack的关系
+### Fuel/Packstack/TriplO/Ctask和PuppetOpenstack的关系
 
-- Packstack封装了PuppetOpenstack，使得用户在终端下可以通过交互式问答或者非交互式YAML格式文件的方式去部署Openstack集群，使得用户无需了解Puppet和PuppetOpenstack。
+- Packstack封装了PuppetOpenstack，使得用户在终端下可以通过交互式问答或者非交互式YAML格式文件的方式去部署Openstack集群，使得用户无需了解Puppet和PuppetOpenstack的细节。
 
-- Fuel则更进一步，提供了友好的Web UI界面，使得用户对于技术细节如何实现上做到了非常好的隐藏，还提供了一些健康检查工具，确保部署符合预期。
+- Fuel更进一步，提供了友好的Web UI界面，使得用户对于技术细节如何实现上做到了非常好的隐藏，还提供了一些健康检查工具，确保部署符合预期。
+
+- TripleO使用Openstack的现有项目来部署Openstack，tripleo-puppet-elements组件用于生成部署Openstack的磁盘镜像文件，直接使用到了PuppetOpenstack。
 
 - Ctask类似于Packstack，封装了PuppetOpenstack，不同点在于整合了内部开发的网络检查工具，分布式存储检查脚本，确保每步的输出符合预期，并能快速定位到问题的根源。
 
