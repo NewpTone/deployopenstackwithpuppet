@@ -38,3 +38,11 @@ UnitedStack DevOps Team从13年伊始就全身心投入到持续交付和持续�
 > * 陆源([小斯](http://weibo.com/2294179087/profile?topnav=1&wvr=6&is_all=1))  &emsp;UnitedStack DevOps成员，爱GW，不爱GFW。2012年开始埋坑，目前负责PuppetOpenstack和UOS部署工具开发。
 > * 周维宇(spunkzwy) &emsp;Unitedstack Devops成员，专注于云计算与容器技术,目前负责UOS持续集成系统。
 > * 韩亮亮(leon)  &emsp;专注于减肥和Devops，目前负责UOS部署工具开发。
+
+# 如何参与
+
+想为本书添砖加瓦？欢迎加入。更多细节参见 [如何参与](howto.md) 一节。
+
+# 版本更新
+
+想知道每次的版本更新和接下来的编写计划？ 请用力戳我 [如何参与](howto.md)
