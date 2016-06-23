@@ -12,16 +12,17 @@ Openstack自动化部署的活儿不能说抡起袖子说干就干，首先你�
 
 ## 资源准备
 
-* 请确保你至少有一台可用的虚拟机，2vcpu, 4G Ram, 30G Disk, 至少有一块NIC，操作系统为RHEL7/CentOS7，并且可以连接上Internet
-* 请确保操作系统上已安装了git命令行工具，并可以正常访问github.com
+* 请确保你至少有一台可用的虚拟机，`2 vCPU`, `4G RAM`, `30G Disk`, 至少有一块`NIC`，操作系统为`CentOS 7.1/7.2`，并且可以连接上Internet
+* 请确保操作系统上已安装了`git`命令行工具，并可以正常访问`https://github.com`
 
 ## 环境搭建
 
-* 你可以使用我们为你准备的安装脚本来搭建实验环境，执行以下命令
+你可以使用我们为你准备的安装脚本来搭建实验环境，执行以下命令:
+
 ```bash
 sudo curl http://pom.nops.cloud/scripts/install_example_environment.sh | bash
 ```
 
 ## 其他准备
 
-* 请系好安全带，我们准备起飞了
+* 请系好安全带，我们准备起飞了 :D
