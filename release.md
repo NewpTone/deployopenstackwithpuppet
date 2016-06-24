@@ -7,7 +7,7 @@
 |`v0.1`| `2016-6-03`| Xingchao Yu  |
 
 ---
-# `v0.2`计划
+# `v0.2`日志
 
 ## 2016-6-2y
   - 添加puppet-swift @luyuan (#todo)
