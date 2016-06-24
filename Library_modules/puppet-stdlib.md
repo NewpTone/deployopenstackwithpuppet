@@ -142,7 +142,7 @@ file_line { 'bashrc_proxy':
   multiple          => true 
 }
 ```
-### `ensure_packages`
+### ensure_packages
 
 `ensure_packages`接受array/hash类型的软件包列表，并确保它们被正确地安装。其实和`package`资源的使用是相似的，但最大的不同点，在于`ensure_packages`函数可以被安全地多次定义，而不会发生duplicated resource的错误。
 下面举例说明其使用：
@@ -159,7 +159,47 @@ ensure_packages({'ksh' => { enure => '20120801-1' } ,
 
 `ensure_resource`与其类似，这里就不再展开说明。
 
+### validate_xxx
+
+stdlib中提供大量的validate_xxx前缀开头的函数，它们的作用是对输入源进行验证，常被用于变量类型检查中，有点类似于assert的断言，若为false，则退出catalog的编译。
+
+例如: `validate_bool`验证所有传入的参数是否都为true/false布尔类型。
+```puppet
+$iamtrue = true
+validate_bool(true)
+validate_bool(true, true, false, $iamtrue)
+```
+`validate_hash`函数用于验证传入的参数是否为hash类型
+```puppet
+$my_hash = { 'one' => 'two' }
+validate_hash($my_hash)
+```
+### is_xxx
+
+stdlib中也提供了另一类型的验证函数，仅当验证通过后，会返回true/false的布尔值。 
+
+`is_array`验证传入参数是否为array类型:
+```puppet
+$numbers=[1,2,3]
+is_array($numbers)
+```
+`is_ipv4_address`验证传入参数是否为ipv4类型的地址:
+```puppet
+$my_ip='10.0.0.88'
+is_ipv4_address($my_ip)
+```
+### 其他函数
+
+其他还有用于处理string，hash，array等类型的函数，我们会在Openstack模块和基础模块中去单独介绍。
+
 ## 小结
 
+`puppet-stdlib`模块的出现极大地增强了puppet对于各种数据类型的处理能力，提供诸多功能，请读者详细阅读`puppet-stdlib`的`readme.markdown`文件，或者在线阅读[stdlib的文档](https://forge.puppet.com/puppetlabs/stdlib/readme#usage)。
+
 ## 动手练习
+
+1. 验证服务器是否具有eth1，如果有则验证传入的$ipaddress_eth1是否为ipv4类型地址。
+2. 将['china','japan','korea']转化为['china-travel','japan-travel','koera-travel']
+3. 判断一台服务器是否为虚拟机，如果是则将libvirt_type设置为'qemu',否则设置为'kvm'
+4. 从$bigclass namespace中查询变量$var的值，其中$bigclass='foo::bar' (提示:`getvar`)
 
