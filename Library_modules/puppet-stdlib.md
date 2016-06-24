@@ -106,10 +106,56 @@ class { 'ntp':
 
 我们来看看实际的使用吧：
 ```puppet
+# 添加指定行
 # 在/etc/sudoers文件中确保`%sudo ALL=(ALL) ALL`被正确添加
 file_line { 'sudo_rule':
   path => '/etc/sudoers',
   line => '%sudo ALL=(ALL) ALL',
 }
 ```
+在实际使用中，除了添加之外，更多的场景是替换：
+```puppet
+# 修改指定行
+# match参数允许使用正则表达式来精确匹配文本行中的内容
+file_line { 'bashrc_proxy':
+  ensure => present,
+  path   => '/etc/bashrc',
+  line   => 'export HTTP_PROXY=http://squid.puppetlabs.vm:3128',
+  match  => '^export\ HTTP_PROXY\=',
+}
+```
+在一些场景下，我们需要删除配置文件中指定的行：
+```puppet
+#删除指定行
+#match_for_absence参数决定在ensure => absent下，是否执行操作
+#mutiple 确保在多行匹配时继续执行操作（否则报错）
+file_line { 'bashrc_proxy':
+  ensure            => absent,
+  path              => '/etc/bashrc',
+  line              => 'export HTTP_PROXY=http://squid.puppetlabs.vm:3128',
+  match             => '^export\ HTTP_PROXY\=',
+  match_for_absence => true,
+  multiple          => true 
+}
+```
+### `ensure_packages`
+
+`ensure_packages`接受array/hash类型的软件包列表，并确保它们被正确地安装。其实和`package`资源的使用是相似的，但最大的不同点，在于`ensure_packages`函数可以被安全地多次定义，而不会发生duplicated resource的错误。
+下面举例说明其使用：
+```puppet
+# array类型，其中'ksh'被重复传了2次，但可以安全通过编译
+ensure_packages(['ksh','openssl'], {'ensure' => 'present'})
+ensure_packages(['ksh','vim'], {'ensure' => 'present'})
+#
+ensure_packages({'ksh' => { enure => '20120801-1' } ,  
+                 'mypackage' => 
+                          { source => '/tmp/myrpm-1.0.0.x86_64.rpm',                                  provider => "rpm" }}, 
+                {'ensure' => 'present'})
+```
+
+`ensure_resource`与其类似，这里就不再展开说明。
+
+## 小结
+
+## 动手练习
 
