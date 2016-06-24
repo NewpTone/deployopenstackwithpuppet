@@ -12,7 +12,7 @@ max(1,2,3)
 $largest=max(1,2,3)
 notify {"$largest":}
 ```
-那么在这个模块中，它提供大量的Puppet资源：
+在这个模块中，它提供了以下Puppet资源：
 
  * Stages
  * Facts
