@@ -7,23 +7,23 @@
 |`v0.1`| `2016-6-03`| Xingchao Yu  |
 
 ---
-# `v0.2`编写计划
+# `v0.2`计划
 
-## 2016-6-23
+## 2016-6-2y
   - 添加puppet-swift @luyuan (#todo)
   - 添加puppet-trove @penghui (#todo)
   - 添加puppet-manila @weiyu (#todo)
   - 添加puppet-modulesync @xingchao (#todo)
   - 添加puppet-mongodb @hanliangliang (#todo)
 
-## 2016-6-22
+## 2016-6-2x
   - 添加puppet-cookiebutter @xingchao (#todo)
 
-## 2016-6-21
-  - 添加puppet-stdlib @xingchao (#todo)
+## 2016-6-24
+  - 添加puppet-stdlib @xingchao
 
 ---
-# `v0.1`发布日志
+# `v0.1`日志
 
 ## 2016-6-06
   - 添加install_example_environment.sh
