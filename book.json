@@ -1,15 +1,18 @@
 {
-    "output": null,
-    "generator": "site",
-    "title": "深入理解Openstack自动化部署",
-    "plugins": [
-        "add-header",
-        "anchor-navigation",
-        "baiduana"
-    ],
-    "pluginsConfig": {
-        "baidu": {
-            "token": "fe553fd9e380264e6c370f1364948830"
-        }
+  "output": null,
+  "generator": "site",
+  "title": "深入理解Openstack自动化部署",
+  "plugins": ["add-header","anchor-navigation", "baiduana"],
+  "pluginsConfig": {
+    "size": {
+      "w": 1800,
+      "h": 2360
+    },
+    "background": {
+      "color": "#09F"
+    },
+    "baidu": {
+      "token": "fe553fd9e380264e6c370f1364948830"
     }
+  }
 }
