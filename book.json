@@ -5,8 +5,7 @@
     "plugins": [
         "add-header",
         "anchor-navigation",
-        "baidu",
-        "tongji"
+        "baidu"
     ],
     "pluginsConfig": {
         "baidu": {
