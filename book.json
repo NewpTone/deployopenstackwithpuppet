@@ -8,5 +8,9 @@
         "baidu",
         "tongji"
     ],
-    "pluginsConfig": {}
+    "pluginsConfig": {
+        "baidu": {
+            "token": "fe553fd9e380264e6c370f1364948830"
+        }
+    }
 }
