@@ -190,7 +190,7 @@ is_ipv4_address($my_ip)
 ```
 ### 其他函数
 
-其他还有用于处理string，hash，array等类型的函数，我们会在Openstack模块和基础模块中去单独介绍。
+在`puppet-stdlib`模块中还有一些用于处理string，hash，array等类型的函数，我们会在Openstack模块和基础模块中去单独介绍。
 
 ## 小结
 
