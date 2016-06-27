@@ -16,8 +16,8 @@
   - 添加puppet-modulesync @xingchao (#todo)
   - 添加puppet-mongodb @hanliangliang (#todo)
 
-## 2016-6-2x
-  - 添加puppet-cookiebutter @xingchao (#todo)
+## 2016-6-27
+  - 添加puppet-cookiebutter @xingchao
 
 ## 2016-6-24
   - 添加puppet-stdlib @xingchao
