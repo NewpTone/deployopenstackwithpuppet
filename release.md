@@ -13,8 +13,10 @@
   - 添加puppet-swift @luyuan (#todo)
   - 添加puppet-trove @penghui (#todo)
   - 添加puppet-manila @weiyu (#todo)
-  - 添加puppet-modulesync @xingchao (#todo)
   - 添加puppet-mongodb @hanliangliang (#todo)
+
+## 2016-6-29
+  - 添加puppet-modulesync-config @xingchao (#todo)
 
 ## 2016-6-27
   - 添加puppet-cookiebutter @xingchao
