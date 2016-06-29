@@ -36,7 +36,7 @@
    * [puppet-vswitch](base_modules/puppet-vswitch.md)
    * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
    * [puppet-openstack-integration](Library_modules/puppet-openstack-integration.md)
-   * [puppet-openstack_specs](Library_modules/puppet-openstackspecs.md)
+   * [puppet-openstack-specs](Library_modules/puppet-openstackspecs.md)
    * [puppet-openstack-cookiebutter](Library_modules/puppet-cookiebutter.md)
    * [puppet-modulesync-configs](Library_modules/puppet-modulesync.md)
    * [puppet-openstack_spec_helper](Library_modules/puppet-openstackspec_helper.md)
