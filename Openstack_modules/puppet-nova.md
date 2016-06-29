@@ -11,10 +11,10 @@
 4. [动手练习 - 光看不练假把式](##动手练习)
 
 **本节作者：廖鹏辉**    
+**阅读级别：必读 **  
+**阅读时间 1.5h**
 
-**建议阅读时间 1.5h**
-
-puppet-nova 是用来配置和管理 nova 服务，包括服务，软件包，配置文件，flavor，nova cells 等等。其中 nova flavor, cell 等资源的管理是使用自定义的resource type来实现的。
+`puppet-nova`模块用于配置和管理Nova服务，包括服务，软件包，配置文件，flavor，nova cells等等。其中 nova flavor, cell 等资源的管理是使用自定义的resource type来实现的。
 
 ## 先睹为快
 Nova 服务内部有很多组件，其中最重要的组件是 nova-api 和 nova-compute，这两个服务的部署在 nova 模块中都有专门的类来完成，当然在部署之前环境中需要有 keystone 来为 nova 提供认证服务。
