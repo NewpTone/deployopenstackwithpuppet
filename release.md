@@ -25,14 +25,17 @@
   - 添加puppet-manila @weiyu (#todo)
   - 添加puppet-mongodb @hanliangliang (#todo)
 
+## 2016-6-30
+  - 添加`puppet-openstack-specs`模块
+
 ## 2016-6-29
-  - 添加`puppet-modulesync-config`模块 @xingchao
+  - 添加`puppet-modulesync-config`模块
 
 ## 2016-6-27
-  - 添加`puppet-cookiebutter`模块 @xingchao
+  - 添加`puppet-cookiebutter`模块
 
 ## 2016-6-24
-  - 添加`puppet-stdlib`模块 @xingchao
+  - 添加`puppet-stdlib`模块
 
 ---
 # `v0.1`日志
@@ -57,8 +60,8 @@
   - 添加`如何参与`一节
  
 ## 2016-5-31
-  - 添加`puppet-heat` @xingchao
-  - 更新`puppet-ceilometer`模块 @liangliang
+  - 添加`puppet-heat`模块
+  - 更新`puppet-ceilometer`模块
 
 ## 2016-5-30
   - 添加`puppet-vcsrepo`模块
