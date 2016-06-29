@@ -6,7 +6,7 @@
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
-Puppet Openstack integration项目确保我们可以持续地测试和验证使用Puppet modules部署的Openstack集群。
+`Puppet-openstack-integration`模块确保社区可以持续地测试和验证使用Puppet modules部署的Openstack集群。
 
 > 建议在阅读其他module前，优先阅读本节内容。
 
