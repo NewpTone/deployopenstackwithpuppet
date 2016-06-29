@@ -2,11 +2,21 @@
 
 本页面维护着本书的版本日志和编写计划，我们将~~看心情~~严格遵守编写计划的推进。
 
-|Current Version|Next Milestone|Release Manager| 
+|Version|Next Milestone|Release Manager| 
 |:---:|:---:|:---:|
-|`v0.1`| `2016-6-03`| Xingchao Yu  |
+|`v0.3`| `2016-6-03`| Xingchao Yu  |
+|`v0.2`| `2016-7-03`| Xingchao Yu  |
+|`v0.1`| `2016-8-03`| Xingchao Yu  |
+
 
 ---
+# `v0.3`日志
+## 2016-7-xx
+  - 添加puppet-sahara
+  - 添加puppet-ironic
+  - 添加puppet-aodh
+  - 添加puppet-goncchi
+  - 添加puppet-rally
 # `v0.2`日志
 
 ## 2016-6-2y
@@ -16,13 +26,13 @@
   - 添加puppet-mongodb @hanliangliang (#todo)
 
 ## 2016-6-29
-  - 添加puppet-modulesync-config @xingchao
+  - 添加`puppet-modulesync-config`模块 @xingchao
 
 ## 2016-6-27
-  - 添加puppet-cookiebutter @xingchao
+  - 添加`puppet-cookiebutter`模块 @xingchao
 
 ## 2016-6-24
-  - 添加puppet-stdlib @xingchao
+  - 添加`puppet-stdlib`模块 @xingchao
 
 ---
 # `v0.1`日志
@@ -70,7 +80,7 @@
   - 更新各个章节的作者
   - 移除`从入门到放弃`副标题，考虑添加`从被忽悠到会忽悠`副标题
 
-## 2016-5-9
+## 2016-5-09
   - 更新半年前没写完的开天辟地README
 
 ## 2015-11-03
