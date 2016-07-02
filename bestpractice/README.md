@@ -18,23 +18,23 @@
 
 我们将其归纳为以下几大块。
 
-代码管理相关：
+1.代码管理相关：
 
  - 版本控制
  - 代码管理
 
-配置管理相关:
+2.配置管理相关:
 
  - Hiera
  - Node Definition
  - Environment
  - PuppetDB
 
-任务编排相关:
+3.任务编排相关:
 
  - ClusterShell
  - Ansible
 
-运维原则相关:
+4.运维原则相关:
 
  - 配置管理操作的基本守则
