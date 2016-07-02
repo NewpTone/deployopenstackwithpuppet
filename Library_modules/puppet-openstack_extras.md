@@ -1,5 +1,7 @@
 # puppet-openstack_extras
 
+This will be done in `v0.2`
+
 1. [先睹为快](#先睹为快)
 2. [核心资源讲解](#核心资源讲解)
 3. [小结](##小结)
