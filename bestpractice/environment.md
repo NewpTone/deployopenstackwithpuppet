@@ -1,4 +1,4 @@
-# Environment
+# 如何正确地使用环境
 
 Environment这个概念是比较容易理解的，你可以联想到开发环境，测试环境，线上环境等等。
 是的，environment的目的就是为了将不同类型的host分组。
