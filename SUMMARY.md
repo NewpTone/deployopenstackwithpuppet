@@ -53,6 +53,7 @@
    * Puppet版本的选择
    * Puppet的能与不能
    * 合理使用PuppetDB
+   * 如何处理依赖
 * [如何参与](howto.md)
 * [版本日志](release.md)
 
