@@ -11,7 +11,7 @@
 
 ---
 # `v0.3`日志
-## 2016-7-xx
+## 2016-8-xx
   - 添加puppet-sahara
   - 添加puppet-ironic
   - 添加puppet-aodh
@@ -19,7 +19,7 @@
   - 添加puppet-rally
 # `v0.2`日志
 
-## 2016-6-2y
+## 2016-7-yy
   - 添加puppet-swift @luyuan (#todo)
   - 添加puppet-trove @penghui (#todo)
   - 添加puppet-manila @weiyu (#todo)
