@@ -41,7 +41,7 @@
    * [puppet-modulesync-configs](Library_modules/puppet-modulesync.md)
    * [puppet-openstack_spec_helper](Library_modules/puppet-openstackspec_helper.md)
    * [puppet-stdlib](Library_modules/puppet-stdlib.md)
-   * puppet-openstack_extras
+   * [puppet-openstack_extras](Library_modules/puppet-openstack_extras.md)
 * [最佳实践](bestpractice/README.md)
    * [提交规范](bestpractice/version_control.md)
    * [代码管理](bestpractice/code_management.md)
