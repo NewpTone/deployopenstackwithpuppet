@@ -13,11 +13,35 @@
 3. [小结](#小结)
 4. [动手练习 - 光看不练假把式](#动手练习)
 
-**本节作者：韩亮亮**    
+**本节作者：韩亮亮**
 
+**建议阅读时间 1h**
 
+ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生的大部分事件，为计费和监控以及其它服务提供数据支撑。ceilometer的架构如下：
+![](../images/03/ceilometer.png)
+ceilometer服务
+---
+| 名称 | 说明 |
+|--------|:-----:|
+| openstack-ceilometer-api | 用于调用和查看collector收集的数据 |
+| openstack-ceilometer-collector | 用于收集和记录polling和notification传过来的事件和计量数据 |
+| openstack-ceilometer-notification | 用于监听消息队列，把感兴趣的监听消息变成Events和Samples，并发送到pipeline。 |
+| openstack-ceilometer-polling | 用于获取openstack组件的信息，并生成监控数据，有三种启动类型：compute、central、ipmi。 |
+ceilometer数据
+---
+| 名称 | 说明 |
+|--------|:-----:|
+| Sample | 某一个时间点获取到的监控数据 |
+| Event | 就是一个事件、一个动作，如创建虚拟机、创建硬盘等。|
+ceilometer收集数据方式
+---
+| 名称 | 说明 |
+|--------|:-----:|
+| Bus listener agent | 通过监听消息队列来获取信息，官方首选。|
+| Polling agents | 通过调用API来收集信息。|
 ## 先睹为快
-ceilometer是openstack的数据收集模块，它把收集OpenStack内部发生的大部分事件，为计费和监控以及其它服务提供数据支撑。由于ceilometer依赖很多服务，所以最好先部署一个openstack，我们可以使用下一站章节的puppet-openstack-integration或devstack部署一套简易版openstack。
+由于ceilometer依赖很多服务，所以最好先部署一个openstack，我们可以使用下一站章节的puppet-openstack-integration或devstack部署一套简易版openstack。
+
 部署ceilometer：
 在examples/site.pp里添加下面的代码,因为默认的site.pp里没有创建endpoint,role。
 ```puppet
