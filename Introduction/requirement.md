@@ -17,11 +17,12 @@ Openstack自动化部署的活儿不能说抡起袖子说干就干，首先你�
 
 ## 环境搭建
 
-你可以使用我们为你准备的安装脚本来搭建实验环境，执行以下命令:
+你可以使用我们准备的安装脚本来配置实验环境，请在终端下执行以下命令:
 
 ```bash
 sudo curl http://pom.nops.cloud/scripts/install_example_environment.sh | bash
 ```
+建议为你的虚拟机制作好快照，在调试代码时，我们尽可能使用纯净的测试环境。
 
 ## 其他准备
 
