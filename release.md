@@ -20,6 +20,8 @@
   - 添加puppet-designate
   - 添加puppet-barbican
   - 添加puppet-mistral
+
+
 # `v0.2`日志
 
 ## 2016-7-yy
@@ -29,7 +31,10 @@
 
 
 ## 2016-7-03
-  - 添加puppet-mongodb
+  - 添加`puppet-mongodb`模块
+
+## 2016-7-02
+  - 更新`最佳实践`章节，添加todo list
 
 ## 2016-6-30
   - 添加`puppet-openstack-specs`模块
