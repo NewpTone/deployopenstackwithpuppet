@@ -17,6 +17,7 @@
    * [puppet-firewall](base_modules/puppet-firewall.md)
    * [puppet-mysql](base_modules/puppet-mysql.md)
    * [puppet-vcsrepo](base_modules/puppet-vcsrepo.md)
+   * [puppet-mongodb](base_modules/puppet-mongodb.md)
 * [Openstack模块](Openstack_modules/README.md)
    * [模块目录结构](Introduction/module_structure.md)
    * [puppet-keystone](Openstack_modules/puppet-keystone.md)
