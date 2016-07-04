@@ -17,13 +17,19 @@
   - 添加puppet-aodh
   - 添加puppet-goncchi
   - 添加puppet-rally
+  - 添加puppet-designate
+  - 添加puppet-barbican
+  - 添加puppet-mistral
 # `v0.2`日志
 
 ## 2016-7-yy
   - 添加puppet-swift @luyuan (#todo)
   - 添加puppet-trove @penghui (#todo)
   - 添加puppet-manila @weiyu (#todo)
-  - 添加puppet-mongodb @hanliangliang (#todo)
+
+
+## 2016-7-03
+  - 添加puppet-mongodb
 
 ## 2016-6-30
   - 添加`puppet-openstack-specs`模块
