@@ -16,7 +16,10 @@
 ### 架构简介
 Openstack大多数项目属于as-a-service类型，因此Rally提供了service和CLI两种方式：
 
-- Rally as-a-Service
-- Rally as-an-App
+- Rally as-a-Service  以web service方式对外提供服务
+- Rally as-an-App     作为轻量级命令行工具使用
+
+
 
 ## 先睹为快
+
