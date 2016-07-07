@@ -20,15 +20,19 @@
   - 添加puppet-designate
   - 添加puppet-barbican
   - 添加puppet-mistral
-
+  - 添加puppet-manila @weiyu (#todo)
+  - 添加puppet-trove @penghui (#todo)
 
 # `v0.2`日志
+## 2016-7-07
+   - 更新`作者简介`
+   - 补全`puppet-rally`章节内容
 
-## 2016-7-yy
-  - 添加puppet-swift @luyuan (#todo)
-  - 添加puppet-trove @penghui (#todo)
-  - 添加puppet-manila @weiyu (#todo)
+## 2016-7-06
+  - 添加`puppet-rally`模块
 
+## 2016-7-05
+  - 添加`puppet-swift`模块
 
 ## 2016-7-03
   - 添加`puppet-mongodb`模块
