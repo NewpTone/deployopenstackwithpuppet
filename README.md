@@ -37,7 +37,7 @@ UnitedStack DevOps Team从13年伊始就全身心投入到持续交付和持续�
 > * 廖鹏辉 ([大狗罗宾逊](http://weibo.com/aoLiii)） &emsp; 与puppet-openstack社区和puppetlabs社区谈笑风声的 puppet 酱，头号背锅侠。
 > * 陆源([小斯](http://weibo.com/2294179087/profile?topnav=1&wvr=6&is_all=1))  &emsp;  推崇BDD（Bug~~Business~~-Driven Development），爱GW，不爱GFW。2012年开始埋坑，目前负责PuppetOpenstack和UOS部署工具开发。
 > * 周维宇(spunkzwy) &emsp; 专注于云计算与容器技术，目前负责UOS持续集成系统。
-> * 韩亮亮(leon)  &emsp;专注于减肥和Devops，目前负责UOS部署工具开发。
+> * 韩亮亮(leon)  &emsp;专注于减肥和美食，目前负责UOS部署工具开发。
 
 # 如何参与
 
