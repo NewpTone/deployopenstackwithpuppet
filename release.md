@@ -26,7 +26,7 @@
 ## 2016-7-07
    - 更新`作者简介`
    - 补全`puppet-rally`章节内容
-   - 添加puppet-trove
+   - 添加`puppet-trove`模块
 
 ## 2016-7-06
   - 添加`puppet-rally`模块
