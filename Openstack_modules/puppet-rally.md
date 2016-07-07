@@ -12,12 +12,12 @@
 **阅读级别：选读 **  
 **阅读时间: 40分钟**
 
-## 基础知识
+##基础知识
 
 `Rally`项目是Openstack性能测试服务，可以被用于Openstack CI/CD中的基本工具链中，以提高Openstack的SLA。下图给出了Rally与Deployment,Verify,Benchmark之间的关系以及其执行流程。不过Rally当前的主要工作仍然集中在benchmark上，社区的进度比较缓慢。
 
 ![](../images/03/rally-process.png)
-### 架构简介
+###架构简介
 Openstack大多数项目属于as-a-service类型，因此Rally提供了service和CLI两种方式：
 
 - Rally as-a-Service  以web service方式对外提供服务
@@ -25,7 +25,7 @@ Openstack大多数项目属于as-a-service类型，因此Rally提供了service�
 
 ![](../images/03/rally-Arch.png)
 
-## 先睹为快
+##先睹为快
 
 
 > puppet-rally模块目前没有使用Release机制管理，请使用master分支代码
@@ -37,11 +37,11 @@ puppet apply -e 'include rally'
 
 然后就可以开始使用rally了，是不是so easy？
 
-## 代码讲解
+##代码讲解
 
 `puppet-rally`模块中，我们主要介绍`class rally`和`class rally::settings`：
 
-### class rally
+###class rally
 
 ```puppet
   include ::rally::db   #配置数据库
@@ -62,7 +62,7 @@ puppet apply -e 'include rally'
     purge => $purge_config,
 ```
 
-### class rally::settings
+###class rally::settings
 
 rally配置文件中涉及到各个服务的参数设置，以cinder为例，在[benchmark]下就有以下参数：
 
@@ -106,12 +106,12 @@ class rally::settings (
 ```
 
 
-## 小结
+##小结
 
 本节简要介绍了Rally服务以及如何使用`puppet-rally`模块部署Rally服务。当前，Rally服务作为Openstack平台的性能测试项目，目前的使用场景还是比较有限的，因为当前Rally只能支持API级别的性能测试，并且多数API的后端操作是异步的，如果只关注API的响应结果，意义不大。不过值得庆幸的是，Rally项目有来自国内两家公司的[core reviewer](https://review.openstack.org/#/admin/groups/211,members)（Kun Huang和Li Yingjun），我们期待着Newton版本中Rally的发展和变化。
 
 
-## 动手练习
+##动手练习
 
 1. 设置glance_image_create_timeout为60s
 2. 使用MySQL替换默认的SQlite作为数据库后端
