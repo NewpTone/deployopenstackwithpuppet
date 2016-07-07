@@ -2,15 +2,15 @@
 
 本页面维护着本书的版本日志和编写计划，我们将~~看心情~~严格遵守编写计划的推进。
 
-|Version|Next Milestone|Release Manager| 
-|:---:|:---:|:---:|
-|`v0.3`| `2016-6-03`| Xingchao Yu  |
-|`v0.2`| `2016-7-03`| Xingchao Yu  |
-|`v0.1`| `2016-8-03`| Xingchao Yu  |
+|Version|Status|Next Milestone|Release Day|Release Manager| 
+|:---:|:---:|:---:|:---:|:---:|
+|`v0.3`|`Design`|`2016-8-01`|`N/A`|Xingchao Yu  |
+|`v0.2`|`Progress`|`2016-7-03`|`2016-7-07`|Xingchao Yu  |
+|`v0.1`|`Finished`|`2016-6-01`|`2016-6-03`|Xingchao Yu  |
 
 
 ---
-# `v0.3`日志
+# `v0.3`版本说明
 ## 2016-8-xx
   - 添加puppet-sahara
   - 添加puppet-ironic
@@ -22,7 +22,7 @@
   - 添加puppet-mistral
   - 添加puppet-manila @weiyu (休假中)
 
-# `v0.2`日志
+# `v0.2`版本说明
 ## 2016-7-07
    - 更新`作者简介`
    - 补全`puppet-rally`章节内容
@@ -53,7 +53,7 @@
   - 添加`puppet-stdlib`模块
 
 ---
-# `v0.1`日志
+# `v0.1`版本说明
 
 ## 2016-6-06
   - 添加install_example_environment.sh
