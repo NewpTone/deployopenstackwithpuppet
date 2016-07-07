@@ -5,6 +5,7 @@
 2. [先睹为快 - 一言不合，立马动手?](#先睹为快)
 3. [核心代码讲解 - 如何做到管理Rally服务？](#核心代码讲解)
     - [class rally](#class rally)
+    - class rally::settings
 4. [小结](##小结)
 5. [动手练习 - 光看不练假把式](##动手练习)
 
@@ -105,5 +106,15 @@ class rally::settings (
 }
 ```
 
+
+## 小结
+
+本节简要介绍了`puppet-rally`模块如何部署Rally服务，Rally服务作为一个仍在发展中的性能测试项目，目前的使用场景还是比较有限的，因为当前Rally只能支持API级别的性能测试，并且多数API的后端操作是异步的，如果只关注API的响应结果，意义不大。不过Rally项目有来自国内两家公司的[core reviewer](https://review.openstack.org/#/admin/groups/211,members)（Kun Huang和Li Yingjun），我们期待Newton版本中的发展和变化。
+
+
+## 动手练习
+
+1. 设置glance_image_create_timeout为60s
+2. 使用MySQL作为数据库后端
 
 
