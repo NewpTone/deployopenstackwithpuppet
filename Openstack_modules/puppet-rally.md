@@ -37,7 +37,7 @@ puppet apply -e 'include rally'
 
 然后就可以开始使用rally了，是不是so easy？
 
-##代码讲解
+##核心代码讲解
 
 `puppet-rally`模块中，我们主要介绍`class rally`和`class rally::settings`：
 
