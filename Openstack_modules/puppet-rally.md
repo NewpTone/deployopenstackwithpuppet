@@ -1,5 +1,4 @@
 # puppet-rally
-`still in progress`
 
 1. 基础知识
 2. [先睹为快 - 一言不合，立马动手?](#先睹为快)
