@@ -6,6 +6,10 @@
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
+**本节作者：余兴超**    
+**阅读级别：必读 **  
+**阅读时间: 40分钟**
+
 Tempest是Openstack的集成测试框架，它的实现基于python的unittest2测试框架和nose测试框架。Tempest通过Openstack client发起API请求，并且对API响应结果进行验证。
 
 ## 先睹为快
