@@ -27,6 +27,9 @@ Openstack大多数项目属于as-a-service类型，因此Rally提供了service�
 
 ## 先睹为快
 
+
+> puppet-rally模块目前没有使用Release机制管理，请使用master分支代码
+
 在终端下执行以下命令:  
 ```
 puppet apply -e 'include rally'
@@ -35,6 +38,72 @@ puppet apply -e 'include rally'
 然后就可以开始使用rally了，是不是so easy？
 
 ## 代码讲解
+
+`puppet-rally`模块中，我们主要介绍`class rally`和`class rally::settings`：
+
+### class rally
+
+```puppet
+  include ::rally::db   #配置数据库
+  include ::rally::logging  #配置日志
+  include ::rally::settings #rally.conf配置文件
+
+  # Keep backward compatibility
+  $openstack_client_http_timeout_real = pick($::rally::settings::openstack_client_http_timeout,$openstack_client_http_timeout)
+
+  # rally软件包的安装
+  package { 'rally':
+    ensure => $ensure_package,
+    name   => $::rally::params::package_name,
+    tag    => ['openstack', 'rally-package'],
+  }
+  # 是否清理非Puppet管理的配置
+  resources { 'rally_config':
+    purge => $purge_config,
+```
+
+### class rally::settings
+
+rally配置文件中涉及到各个服务的参数设置，以cinder为例，在[benchmark]下就有以下参数：
+
+*   $volume_create_poll_interval 
+*   $volume_create_prepoll_delay 
+*   $volume_create_timeout       
+*   $volume_delete_poll_interval 
+*   $volume_delete_timeout
+
+在`puppet-rally`模块下，将各服务的参数设置，拆为单独的class，放置在settings/目录下，统一被`rally::settings`调用：
+```puppet
+class rally::settings (
+  $project_domain                = $::os_service_default,
+  $resource_deletion_timeout     = $::os_service_default,
+  $resource_management_workers   = $::os_service_default,
+  $user_domain                   = $::os_service_default,
+  $openstack_client_http_timeout = undef,
+) {
+
+  #管理rally各服务的配置
+  include ::rally::settings::cinder
+  include ::rally::settings::ec2
+  include ::rally::settings::glance
+  include ::rally::settings::heat
+  include ::rally::settings::ironic
+  include ::rally::settings::manila
+  include ::rally::settings::murano
+  include ::rally::settings::nova
+  include ::rally::settings::sahara
+  include ::rally::settings::swift
+  # 此类等待https://review.openstack.org/#/c/337412/被Merge
+  include ::rally::settings::tempest
+
+  rally_config {
+    'cleanup/resource_deletion_timeout':         value => $resource_deletion_timeout;
+    'users_context/project_domain':              value => $project_domain;
+    'users_context/resource_management_workers': value => $resource_management_workers;
+    'users_context/user_domain':                 value => $user_domain;
+  }
+}
+```
 
 
 
