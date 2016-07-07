@@ -109,12 +109,13 @@ class rally::settings (
 
 ## 小结
 
-本节简要介绍了`puppet-rally`模块如何部署Rally服务，Rally服务作为一个仍在发展中的性能测试项目，目前的使用场景还是比较有限的，因为当前Rally只能支持API级别的性能测试，并且多数API的后端操作是异步的，如果只关注API的响应结果，意义不大。不过Rally项目有来自国内两家公司的[core reviewer](https://review.openstack.org/#/admin/groups/211,members)（Kun Huang和Li Yingjun），我们期待Newton版本中的发展和变化。
+本节简要介绍了Rally服务以及如何使用`puppet-rally`模块部署Rally服务。当前，Rally服务作为Openstack平台的性能测试项目，目前的使用场景还是比较有限的，因为当前Rally只能支持API级别的性能测试，并且多数API的后端操作是异步的，如果只关注API的响应结果，意义不大。不过值得庆幸的是，Rally项目有来自国内两家公司的[core reviewer](https://review.openstack.org/#/admin/groups/211,members)（Kun Huang和Li Yingjun），我们期待着Newton版本中Rally的发展和变化。
 
 
 ## 动手练习
 
 1. 设置glance_image_create_timeout为60s
-2. 使用MySQL作为数据库后端
+2. 使用MySQL替换默认的SQlite作为数据库后端
+3. 当前`puppet-rally`能否支持从源码安装Rally？需要如何修改？
 
 
