@@ -11,12 +11,12 @@
 4. [动手练习](##动手练习)
 
 **本节作者：廖鹏辉**    
-
+**阅读级别：选读 **  
 **阅读时间:2h**
 
 ##基础知识
 
-trove 是一个 DBaaS 服务，它能够利用 OpenStack 云平台中的资源，让用户能够以自助的方式快速的构建和管理数据库服务。trove 支持多种数据库，包括关系型和非关系型数据库，例如 MySQL/MariaDB/PostgreSQL/MongoDB/Canssandra/Redis/Couchbase 等等。trove 将这些数据库的管理功能抽象成了统一的接口提供给用户使用。
+Trove 是一个 DBaaS 服务，它能够利用 OpenStack 云平台中的资源，让用户能够以自助的方式快速的构建和管理数据库服务。trove 支持多种数据库，包括关系型和非关系型数据库，例如 MySQL/MariaDB/PostgreSQL/MongoDB/Canssandra/Redis/Couchbase 等等。trove 将这些数据库的管理功能抽象成了统一的接口提供给用户使用。
 
 使用 trove 服务能够帮助用户减少数据库的部署，配置和维护成本，能够更轻松的使用各种不同的数据库服务。trove 通过调用 Nova/Cinder/Swift 等其他 OpenStack 服务来进行资源的编排。
 
