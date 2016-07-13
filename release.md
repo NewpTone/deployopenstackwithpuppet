@@ -5,7 +5,7 @@
 |Version|Status|Next Milestone|Release Day|Release Manager| 
 |:---:|:---:|:---:|:---:|:---:|
 |`v0.3`|`Design`|`2016-8-01`|`N/A`|Xingchao Yu  |
-|`v0.2`|`Progress`|`2016-7-03`|`2016-7-07`|Xingchao Yu  |
+|`v0.2`|`Finished`|`2016-7-03`|`2016-7-09`|Xingchao Yu  |
 |`v0.1`|`Finished`|`2016-6-01`|`2016-6-03`|Xingchao Yu  |
 
 
@@ -20,9 +20,12 @@
   - 添加puppet-designate
   - 添加puppet-barbican
   - 添加puppet-mistral
-  - 添加puppet-manila @weiyu (休假中)
 
 # `v0.2`版本说明
+
+## 2016-7-09
+   - 添加`puppet-manila`模块 
+
 ## 2016-7-07
    - 更新`作者简介`
    - 补全`puppet-rally`章节内容
