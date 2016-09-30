@@ -53,9 +53,9 @@
     * [代码风格](bestpractice/code_style.md)
     * [Standalone vs C\/S 模式](bestpractice/cs-vs-standalone模式.md)
     * [Puppet版本的选择](bestpractice/puppet版本的选择.md)
-    * Puppet的能与不能
+    * [Puppet的能与不能](bestpractice/puppet的能与不能.md)
     * [合理使用PuppetDB](bestpractice/合理使用puppetdb.md)
-    * 如何处理依赖
+    * [如何处理依赖](bestpractice/如何处理依赖.md)
 * [如何参与](howto.md)
 * [版本日志](release.md)
 
