@@ -51,7 +51,7 @@
     * [Environment](bestpractice/environment.md)
     * [转发层规范](bestpractice/Composition.md)
     * [代码风格](bestpractice/code_style.md)
-    * [C\/S vs Standalone模式](bestpractice/cs-vs-standalone模式.md)
+    * [Standalone vs C\/S 模式](bestpractice/cs-vs-standalone模式.md)
     * [Puppet版本的选择](bestpractice/puppet版本的选择.md)
     * Puppet的能与不能
     * [合理使用PuppetDB](bestpractice/合理使用puppetdb.md)

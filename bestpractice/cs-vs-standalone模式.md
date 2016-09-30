@@ -1,4 +1,4 @@
-# 服务器/客户端 vs 单机模式
+#  Standalone vs C/S 模式
 
 ## Standalone(单机模式)
 
