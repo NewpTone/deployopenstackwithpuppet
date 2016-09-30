@@ -49,7 +49,7 @@
     * [Hiera](bestpractice/hiera.md)
     * [提交规范](bestpractice/version_control.md)
     * [Environment](bestpractice/environment.md)
-    * [转发层模块](bestpractice/Composition.md)
+    * [转发层规范](bestpractice/Composition.md)
     * [代码风格](bestpractice/code_style.md)
     * [C\/S vs Standalone模式](bestpractice/cs-vs-standalone模式.md)
     * [Puppet版本的选择](bestpractice/puppet版本的选择.md)
