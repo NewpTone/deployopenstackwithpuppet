@@ -14,15 +14,50 @@ Puppet适合用于以下场景：
 - MySQL,Apache,RabbitMQ等软件的包管理
 - Openstack软件的包安装，配置文件管理以及服务状态的管理
 - Puppet原生resource type，如ssh,host等
-- Puppet第三方模块扩展的自定义resource，如keystone_user,mysql_database等
+- Puppet第三方模块中的扩展resource，如keystone_user,mysql_database等
+
 
 ## 什么场景下不选择使用Puppet?
 
 Puppet不适合使用以下场景：
 
-- 源码的管理： 绝对不适合，所有服务必须以统一的打包形式上线
-- 依赖包的管理：不适合，所有包的依赖必须通过spec的形式来管理
-- 二进制文件的管理：不适合，所有二进制文件需要单独打包处理
-- 服务的初始化操作：酌情考虑，除非逻辑非常复杂或者代价太大，否则建议采用Puppet来管理
-- 服务状态的监控和恢复：Puppet并不是监控系统也不是专业的服务状态管理，每次编译catalog消耗大量资源，不适合短间隔执行来保障服务状态
-- 角色间或节点间的依赖管理处理：Puppet本身没有编排能力，只能处理同一个节点内的类之间或者服务之间的依赖关系。
+- 源码文件管理
+
+  有人可能会使用`file`resource来管理一些项目的脚本，比如zabbix的plugin scripts，这些代码文件通常作为静态文件放置在files/目录下，在agent应用catalog的阶段，从puppetserver下载到各个服务器上。这样做有好多缺点：
+   - 首先, 每次代码文件的更新必须要更新相应模块，业务代码和部署代码完全耦合。
+   - 其次，所有线上业务没统一的代码管理方式，在我们内部，所有项目必须使用RPM包的方式进行统一管理
+   - 最后，每次执行Puppet Agent都会对每个文件单独计算hash值，并在服务器端做hash值比较，且会把旧文件备份到备份文件目录下，此操作会消耗客观的CPU和IO资源。
+
+- 软件包的依赖管理
+
+   例如在计算节点上，nova-compute依赖bridge-utils包，有些工程师喜欢在nova::compute里去添加一个`package`资源来确保在计算节点上安装此包。正确的做法是在nova的spec文件里，对openstack-nova-compute组件新增一条包依赖关系。
+   我们应该明确包的依赖管理应该交给软件包管理工具去做。
+
+- 二进制文件的管理
+
+  我们可能会为一个业务系统添加一下方便管理，查询，统计或者清理的脚本，一些工程师的做法是将这些二进制可执行文件也丢到了puppet module的file/目录下，随着项目的发展会出现大量的二进制文件，那么它们的归宿，要么放到该项目的tools目录，或者单独作为一个项目存在，例如openstack_tools。
+
+- 服务的初始化操作
+
+  Puppet中有个`exec`资源，有些工程师拿它来写非常复杂的bash脚本。这就类似使用Python的subprocess去写非常复杂的bash脚本一样，实现方式非常丑陋，而且低效。例如Nova服务的`db sync`操作，复杂的实现逻辑已经封装到了Python脚本中，Puppet只是通过exec{'nova-db-sync'}去调用`nova-manage db sync`cli接口。
+
+  因此在遇到业务逻辑非常复杂或者代价太大就应该交给项目去实现，对外提供操作简单的接口，然后交给Puppet去调用，而不是由Puppet去实现。
+
+```
+ exec { 'nova-db-sync':
+    command => "/usr/bin/nova-manage ${extra_params} db sync",
+    refreshonly => true,
+    logoutput => on_failure
+ } 
+```
+
+- 服务状态的监控和恢复
+
+  有些工程师认为可以把Puppet的runinterval改成60s，这样就可以使用Puppet做频繁的状态收敛来确保服务一直是处于运行状态，虽然在一定程度上，可以确保服务的运行状态，但这里有两个问题：
+  - Puppet既不是监控系统也不是专业的服务状态管理，60s的执行间隔对于服务来说，简直是太长了
+  - Server端每次编译catalog会消耗大量资源，在集群数量增长或者Puppet代码逻辑复杂度提高后，你将会发现catalog的编译时间都已经超过了60s的执行间隔。
+
+
+- 角色间或节点间的依赖管理处理
+
+  Puppet本身没有编排能力，只能处理同个节点内类之间或者服务之间的依赖关系，这是Puppet最大的硬伤。因此，Puppet公司后来就收购了Mcollective来弥补编排的短板。我们这里推荐使用Ansible来做集群编排，Ansible作为后起之秀，提供了基于YAML格式的配置管理和编排能力。
