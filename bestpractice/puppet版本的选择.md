@@ -13,4 +13,8 @@ Puppet 3.x的最新版本是[3.8.7](https://docs.puppet.com/puppet/3.8/reference
 
 ## Puppet 4.x
 
-在9月22日，Puppet发布了4.7.0版本，但目前我仍不推荐使用4.x。原因就是Python2和Python3的关系一样。Python社区修复了Py2中令人头疼的编码问题，但是愿意使用的人寥寥无几，Python社区甚至专门做了一个[Python2生命倒计时网站](https://pythonclock.org/)来提醒大家赶紧切换到Python3。原因就在于大量的第三方库并进行升级以支持Py3。Puppet也是同样的原因。当前所有的puppet-openstack modules都支持Puppet4，但我们无法保证其他第三方的模块也能正常支持Puppet4。
+在9月22日，Puppet发布了4.7.0版本，目前暂不推荐使用4.x。原因与Python2和Python3的情况类似：Py3修复了Py2中令人头疼的编码问题，提供了更多的新特性，但愿意使用的人寥寥无几，Python社区甚至专门做了一个[Python2生命倒计时网站](https://pythonclock.org/)来提醒大家尽快切换到Python3。主要原因在于目前仍有大量第三方库并没有升级到对Py3的支持。Puppet4也面临同样的问题。puppet-openstack modules已经支持Puppet4，但无法保证读者们在其线上使用到的第三方模块也能正常支持Puppet4。
+
+因此，我们的建议是：
+   - 如果您正在使用Puppet2/3，那么我们建议谨慎升级。
+   - 如果你正在计划使用Puppet4，那么我们推荐使用Puppet4。
