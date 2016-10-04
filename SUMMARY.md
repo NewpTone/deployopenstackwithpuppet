@@ -7,6 +7,7 @@
     * [相关约定](Introduction/convention.md)
     * [术语表](Introduction/term.md)
     * [项目概览](Introduction/project_overview.md)
+* [主流部署工具介绍](deployment_tool/README.md)
 * [基础模块](base_modules/readme.md)
     * [puppet-apache](base_modules/puppet-apache.md)
     * [puppet-memcache](base_modules/puppet-memcache.md)

@@ -6,7 +6,7 @@
 
 - 你可以使用`git clone`命令下载源代码，在完成相应的修改工作后，可以发起pull request请求，我们会在第一时间去处理你提交的Patch。
 
-## 项目地址
+# 项目地址
 
  - `Gitbook地址`：https://gitbook.com/book/newptone/deployopenstackwithpuppet/details
  
