@@ -56,7 +56,7 @@
     * [Puppet的能与不能](bestpractice/puppet的能与不能.md)
     * [合理使用PuppetDB](bestpractice/合理使用puppetdb.md)
     * [如何处理依赖](bestpractice/如何处理依赖.md)
-    * 正确的升级流程
+    * [正确的升级流程](bestpractice/正确的升级流程.md)
 * [如何参与](howto.md)
 * [版本日志](release.md)
 
