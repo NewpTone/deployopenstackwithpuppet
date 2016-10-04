@@ -48,7 +48,7 @@
     * [模块管理](bestpractice/code_management.md)
     * [Hiera](bestpractice/hiera.md)
     * [提交规范](bestpractice/version_control.md)
-    * [Environment](bestpractice/environment.md)
+    * [正确使用环境](bestpractice/environment.md)
     * [转发层规范](bestpractice/Composition.md)
     * [代码风格](bestpractice/code_style.md)
     * [Standalone vs C\/S 模式](bestpractice/cs-vs-standalone模式.md)
