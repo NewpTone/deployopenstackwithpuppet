@@ -4,14 +4,23 @@
 
 | Version | Status | Next Milestone | Release Day | Release Manager |
 | --- | --- | --- | --- | --- |
-| `v0.3` | `Design` | `2016-8-01` | `N/A` | Xingchao Yu |
+| `v0.4` | `Design` | `2016-10-08` | `N/A` | Xingchao Yu |
+| `v0.3` | `Finished` | `2016-8-01` | `2016-9-31` | Xingchao Yu |
 | `v0.2` | `Finished` | `2016-7-03` | `2016-7-09` | Xingchao Yu |
 | `v0.1` | `Finished` | `2016-6-01` | `2016-6-03` | Xingchao Yu |
 
 ---
+# `v0.4`版本说明
+
+## 2016-10-31
+
+* packstack @liao 
+* kolla @weiyu 
+* tripleo @liangliang 
+* fuel @xingchao 
+* ansible-openstack @luyuan 
 
 # `v0.3`版本说明
-
 
 ## 2016-9-xx
 
@@ -19,13 +28,11 @@
 
 ## 2016-9-xx
 
-* 添加puppet-sahara  @weiyu
 * 添加puppet-ironic  @luyuan 
-* 添加puppet-aodh    @luyuan
+* 添加puppet-aodh
 * 添加puppet-goncchi @hanliangliang
-* 添加puppet-designate  @penghui
-* 添加puppet-barbican   @penghui
-* 添加puppet-mistral   @xingchao
+* HA相关 @liao
+
 
 # `v0.2`版本说明
 
