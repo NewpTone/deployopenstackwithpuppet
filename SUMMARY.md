@@ -58,6 +58,11 @@
     * [如何处理依赖](bestpractice/如何处理依赖.md)
     * [典型的升级流程](bestpractice/正确的升级流程.md)
 * [其他部署工具](deployment_tool/README.md)
+    * Fuel
+    * Kolla
+    * TripleO
+    * Packstack
+    * OSA
 * [如何参与](howto.md)
 * [版本日志](release.md)
 
