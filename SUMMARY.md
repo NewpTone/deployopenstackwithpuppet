@@ -53,7 +53,7 @@
     * [代码风格](bestpractice/code_style.md)
     * [Standalone vs C\/S 模式](bestpractice/cs-vs-standalone模式.md)
     * [Puppet版本的选择](bestpractice/puppet版本的选择.md)
-    * [漫谈Puppet4](bestpractice/正确的升级流程.md)
+    * [漫谈Puppet4](bestpractice/puppet4.md)
     * [Puppet的能与不能](bestpractice/puppet的能与不能.md)
     * [合理使用PuppetDB](bestpractice/合理使用puppetdb.md)
 * [其他部署工具](deployment_tool/README.md)
