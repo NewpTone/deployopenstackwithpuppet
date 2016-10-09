@@ -174,16 +174,16 @@ yum localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rp
 
 ### HTTP API的变化
 
-Puppet4中的另一个重要变化是master和agent通讯的URLs发生了变化。因此Puppet3的agent将无法和Puppet4的server端通信。
+Puppet4中的另一个重要变化是master和agent通讯的URLs发生了变化。因此Puppet3的agent将无法和Puppet4的server端通信。例如：
 
-例如，在Puppet3中url是"http://localhost:8140/production/node/foo"，
-在Puppet4中url变成了"http://localhost:8140/puppet/v3/node/foo?environment=production"。
+- 在Puppet3中url是"http://localhost:8140/production/node/foo"
+- 在Puppet4中url变成了"http://localhost:8140/puppet/v3/node/foo?environment=production"。
 
 ### `puppet doc`和`tagmail`被移除
 
-由于`puppet doc`命令依赖RDoc，而RDoc与最新版本的ruby不兼容，因此在Puppet4代码中被移除，如果要继续使用，可以通过`[puppetlabs-strings](https://forge.puppetlabs.com/puppetlabs/strings/)`模块来提供类似的功能。
+由于`puppet doc`命令依赖RDoc，而RDoc与最新版本的ruby不兼容，因此在Puppet4代码中被移除，如果要继续使用，可以通过[puppetlabs-strings](https://forge.puppetlabs.com/puppetlabs/strings/)模块来提供类似的功能。
 
-同理，`tagmail`被移除，可以通过`[puppetlabs-tagmail](https://forge.puppetlabs.com/puppetlabs/tagmail)`模块来找到它。
+同理，`tagmail`被移除，可以通过[puppetlabs-tagmail](https://forge.puppetlabs.com/puppetlabs/tagmail)模块来找到它。
 
 
 ### Resource Type/Providers的变化
@@ -195,7 +195,7 @@ Puppet4中的另一个重要变化是master和agent通讯的URLs发生了变化�
 
 ### 内部API和实现的变化
 
-这些变化仅影响Puppet内部的ruby方法和库，对用户的使用没有影响。
+这些变化只会影响到Puppet内部ruby方法和库的调用接口，对终端用户的使用没有任何影响。
 
 
 ## 参考文档
