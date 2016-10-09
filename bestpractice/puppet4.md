@@ -45,17 +45,29 @@ PuppetDB也是主要瓶颈之一，像resource export,virtual resource等高级�
  - 由于Clojure语言的天生优势，拥有良好的并发和互斥控制能力，而且可以使用丰富的Java Library，是作为后端服务开发的理想选择。
  - Puppetlabs公司开发了一个Clojure框架[Trapperkeeper framework](https://github.com/puppetlabs/trapperkeeper)：为了支撑长期运行的应用和服务而生，从而保证Puppet服务的稳定性和鲁棒性。
 
-### 全新的parser
+### 全新的Parser
 
- - 全新的parser支持lambdas和iteraion！再也不用使用tricky的creates_resources函数了：
+ - 新的Parser支持lambdas和iteraion！再也不用使用tricky的creates_resources函数了：
 
 ```puppet
 $a = [1,2,3] each($a) |$value| { notice $value }
 ```
 
- - 全新的parser还直接支持数据类型检查，再也不用stdlib里的validate_string等函数了。
+ - 全新的parser还直接支持数据类型检查，再也不用stdlib里的validate_string等函数了:
 
- - 另外一个亮点是直接支持差值函数调用了:
+```puppet
+class ntp ( 
+    Boolean $service_manage = true, 
+    Boolean $autoupdate     = false, 
+    String  $package_ensure = 'present', 
+    # ... 
+) { 
+   # ... 
+}
+```
+
+ - 另外一个亮点是直接支持插值式函数调用:
+
 ```puppet
 notice "This is a random number: ${fqdn_rand(30)}
 ```
