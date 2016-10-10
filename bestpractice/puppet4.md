@@ -17,6 +17,7 @@
    - [`puppet doc`和`tagmail`被移除](#`puppet doc`和`tagmail`被移除)
    - [Resource Type/Providers的变化](#Resource Type/Providers的变化)
    - [内部API和实现的变化](#内部API和实现的变化)
+4. [被废弃的特性](#被废弃的特性)
 
 
 ## 激动人心的改进
@@ -90,8 +91,9 @@ Puppet4既然做了重写，因此有大量与Puppet3不兼容的变化。这些
 
 ### 包管理方式的变化
 
-过去，我们需要在服务器上单独安装Puppet,Facter,Hiera,Mcollective等多个组件才能获得相应的功能和特性。在Puppet4中，Puppet4软件包不再使用`puppet`，而是重新命名为`puppet-agent`，并采用AIO(All-in-One)的方式来简化软件包的管理，其中包含以下组件：
+过去，我们需要在服务器上单独安装Puppet,Facter,Hiera,Mcollective等多个组件才能获得相应的功能和特性。
 
+在Puppet4中，安装Puppet不再需要安装多个软件包，而是采用AIO(All-in-One)的方式来简化软件包的管理，例如`puppet-agent`中包含以下组件：
  - Facter 3.4.x
  - CFacter 0.4
  - Hiera 1.3.x
@@ -99,19 +101,31 @@ Puppet4既然做了重写，因此有大量与Puppet3不兼容的变化。这些
  - Ruby 2.1.5
  - OpenSSL 1.0.0r
 
-Puppetlabs将这种AIO的包管理方式称之为Puppet Collections(PC)，每个PC其实对应着一个软件仓库(repo)，为用户提供了Facter/Ruby/Puppet等组件的匹配矩阵。
 
-在基于RPM的系统下使用以下命令：
+Puppetlabs将这种AIO的包管理方式称之为Puppet Collections(PC)，每个PC其实对应着一个软件仓库(repo)，为用户提供了Facter/Ruby/Puppet等组件的匹配矩阵。
+下表给出了PC中主要软件包中整合的组件。
+
+|软件包名|包含组件|
+| --- | --- |
+|`puppet-agent`|Puppet, Facter, Hiera, MCollective, pxp-agent, root certificates, Ruby, Augeas|
+|`puppetserver`|Puppet Server，依赖`puppet-agent`|
+|`puppetdb`|PuppetDB|
+|`puppetdb-termini`|PuppetServer与PuppetDB交互的Plugin|
+
+
+要在服务器上启用新版本的Puppet4，只需要执行一行简单的命令：
+
+- 在基于RPM的系统下使用以下命令：
 ```code
 yum localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm
 ```
 
-在基于Deb的系统下使用以下命令：
+- 在基于Deb的系统下使用以下命令：
 ```code
 # curl -O http://apt.puppetlabs.com/puppetlabs-release-pc1-wheezy.deb ; dpkg -i puppetlabs-release-pc1-wheezy.deb
 ```
 
-在这种包管理模式下，用户可以移除旧的puppetlabs-release包中的production，dependencies，devel仓库。
+通过这种集中式的软件仓库管理方式，用户可以移除过去puppetlabs-release中的production，dependencies，devel等多个仓库。
 
 **注意**  `puppet-agent`不会自动升级老版本的`puppet`软件包(建议使用deb或rpm来管理软件包的升级)
 
@@ -160,6 +174,7 @@ yum localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rp
 
  - 在PuppetMaster加载新的Puppet代码不再需要重启server服务
  - EPP(Embeded Puppet)将支持直接使用Puppet来编写inline和基于文件模，不再需要使用ERB，避免用户在Puppet和Ruby之间来回切换。
+ - 支持使用Puppet来编写functions。
 
 ### `Puppet Kick`等将被移除
 
@@ -197,6 +212,46 @@ Puppet4中的另一个重要变化是master和agent通讯的URLs发生了变化�
 
 这些变化只会影响到Puppet内部ruby方法和库的调用接口，对终端用户的使用没有任何影响。
 
+
+## 被废弃的特性
+
+### Rack和WEBrick Web服务器被废弃
+
+Rack和WEBrick Web服务器过去常用于开发和简单验证，目前已在Puppet 4.1中标记为弃用，计划在5.0中移除。
+
+## 核心配置参数
+
+Puppet4有多达[200个配置参数](https://docs.puppet.com/puppet/latest/reference/configuration.html)，不过用户需要关心的参数大约为30个。
+
+### Agent端
+
+#### 基础参数
+
+ - `server`: Puppet Master的地址，默认值是`puppet`
+  - `ca_server`: Puppet CA的地址，仅在多master模式使用
+  - `report_server`: Puppet report server的地址，仅在多master模式使用
+ - `certname`：node的证书名称，默认使用FQDN
+ - `environment`：agent向master端请求的environment。默认是`prodcution`。
+
+#### 运行相关
+
+ - `noop`: agent仅在模拟运行并输出运行结果
+ - `nice`: 指定agent运行的nice值，防止agent在应用catalog时占用过多的CPU资源
+ - `report`: 是否发生report，默认为true。
+ - `tags`： 限制Puppet只运行含有指定tags的resources。
+ - `trace`, `profile`, `graph`,`show_diff`：用于debug agent运行结果
+ - `usecacheonfailure `: 在master端无法返回一个正确的catalog时，是否回退执行上一个正确的catalog。默认是true，如果是开发环境，建议修改为false。
+ - `prerun_command`和`postrun_command`：在Puppet执行前后运行的命令，若返回值非0，则Puppet执行失败。
+
+#### 服务相关
+
+ - `runinterval`: Puppet的运行间隔
+ - `waitforcert`: Puppet请求证书签名的频率。当agent端第一次启动时，agent会提交一个CSR(certificate signing request)到ca server，该证书可能是自动签名(autosign)，或者需要人工批准，而这段时间无法预估，因此需要设置一个时间段，默认是2m。
+ - `splay`和`splaylimit`：为每次Agent的定时执行添加一个随机数时间，用于避免惊群效应的发生。
+ - `daemonize`:是否以进程方式运行，配合cron使用时，应设置为false。
+ - `onetime`: 是否执行完成后退出，配合cron使用时，应设置为true。
+
+### Server端
 
 ## 参考文档
 

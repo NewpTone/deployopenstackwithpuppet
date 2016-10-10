@@ -25,4 +25,4 @@ Puppet4也面临同样的问题。puppet-openstack modules已经完全支持Pupp
    - 如果您正在使用Puppet3，建议谨慎升级。
    - 如果你正在计划使用Puppet，推荐使用Puppet4。
 
-我们会在下一节谈一谈Puppet 4.x的显著变化。
+我们会在下一节去详细介绍Puppet 4.x的显著变化。
