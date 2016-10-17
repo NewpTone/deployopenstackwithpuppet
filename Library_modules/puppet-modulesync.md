@@ -3,8 +3,10 @@
 1. [先睹为快](#先睹为快)
 2. [模块讲解](#模块讲解)
 
-**本节作者：余兴超**    
-**阅读级别：选读 **  
+**本节作者：余兴超**
+
+**阅读级别：选读 **   
+
 **阅读时间: 0.5小时**
 
 本节为选读章节，推荐有兴趣的读者阅读。
@@ -71,4 +73,4 @@ msync update
  - `managed_modules.yml`: 被管理的module列表
  - `modulesync.yml`: 传递到Modulesync命令行的键值对参数对
 
-关于`puppet-openstack-cookiebutter`的用途比较单一，因此不再深入展开，更详细的解释参见其[模块说明](https://github.com/openstack/puppet-modulesync-configs)。
+关于`puppet-modulesync-configs`的用途比较单一，因此不再深入展开，更详细的解释参见其[模块说明](https://github.com/openstack/puppet-modulesync-configs)。
