@@ -9,7 +9,7 @@
 
 5. [designate原理](#designate原理)
 
-6. [designate使用场景](#designate使用场景)
+6. [designate使用场景](#使用场景)
 
 7. [小结](#小结)
 
