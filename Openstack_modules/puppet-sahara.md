@@ -91,13 +91,23 @@ sahara-engine是通过ssh连接虚拟机完成集群配置的，**因此sahara-e
 目前sahara-engine连通虚拟机的方式有以下几种:
 
 * flat private network，这种方式不支持Neutron网络，不考虑。
-* floating IPs，即给所有虚拟机分配公有IP。
-* network namespace，通过网络命名空间访问，sahara-engine必须部署在网络节点，且不支持多网络节点情况(想想为什么？)。
+* floating IPs，即给所有虚拟机分配公有IP，通过公有IP访问虚拟机。
+* network namespace，通过网络命名空间访问虚拟机，sahara-engine必须部署在网络节点，且不支持多网络节点情况(想想为什么？)。
 * agent模式，这个尚未实现，主要想参考Trove的agent模式，通过消息队列通信。
 
 以上4种方式其实只有中间两种方式可用，但若集成厂商的Hadoop发行版并且需要调用厂商工具API部署集群的情况，不支持network namespace模式，因为即使能通过进入netns方式ssh连接虚拟机，也不可能调用虚拟机内部的API服务（除非打通管理网和虚拟机网络）。**简而言之，CDH和HDP不支持netns模式。**
 
 **因此，若要通过Sahara部署CDH或者HDP集群，请使用floating IPs模式，并开启虚拟机自动分配floating ip功能。**
+
+Sahara大多数配置项和其它服务类似，比如日志配置、RabbitMQ配置、认证配置等等，Sahara专有的需要注意的配置项如下(均在`/etc/sahara/sahara.conf`的`DEFAULT`配置组):
+
+* `use_floating_ips`: 若sahara-engine配置使用浮动IP访问虚拟机，则需要设置为`True`，此时建议配置nova配置项`auto_assign_floating_ip`为`True`，否则创建集群时堵塞直到用户手动分配浮动IP。
+* `use_neutron`: 使用Neutron网络设置为`True`，否则若使用废弃的`nova-network`设置为`False`。
+* `use_namespaces`: 若sahara-engine使用network namespace方式访问虚拟机，需要设置该配置项为`True`。
+* `use_rootwrap`: 该配置项需要设置为`True`，否则ssh连接虚拟机时出错。
+* `rootwrap_command`： 设置为`"sudo sahara-rootwrap /etc/sahara/rootwrap.conf"`，原因同上。
+* `plugins`: 开启的插件列表，N版本前插件列表是静态配置的，N版本后可以动态配置。
+* `proxy_command`: sahara-engine使用net ns访问虚拟机时ssh的ProxyCommand参数，默认值为`'ip netns exec ns_for_{network_id} nc {host} {port}'`。
 
 关于Sahara的高可用，sahara-api由于是HTTP服务，高可用肯定是没有问题的，可以创建多个实例并放在LB之上即可。
 
@@ -219,25 +229,22 @@ class sahara::db::sync(
 
 ### 3.4 Sahara配置管理
 
-Sahara配置文件主要包括`/etc/sahara.conf`和`/etc/sahara/api-paste.ini`，由类`sahara::config`定义:
+Sahara配置文件主要包括`/etc/sahara/sahara.conf`和`/etc/sahara/api-paste.ini`两个文件，其中`/etc/sahara/sahara.conf`绝大多数配置项由`init.pp`下的`sahara`类管理，使用形如`xyz/key:value`的键值对保存,其中`xyz`表示所在的配置组，`key`表示配置项名称，后面的`value`是配置项的值，样例如下:
 
-```
-class sahara::config (
-  $sahara_config        = {},
-  $sahara_api_paste_ini = {},
-) {
-
-  validate_hash($sahara_config)
-  validate_hash($sahara_api_paste_ini)
-
-  create_resources('sahara_config', $sahara_config)
-  create_resources('sahara_api_paste_ini', $sahara_api_paste_ini)
-}
+```puppet
+sahara_config {
+    'DEFAULT/plugins':            value => join(any2array($plugins),',');
+    'DEFAULT/use_neutron':        value => $use_neutron;
+    'DEFAULT/use_floating_ips':   value => $use_floating_ips;
+    'DEFAULT/host':               value => $host;
+    'DEFAULT/port':               value => $port;
+    'DEFAULT/default_ntp_server': value => $default_ntp_server;
+  }
 ```
 
-...
+除了`sahara`类中定义的配置参数，在`sahara::config`中可定义一些额外配置项，通常通过hieradata定义。
 
-另外除了基本配置，和其它服务一样，还需要配置policy文件，对应类为`sahara::policy`，该类实现和其它服务类似，不再重复介绍。
+另外除了基本配置外，和大多数其它服务一样，还需要配置policy，对应类为`sahara::policy`，该类实现和其它服务类似，这里不再重复介绍。
 
 该步骤对应手动部署套路第4条。
 
@@ -278,7 +285,8 @@ class sahara::service::api (
 }
 ```
 
-以上可以很清晰地从代码看出，其实就是对应部署套路的第3跳和第6条。
+
+以上可以很清晰地从代码看出，该类就是对应部署套路的第3跳和第6条。
 
 # 4 小结
 
