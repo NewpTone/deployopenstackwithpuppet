@@ -31,6 +31,7 @@
     * [puppet-heat](Openstack_modules/puppet-heat.md)
     * [puppet-swift](Openstack_modules/puppet-swift.md)
     * [puppet-trove](Openstack_modules/puppet-trove.md)
+    * [puppet-sahara](Openstack_modules/puppet-sahara.md)
     * [puppet-manila](Openstack_modules/puppet-manila.md)
     * [puppet-rally](Openstack_modules/puppet-rally.md)
     * [puppet-designate](Openstack_modules/puppet-designate.md)
