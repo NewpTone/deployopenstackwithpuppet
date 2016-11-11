@@ -19,7 +19,7 @@ resource得单独讲，因为它的地位略高。
 | manifests | puppet代码的文件夹路径 |
 | node definition | 节点定义文件 |
 | hiera   |  数据文件，用于存放puppet的变量赋值  |
-|RVM | 用于帮你安装Ruby环境，帮你管理多个Ruby环境，帮你管理你开发的每个Ruby应用使用机器上哪个Ruby环境。Ruby环境不仅仅是Ruby本身，还包括依赖的第三方Ruby插件。都由RVM管理。|
+|RVM | 安装和管理多个Ruby环境以及Ruby应用所使用的Ruby环境。|
 |Rails |[Web开发框架](http://zh.wikipedia.org/wiki/Ruby_on_Rails)  |
 |RubyGems| RubyGems是一个方便而强大的Ruby程序包管理器（ package manager），类似RedHat的RPM.它将一个Ruby应用程序打包到一个gem里，作为一个安装单元。无需安装，最新的Ruby版本已经包含RubyGems了|
 | Gem |Gem是封装起来的Ruby应用程序或代码库。|
