@@ -1,27 +1,27 @@
 # Puppet-sahara模块介绍
 
-0. [基础知识 - 欲知部署之必先了解之](#基础知识)
-    - [1.Why Sahara?](## 1. Why Sahara ?)
-    - [2.Sahara的几个概念](## 2. Sahara的几个概念)
-    - [3.Sahara组件介绍](## 3. Sahara组件介绍)
-    - [4.谈谈Sahara部署](4. 谈谈Sahara部署)
-1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理keystone服务？](#核心代码讲解)
-    - [class keystone](###class keystone)
-    - [class keystone::service](###class keystone::service)
-    - [class keystone::endpoint](###class keystone::endpoint)
-    - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
-    - [class keystone::config](###class keystone::config) 
-3. [小结](##小结)
-4. [动手练习 - 光看不练假把式](##动手练习)
+1. [基础知识 - 欲知部署之必先了解之](#基础知识)
+    - [1.1 Why Sahara?](## 1. Why Sahara ?)
+    - [1.2 Sahara的几个概念](## 2. Sahara的几个概念)
+    - [1.3 Sahara组件介绍](## 3. Sahara组件介绍)
+    - [1.4 谈谈Sahara部署](4. 谈谈Sahara部署)
+2. [先睹为快 - 一言不合，立马动手?](#先睹为快)
+3. [核心代码讲解 - 如何做到管理keystone服务？](#核心代码讲解)
+    - [3.1 Openstack服务部署套路](### 3.1 Openstack服务部署套路)
+    - [3.2 数据库配置](### 3.2 数据库配置)
+    - [3.3 Sahara服务认证配置](### 3.3 Sahara服务认证配置)
+    - [3.4 Sahara配置管理](### 3.4 Sahara配置管理)
+    - [3.5 Sahara服务安装和启动](### 3.5 Sahara服务安装和启动) 
+4. [小结](##小结)
+5. [动手练习 - 光看不练假把式](##动手练习)
 
 **本节作者：付广平**    
 
 **建议阅读时间 2h**
 
-# 基础知识
+# 1 基础知识
 
-## 1. Why Sahara ?
+## 1.1 Why Sahara ?
 
 近年来大数据可谓如火如荼，哪个企业不说搞大数据都要被嘲讽技术落后，程序员不张口闭口MapReduce、Nosql都不敢说自己学计算机的。而谈到大数据就必然和Hadoop粘一起，似乎谈大数据就等价于说Hadoop。
 
@@ -39,7 +39,7 @@ Openstack Sahara旨在基于IaaS之上自动化部署Hadoop集群，不仅支持
 
 Sahara是Openstack的高层服务，构建在Nova、Cinder、Neutron、Heat等之上。本章接下来将重点讨论如何在Openstack平台上部署Sahara组件。
 
-## 2. Sahara的几个概念
+## 1.2 Sahara的几个概念
 
 本小节简单介绍下Sahara涉及的几个概念，主要针对感兴趣的读者能够快速了解Sahara，这些内容和部署关系不大，读者可直接跳过本节。
 
@@ -55,7 +55,7 @@ Sahara主要包含以下几个概念:
 * Cluster Template，集群模板，定义集群拓扑，集群模板由Node Group Template构成，定义如几个datanode、几个spark-worker等，同时还定义Hadoop的一些配置信息，比如HDFS副本数等。
 * Cluster，集群实例，集群实例必须由集群模板创建。
 
-## 3. Sahara组件介绍
+## 1.3 Sahara组件介绍
 
 欲知如何部署Sahara，首先需要了解Sahara包含的组件以及模块。和Openstack其它大多数服务一样，Sahara同样需要依赖于消息队列、数据库等公共组件。
 
@@ -72,7 +72,7 @@ Sahara官方的新架构图如下:
 
 可见，Sahara服务相对来说还是比较简单的，只包含sahara-api和sahara-engine两个服务。下一小节中将开始介绍sahara的部署问题。
 
-## 4. 谈谈Sahara部署
+## 1.4 谈谈Sahara部署
 
 前面提到sahara服务相对简单，但不得不说，部署起来却大小坑不计其数。Sahara的工作原理本不应该在这里提及，但在不了解其工作原理的前提下部署Sahara，可以毫不夸张地说: No Way!
 
@@ -91,19 +91,208 @@ sahara-engine是通过ssh连接虚拟机完成集群配置的，**因此sahara-e
 目前sahara-engine连通虚拟机的方式有以下几种:
 
 * flat private network，这种方式不支持Neutron网络，不考虑。
-* floating IPs，即给所有虚拟机分配公有IP。
-* network namespace，通过网络命名空间访问，sahara-engine必须部署在网络节点，且不支持多网络节点情况(想想为什么？)。
+* floating IPs，即给所有虚拟机分配公有IP，通过公有IP访问虚拟机。
+* network namespace，通过网络命名空间访问虚拟机，sahara-engine必须部署在网络节点，且不支持多网络节点情况(想想为什么？)。
 * agent模式，这个尚未实现，主要想参考Trove的agent模式，通过消息队列通信。
 
 以上4种方式其实只有中间两种方式可用，但若集成厂商的Hadoop发行版并且需要调用厂商工具API部署集群的情况，不支持network namespace模式，因为即使能通过进入netns方式ssh连接虚拟机，也不可能调用虚拟机内部的API服务（除非打通管理网和虚拟机网络）。**简而言之，CDH和HDP不支持netns模式。**
 
 **因此，若要通过Sahara部署CDH或者HDP集群，请使用floating IPs模式，并开启虚拟机自动分配floating ip功能。**
 
+Sahara大多数配置项和其它服务类似，比如日志配置、RabbitMQ配置、认证配置等等，Sahara专有的需要注意的配置项如下(均在`/etc/sahara/sahara.conf`的`DEFAULT`配置组):
+
+* `use_floating_ips`: 若sahara-engine配置使用浮动IP访问虚拟机，则需要设置为`True`，此时建议配置nova配置项`auto_assign_floating_ip`为`True`，否则创建集群时堵塞直到用户手动分配浮动IP。
+* `use_neutron`: 使用Neutron网络设置为`True`，否则若使用废弃的`nova-network`设置为`False`。
+* `use_namespaces`: 若sahara-engine使用network namespace方式访问虚拟机，需要设置该配置项为`True`。
+* `use_rootwrap`: 该配置项需要设置为`True`，否则ssh连接虚拟机时出错。
+* `rootwrap_command`： 设置为`"sudo sahara-rootwrap /etc/sahara/rootwrap.conf"`，原因同上。
+* `plugins`: 开启的插件列表，N版本前插件列表是静态配置的，N版本后可以动态配置。
+* `proxy_command`: sahara-engine使用net ns访问虚拟机时ssh的ProxyCommand参数，默认值为`'ip netns exec ns_for_{network_id} nc {host} {port}'`。
+
 关于Sahara的高可用，sahara-api由于是HTTP服务，高可用肯定是没有问题的，可以创建多个实例并放在LB之上即可。
 
 但sahara-engine虽然和nova-conductor、nova-scheduler等服务一样都是消息消费服务，你可以通过部署多实例来提高服务的可用性，但并不能说实现了高可用。Sahara的任务通常都是分阶段的长任务，比如创建一个集群大概需要数分钟时间，但一个任务只能由一个sahara-engine实例全程负责，如果中途挂了，其它sahara-engine实例并不能接管工作。**尤其注意在集群扩容操作时，如果sahara-engine奔溃了，将导致集群可能永远处于中间状态，甚至导致集群瘫痪。**
 
-OK，以上啰嗦了那么多，无非是想引导读者自己想明白Sahara应该怎么部署，sahara-api应该部署在哪个节点，sahara-engine应该怎么部署，相信读者已经自己能得到答案了。下一节将详细介绍puppet-sahara核心模块，该模块能通过puppet自动化部署Sahara服务。
+OK，以上啰嗦了那么多，无非是想引导读者自己想明白Sahara应该怎么部署。Sahara只有两个服务，sahara-api通常部署在控制节点，而sahara-engine部署在哪个节点取决于连接虚拟机使用何种访问模式，相信读者已经有自己的答案了。OK，Let the elephant fly on our Openstack!
 
-# 核心代码讲解 - 如何一键部署Sahara？
+# 2 先睹为快 - 一言不合，立马动手?
 
+前面介绍了Sahara基(ku)础(zao)知识，提到Sahara部署时需要注意的几个问题。我们已经知道若sahara-engine使用浮动ip连接虚拟机，则sahara-engine无所谓部署在哪个节点了，只要保证能够连通虚拟机即可，通常我们会部署在控制节点上。社区为此在puppet-sahara中实现了专门的类同时在一个节点中部署sahara-api和sahara-engine，使一键部署sahara测试环境成为可能:
+
+```
+puppet apply -v puppet-sahara/examples/basic.pp
+```
+
+以上命令执行完毕，一个单节点Sahara环境就已经部署完成了。
+
+不过正如前面所说，**Sahara是一个高层服务，强依赖于底层Openstack基础服务，因此在部署Sahara前请务必保证Keystone、Nova、Cinder、Glance、Heat、Neutron等能够正常工作。**
+
+# 3. 核心代码讲解 - 如何做到管理Sahara服务？
+
+### 3.1 Openstack服务部署套路
+
+在使用自动化工具部署任何系统之前，首先你得了解需要部署系统的工作原理，并能手动部署之。手动部署过Openstack的一定知道部署Openstack服务的套路，无论你部署Nova，还是部署Cinder、Glance甚至Heat，基本都是这个套路:
+
+1. 创建数据库。
+2. 通过Keystone创建用户、服务、endpoint等。
+3. 下载必要包。
+4. 修改配置，主要包括RabbitMQ、数据库连接等配置。
+5. 调用xxxx-manager创建数据库的表。
+6. 启动服务。
+
+值得庆幸的是，Sahara部署完全遵循Openstack服务的部署套路，除了套路里包含的东西，几乎没有其它额外新鲜事情。这里就不再重复介绍手动部署过程了，感兴趣的读者可以参考[Openstack大数据项目Sahara实践总结](http://int32bit.me/2016/07/27/Openstack%E5%A4%A7%E6%95%B0%E6%8D%AE%E9%A1%B9%E7%9B%AESahara%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/#sahara-3)。
+
+无论采用何种方式部署，万变不如其中，其实自动化部署工具就是替代我们手动敲的命令，实现步骤是完全一样的，接下来将分析puppet-sahara各个模块实现以及与我们手动部署时对应的步骤如何关联起来的。
+
+### 3.2 数据库配置
+
+首先看`sahara::db`这个类，该类位于项目根路径下，主要定义数据库的一些全局通用配置，这些配置是脱离于使用mysql还是postsql的，类定义的原型如下:
+
+```puppet
+class sahara::db (
+  $database_db_max_retries = $::os_service_default,
+  $database_connection     = 'mysql+pymysql://sahara:secrete@localhost:3306/sahara',
+  $database_idle_timeout   = $::os_service_default,
+  $database_min_pool_size  = $::os_service_default,
+  $database_max_pool_size  = $::os_service_default,
+  $database_max_retries    = $::os_service_default,
+  $database_retry_interval = $::os_service_default,
+  $database_max_overflow   = $::os_service_default,
+)
+```
+
+接下来在`sahara::db::mysql`是专门针对使用mysql数据库的配置，源码如下:
+
+```puppet
+class sahara::db::mysql(
+  $password,
+  $dbname        = 'sahara',
+  $user          = 'sahara',
+  $host          = '127.0.0.1',
+  $allowed_hosts = undef,
+  $charset       = 'utf8',
+  $collate       = 'utf8_general_ci',
+) {
+
+  validate_string($password)
+
+  ::openstacklib::db::mysql{ 'sahara':
+    user          => $user,
+    password_hash => mysql_password($password),
+    dbname        => $dbname,
+    host          => $host,
+    charset       => $charset,
+    collate       => $collate,
+    allowed_hosts => $allowed_hosts,
+  }
+
+  ::Openstacklib::Db::Mysql['sahara'] ~> Exec<| title == 'sahara-dbmanage' |>
+}
+```
+
+以上相当于调用`::openstacklib::db::mysql`创建数据库，对应部署套路第一条。
+
+最后我们通知执行`Exec<| title == 'sahara-dbmanage'`，这其实就相对于对应套路第5条，源代码为:
+
+```
+class sahara::db::sync(
+  $extra_params = '--config-file /etc/sahara/sahara.conf',
+) {
+
+  include ::sahara::params
+
+  Package <| tag == 'sahara-package' |> ~> Exec['sahara-dbmanage']
+  Exec['sahara-dbmanage'] ~> Service <| tag == 'sahara-service' |>
+
+  Sahara_config <||> -> Exec['sahara-dbmanage']
+  Sahara_config <| title == 'database/connection' |> ~> Exec['sahara-dbmanage']
+
+  exec { 'sahara-dbmanage':
+    command     => "sahara-db-manage ${extra_params} upgrade head",
+    path        => '/usr/bin',
+    user        => 'sahara',
+    refreshonly => true,
+    try_sleep   => 5,
+    tries       => 10,
+    logoutput   => on_failure,
+    tag         => 'openstack-db',
+  }
+
+}
+```
+
+以上几个类共同协作完成了Sahara数据库表的初始化。
+
+### 3.3 Sahara服务认证配置
+
+认证配置对应部署套路第2步，主要包括调用Keystone API创建sahara用户、服务、endpoint等，puppet-sahara代码实现在`sahara::keystone::auth`，该类的实现和前面几个服务非常类似，如Nova、Cinder等，再次不再重复，有兴趣的读者可以直接阅读源码。
+
+### 3.4 Sahara配置管理
+
+Sahara配置文件主要包括`/etc/sahara/sahara.conf`和`/etc/sahara/api-paste.ini`两个文件，其中`/etc/sahara/sahara.conf`绝大多数配置项由`init.pp`下的`sahara`类管理，使用形如`xyz/key:value`的键值对保存,其中`xyz`表示所在的配置组，`key`表示配置项名称，后面的`value`是配置项的值，样例如下:
+
+```puppet
+sahara_config {
+    'DEFAULT/plugins':            value => join(any2array($plugins),',');
+    'DEFAULT/use_neutron':        value => $use_neutron;
+    'DEFAULT/use_floating_ips':   value => $use_floating_ips;
+    'DEFAULT/host':               value => $host;
+    'DEFAULT/port':               value => $port;
+    'DEFAULT/default_ntp_server': value => $default_ntp_server;
+  }
+```
+
+除了`sahara`类中定义的配置参数，在`sahara::config`中可定义一些额外配置项，通常通过hieradata定义。
+
+另外除了基本配置外，和大多数其它服务一样，还需要配置policy，对应类为`sahara::policy`，该类实现和其它服务类似，这里不再重复介绍。
+
+该步骤对应手动部署套路第4条。
+
+### 3.5 Sahara服务安装和启动
+
+前面我们已经知道Sahara由sahara-api和sahara-engine两个服务，分别对应的类为`sahara::service::api`和`sahara::service::engine`，这两个类都定义了包的安装、服务配置等。以api服务为例，其核心代码为:
+
+```puppet
+class sahara::service::api (
+  $api_workers    = $::os_workers,
+  $enabled        = true,
+  $manage_service = true,
+  $package_ensure = 'present',
+) {
+
+  include ::sahara::policy
+  include ::sahara::params
+
+  Sahara_config<||> ~> Service['sahara-api']
+  Class['sahara::policy'] ~> Service['sahara-api']
+
+  package { 'sahara-api':
+    ensure => $package_ensure,
+    name   => $::sahara::params::api_package_name,
+    tag    => ['openstack', 'sahara-package'],
+    notify => Service['sahara-api'],
+  }
+  service { 'sahara-api':
+    ensure     => $service_ensure,
+    name       => $::sahara::params::api_service_name,
+    enable     => $enabled,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Package['sahara-api'],
+    tag        => 'sahara-service',
+  }
+
+}
+```
+
+
+以上可以很清晰地从代码看出，该类就是对应部署套路的第3跳和第6条。
+
+# 4 小结
+
+在这里，我们介绍了puppet-sahara的核心代码实现以及各个模块完成的工作，通过和手动部署套路联系在一起，相信读者能更容易理解代码的原理。当然该module还有许多重要的class我们并没有涉及，例如：`sahara::logging`，`sahara::nofity`等等。这些就留给读者自己去阅读代码了，当然在后期的版本中，我也会进一步去完善puppet-sahara的核心代码内容。
+
+# 5 动手练习
+
+1. 使用puppet-sahara部署Sahara，要求sahara-engine支持`net_ns`访问模式。
+2. 想想为什么sahara-engine使用`net_ns`访问虚拟机不支持多网络节点情况。
