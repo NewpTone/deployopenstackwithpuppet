@@ -12,6 +12,11 @@
 ---
 # `v0.4`版本说明
 
+## 2017-01-05
+
+* 更新Puppet4漫谈
+* 更新puppet-sahara
+
 ## 2016-10-31
 
 * packstack @liao 

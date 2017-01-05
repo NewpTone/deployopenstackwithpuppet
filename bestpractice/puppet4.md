@@ -195,7 +195,6 @@ yum localinstall http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rp
  - `ActiveRecord`stored config
  - puppet.conf中`master`section
 
-
 ### HTTP API的变化
 
 Puppet4中的另一个重要变化是master和agent通讯的URLs发生了变化。因此Puppet3的agent将无法和Puppet4的server端通信。例如：
@@ -216,11 +215,9 @@ Puppet4中的另一个重要变化是master和agent通讯的URLs发生了变化�
 
  - 在Puppet3中，若用户没有设置allow_virtual属性，会有废弃的警告信息，在Puppet4中该警告会被移除，allow_vritual默认会从false变为true。
 
-
 ### 内部API和实现的变化
 
 这些变化只会影响到Puppet内部ruby方法和库的调用接口，对终端用户的使用没有任何影响。
-
 
 ## 被废弃的特性
 
