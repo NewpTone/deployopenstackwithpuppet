@@ -12,18 +12,19 @@
 ---
 # `v0.4`版本说明
 
+## 2017-02-06
+* packstack @xingchao 本周末
+* kolla @weiyu 本周末 
+* tripleo @liangliang 本周末
+* fuel @liao 本周五 
+* ansible-openstack @luyuan 本周末
+* puppet-ceph @feiyang 本周末
+
 ## 2017-01-05
 
 * 更新Puppet4漫谈
 * 更新puppet-sahara
 
-## 2016-10-31
-
-* packstack @xingchao
-* kolla @weiyu 
-* tripleo @liangliang 
-* fuel @liao
-* ansible-openstack @luyuan 
 
 # `v0.3`版本说明
 
