@@ -19,10 +19,10 @@
 
 ## 2016-10-31
 
-* packstack @liao 
+* packstack @xingchao
 * kolla @weiyu 
 * tripleo @liangliang 
-* fuel @xingchao 
+* fuel @liao
 * ansible-openstack @luyuan 
 
 # `v0.3`版本说明
