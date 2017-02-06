@@ -1,4 +1,4 @@
-# 模块管理
+# 如何做好模块管理
 
 不同于其他的Openstack项目，puppet modules是一个数量庞大的存在。以我们当前在使用中的puppet modules为例，就已经多达96个（破百计日可待）。
 
