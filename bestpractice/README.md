@@ -1,6 +1,5 @@
 # Openstack自动化部署最佳实践
 
-**本章完成度:`30%`**
 
 > Fools ignore complexity. Pragmatists suffer it. Some can avoid it. Geniuses remove it.  
 >   &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;                  — Alan J. Perlis, “Epigrams in Programming”
@@ -22,7 +21,7 @@
 
 1.代码管理相关：
 
-> 代码规范的程度体现了一个程序员的素质，映射出一家公司对待技术的态度。
+> 代码的规范与否体现了一个程序员的素质，代码的管理则反映了一家公司对待技术的态度。
 
 那么代码规范体现在以下几点：
 

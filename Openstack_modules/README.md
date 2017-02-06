@@ -39,7 +39,7 @@ PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet�
 * Root Cause Analysis (Vitrage)
 * Message service (Zaqar)
 
-第一期我们会cover核心Openstack服务和部分热门服务：
+本书将会cover核心Openstack服务和部分热门服务：
 
 * Telemetry (Ceilometer)
 * Block Storage (Cinder)  
@@ -51,4 +51,10 @@ PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet�
 * Networking (Neutron)
 * Compute (Nova)    
 * Object Storage (Swift)
-* Testing (Tempest)    
+* Testing (Tempest) 
+* Ceph(Block Storage)
+* Benchmarking (Rally) 
+* Data processing (Sahara)
+* Orchestration (Heat)
+* DNS (Designate)
+
