@@ -65,6 +65,7 @@
   * [TripleO](deployment_tool/tripleo.md)
   * [Packstack](deployment_tool/packstack.md)
   * [OSA](deployment_tool/osa.md)
+  * [DevStack](deployment_tool/devstack.md)
 * [如何参与](howto.md)
 * [版本日志](release.md)
 
