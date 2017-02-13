@@ -109,17 +109,17 @@ $ cd /opt/openstack-ansible
 export BOOTSTRAP_OPTS="bootstrap_host_data_disk_device=vdb"
 export ANSIBLE_ROLE_FETCH_MODE=git-clone
 ```
-
+环境执行工具的安装和初始化
 ```bash
 $ scripts/bootstrap-ansible.sh
 ```
-
+执行命令环境准备
 ```bash
-scripts/bootstrap-aio.sh
+$ scripts/bootstrap-aio.sh
 ```
-
+最后执行部署命令
 ```bash
-scripts/run-playbooks.sh
+$ scripts/run-playbooks.sh
 ```
 
 安装过程需要一段时间才能完成，但这里有一些一般估计：
