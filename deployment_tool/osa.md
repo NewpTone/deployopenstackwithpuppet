@@ -1,12 +1,16 @@
 # Openstack-Ansible
 ## 简介
 ***
-OpenStack-Ansible 是 OpenStack 社区的官方项目，他从通过源代码部署到生产环境当中，从而可以更加容易的去的运维、升级、及扩展集群。了解本章需要你有一定的 Ansible和 OpenStack的基本概念。本次我们通过一个 OpenStack-Ansible部署一套AIO环境
+OpenStack-Ansible 是 OpenStack 社区的官方项目，他从通过源代码部署到生产环境当中，从而可以更加容易的去的运维、升级、及扩展集群。同时OpenStack-Ansible（OSA）使用Ansible IT自动化引擎在Ubuntu Linux上部署一个OpenStack环境。为了隔离和易于维护，您可以将OpenStack组件安装到Linux容器（LXC）中。
+
+
+***注意了解本章需要你有一定的 Ansible和 OpenStack的基本概念。本次我们通过一个 OpenStack-Ansible部署一套AIO环境
 
 
 OpenStack-Ansible为OpenStack-Ansible支持的每个单独角色提供单独的角色存储库。有关单个角色文档，请参阅OpenStack-Ansible文档中的角色文档。
 参考文档：
 http://docs.openstack.org/developer/openstack-ansible/developer-docs/advanced-role-docs.html
+
 
 目前已经可以配置以下基础组件包括
 * galera_server[]
@@ -167,17 +171,12 @@ $ scripts/run-playbooks.sh
 # rm /etc/apt/apt.conf.d/00apt-cacher-proxy
 ```
 
-下图是AIO的部署逻辑图,此图不是按比例的，并且甚至不是100％准确，此图表仅用于信息目的:
-
-
-
-
+### 下图是AIO的部署逻辑图,此图不是按比例的，并且甚至不是100％准确，此图表仅用于信息目的:
+未完待续
 ### OpenStack-ansible配置管理
-
-
-
-
+未完待续
 ### OpenStack-ansible升级管理
+未完待续
 
 ## 总结
 优点
