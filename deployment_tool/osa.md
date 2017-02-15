@@ -1,66 +1,52 @@
 # Openstack-Ansible
-## 简介
+## OSA简介
 ***
-OpenStack-Ansible 是 OpenStack 社区的官方项目，他从通过源代码部署到生产环境当中，从而可以更加容易的去的运维、升级、及扩展集群。同时OpenStack-Ansible（OSA）使用Ansible IT自动化引擎在Ubuntu Linux上部署一个OpenStack环境。为了隔离和易于维护，您可以将OpenStack组件安装到Linux容器（LXC）中。
+OpenStack-Ansible 是 OpenStack 社区的官方项目，可以部署在指定物理机器上，而不使用容器技术，从而可以更加容易的去的运维、升级、及扩展集群。同时OpenStack-Ansible（OSA）使用Ansible 自动化工具在Ubuntu Linux上部署OpenStack集群。为了隔离和易于维护，OSA也可以使用Linux容器（LXC）将Openstack核心服务安装到容器当中。除了OSA社区中官方项目Kolla，它的原理基于容器作为服务载体，使用Docker技术，如果有兴趣读者可以阅读Kolla章节。
+
+* 注意了解本章需要你有一定的 Ansible 和 OpenStack的基本概念。本次我们通过一个 OpenStack-Ansible部署一套AIO环境
+***
+
+## Ansible
+Ansible是目前市面上非常流行一个自动化工具，主要是为了简化系统和应用程序的部署。Ansible通过SSH技术链接到每台服务器上。Ansible使用以YAML语言编写的手册进行编排。
+
+## Linux containers (LXC)
+Linux Container容器是一种内核虚拟化技术。容器通过增强chroot环境的概念提供操作系统级虚拟化。容器为特定的一组进程隔离资源和文件系统，而没有虚拟机的开销和复杂性。们访问底层主机上的相同内核，设备和文件系统，并提供围绕一组规则构建的精简操作层。
 
 
-***注意了解本章需要你有一定的 Ansible和 OpenStack的基本概念。本次我们通过一个 OpenStack-Ansible部署一套AIO环境
-
-
-OpenStack-Ansible为OpenStack-Ansible支持的每个单独角色提供单独的角色存储库。有关单个角色文档，请参阅OpenStack-Ansible文档中的角色文档。
-参考文档：
-http://docs.openstack.org/developer/openstack-ansible/developer-docs/advanced-role-docs.html
-
-
-目前已经可以配置以下基础组件包括
-* galera_server[]
-* haproxy_server
-* memcached_server
-* rabbitmq_server
-* repo_build
-* repo_server
-* rsyslog_server
+## OSA可配置的组件
+可以部署Infrastructure 组件包括
+* MariaDB with Galera
+* RabbitMQ
+* Memcached
+* Repository
+* Load balancer
+* Utility container
+* Log aggregation host
+* Unbound DNS container
 
 可以部署的Openstack组件包括
-* os_aodh
-* os_barbican
-* os_ceilometer
-* os_cinder
-* os_designate
-* os_glance
-* os_gnocchi
-* os_heat
-* os_horizon
-* os_ironic
-* os_keystone
-* os_magnum
-* os_neutron
-* os_nova
-* os_rally
-* os_sahara
-* os_swift
-* os_tempest
-* os_trove
+OpenStack services
+* Bare Metal (ironic)
+* Block Storage (cinder)
+* Compute (nova)
+* Container Infrastructure Management (magnum)
+* Dashboard (horizon)
+* Data Processing (sahara)
+* Identity (keystone)
+* Image (glance)
+* Networking (neutron)
+* Object Storage (swift)
+* Orchestration (heat)
+* Telemetry (aodh, ceilometer, gnocchi)
 
-其他组件
-* ansible-plugins
-* apt_package_pinning
-* ceph_client
-* galera_client
-* lxc_container_create
-* lxc_hosts
-* pip_install
-* openstack_openrc
-* openstack_hosts
-* rsyslog_client
-## Openstack-ansible 安装Openstack
+## OSA 安装Openstack
 ***
 环境准备,需要准备如下配置：
 *8 vCPU’s
 *50GB free disk space on the root partition
 *8GB RAM
 ***
-***
+
 最小化配置需求：
 * CPU主板支持hardware-assisted的虚拟化
 * 8 CPU Cores
@@ -97,10 +83,10 @@ $ cd /opt/openstack-ansible
 
 根据自己需求来部署对应的Openstack集群版本
 ```bash
-# # List all existing tags.
+# # 显示所有的TAG号
 # git tag -l
 
-# # Checkout the stable branch and find just the latest tag
+# # 本次我们使用Newton版本搭建一套AIO
 # git checkout stable/newton
 # git describe --abbrev=0 --tags
 
@@ -141,10 +127,9 @@ $ scripts/run-playbooks.sh
 重新构建环境
 有时，销毁所有容器并重建AIO是最佳的方案。虽然最佳方案是AIO被完全破坏和重建，但这并不是最佳的方案。因此，可以执行以下操作
 ```bash
-# # Move to the playbooks directory.
 # cd /opt/openstack-ansible/playbooks
 
-# # Destroy all of the running containers.
+# 删除所有的LXC容器
 # openstack-ansible lxc-containers-destroy.yml
 
 # # On the host stop all of the services that run locally and not
@@ -156,33 +141,123 @@ $ scripts/run-playbooks.sh
     service $i stop; \
   done
 
-# # Uninstall the core services that were installed.
+# # 卸除所有已经安装的Openstack服务
 # for i in $(pip freeze | grep -e "nova\|neutron\|keystone\|swift\|cinder"); do \
     pip uninstall -y $i; done
 
-# # Remove crusty directories.
+# # 删除日志和配置目录
 # rm -rf /openstack /etc/{neutron,nova,swift,cinder} \
          /var/log/{neutron,nova,swift,cinder}
 
-# # Remove the pip configuration files on the host
+# # 删除pip配置文件
 # rm -rf /root/.pip
 
-# # Remove the apt package manager proxy
+# # 删除apt的proxy配置文件
 # rm /etc/apt/apt.conf.d/00apt-cacher-proxy
 ```
 
-### 下图是AIO的部署逻辑图,此图不是按比例的，并且甚至不是100％准确，此图表仅用于信息目的:
-未完待续
-### OpenStack-ansible配置管理
-未完待续
-### OpenStack-ansible升级管理
-未完待续
+### OSA部署流程
+![](../images/osa/installation-workflow-overview.png)
+### OSA的AIO工作流程图
+![](../images/osa/osa-workflow-aio.png)
 
+### OpenStack-ansible配置管理
+OSA将安装服务文件存放在/etc/openstack_deploy/conf.d/目录当中，提供AIO和example展示当前主机组使用的文件。如果需要添加其它服务，分配主机到当前的主机文件当中，最后执行playbooks。
+
+```bash
+# 执行命令
+# openstack-ansible setup-infrastructure.yml
+```
+setup-infrastructure.yml 文件包含了如下yaml
+```bash
+- include: unbound-install.yml
+- include: repo-install.yml
+- include: haproxy-install.yml
+- include: memcached-install.yml
+- include: galera-install.yml
+- include: rabbitmq-install.yml
+- include: etcd-install.yml
+- include: ceph-install.yml
+- include: utility-install.yml
+- include: rsyslog-install.yml
+```
+Ansible 基础服务的playbooks安装如下基础服务：Memcached repository Galera RabbitMQ rsyslog
+memcached-install.yaml 详细代码，主要由两个role组成
+```bash
+- name: Install memcached
+  hosts: memcached
+  gather_facts: "{{ gather_facts | default(True) }}"
+  max_fail_percentage: 20
+  user: root
+  pre_tasks:
+    - include: common-tasks/os-lxc-container-setup.yml
+    - include: common-tasks/os-log-dir-setup.yml
+      vars:
+        log_dirs:
+          - src: "/openstack/log/{{ inventory_hostname }}-memcached"
+            dest: "/var/log/memcached"
+    - include: common-tasks/package-cache-proxy.yml
+  roles:
+    - role: "memcached_server"
+    - role: "rsyslog_client"
+      rsyslog_client_log_rotate_file: memcached_log_rotate
+      rsyslog_client_log_dir: "/var/log/memcached"
+      rsyslog_client_config_name: "99-memcached-rsyslog-client.conf"
+      tags:
+        - rsyslog
+    - role: "system_crontab_coordination"
+      tags:
+        - crontab
+  vars:
+    is_metal: "{{ properties.is_metal|default(false) }}"
+  tags:
+    - memcached
+```
+role: "memcached_server" 默认参数
+```bash
+## Logging level
+debug: False
+
+## APT Cache Options
+cache_timeout: 600
+
+# Set the package install state for distribution packages
+# Options are 'present' and 'latest'
+memcached_package_state: "latest"
+
+# Defines that the role will be deployed on a host machine
+is_metal: true
+
+# The default memcache memory setting is to use .25 of the available system ram
+# as long as that value is < 8192. However you can set the `memcached_memory`
+# value to whatever you like as an override.
+base_memcached_memory: "{{ ansible_memtotal_mb | default(4096) }}"
+memcached_memory: "{{ base_memcached_memory | int // 4 if base_memcached_memory | int // 4 < 8192 else 8192 }}"
+
+memcached_port: 11211
+memcached_listen: "127.0.0.1"
+memcached_log: /var/log/memcached/memcached.log
+memcached_connections: 1024
+memcached_threads: 4
+memcached_file_limits: "{{ memcached_connections | int + 1024 }}"
+
+memcached_distro_packages: []
+memcached_test_distro_packages: []
+install_test_packages: False
+```
+更多参数可以参考:https://github.com/openstack/openstack-ansible-memcached_server
+### 其它
+安装前检查命令
+```bash
+openstack-ansible setup-hosts.yml --syntax-check
+openstack-ansible setup-infrastructure.yml --syntax-check
+openstack-ansible setup-openstack.yml --syntax-check
+```
 ## 总结
 优点
 * 部署简单
-* 环境隔离
 * 支持的部署的服务多
+* 可以自定义role中参数
 
 缺点
-* 对新手的友好程度
+* 友好程度
