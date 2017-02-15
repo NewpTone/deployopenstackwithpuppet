@@ -23,8 +23,27 @@ Packstack支持两种部署架构：
  
  在开始部署前，我们需要准备一台虚拟机，它的规格如下：
  
- |硬件名称|要求
+ |名称|要求|
  | -- | -- |
- |内存 至少4G |
+ |处理器|推荐2核以上|
+ |内存|推荐4G以上 |
+ |磁盘|推荐20G以上|
+ |网卡|至少一块1G网卡|
+ |操作系统|CentOS7.2|
  
- |
+ 
+ 在完成虚拟机的配置和启动后，在终端下输入以下指令： 
+ ```shell
+$ sudo yum install -y https://www.rdoproject.org/repos/rdo-release.rpm
+$ sudo yum update -y
+$ sudo yum install -y openstack-packstack
+```
+ 
+ 
+ ### 快速运行
+ 
+ 快速运行模式，顾名思义就是一键搞定：
+ 
+ ```shell
+$ packstack --allinone
+ ```
