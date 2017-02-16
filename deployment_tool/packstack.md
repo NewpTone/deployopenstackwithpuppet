@@ -67,13 +67,13 @@ $ packstack --install-hosts=CONTROLLER_ADDRESS,NODE_ADDRESSES
  
  ### 交互式运行
  
-1. 如果希望以交互式的方式来配置集群的部署，可以在终端下输入：
+1.如果希望以交互式的方式来配置集群的部署，可以在终端下输入：
 
 ```shell
 # packstack
-````
+```
 
-2. packstack会提示你输入一个用于保存公共密钥的路径，输入`Enter`，则
+2.packstack会提示你输入一个用于保存公共密钥的路径，输入`Enter`，则
 会使用默认的`~/.ssh/id_rsa.pub`：
 
 ```
@@ -81,7 +81,7 @@ Enter the path to your ssh Public key to install on servers:
 ```
 
 
-3. packstack提示输入一个默认密码，该密码将作为admin user密码，
+3.packstack提示输入一个默认密码，该密码将作为admin user密码，
 不输入则随机生成：
 
 ```
@@ -163,7 +163,7 @@ Enter list of network hosts  [10.211.55.8] :
 
 ```
 Do you want to use VMware vCenter as hypervisor and datastore [y|n]  [n] :
-````
+```
 
 15.指定是否使用不支持的参数，推荐使用默认设置：
 
@@ -273,6 +273,7 @@ Confirm password [y|n]  [y] :
 ```
 
 27.配置计算服务，包括flavor,资源虚拟比，迁移，虚拟化软件等参数的设置：
+
 ```
 Should Packstack manage default Nova flavors [y|n]  [y] :
 Enter the CPU overcommitment ratio. Set to 1.0 to disable CPU overcommitment  [16.0] :
@@ -286,6 +287,7 @@ Enter the PCI passthrough whitelist as array of hash in JSON style for controlle
 The nova hypervisor that should be used. Either qemu or kvm. [qemu|kvm]  [%{::default_hypervisor}] :
 Confirm password [qemu|kvm]  [%{::default_hypervisor}] :
 ```
+
 28.配置网络服务，包括从组件，接口，网络驱动等细节的设置：
 ```
 Enter the password for Neutron Keystone access :
@@ -319,11 +321,13 @@ Enter comma separated list of subnets used for tunneling to make them allowed by
 Enter VXLAN UDP port number  [4789] :
 ```
 29.设置Dashboard服务，是否开启Https服务：
+
 ```
 Would you like to set up Horizon communication over https [y|n]  [n] :
 ```
 
 30.配置对象存储服务,包括设备逻辑，zone，replicas,文件系统和块设备大小的配置：
+
 ```
 Enter the Swift Storage devices e.g. /path/to/dev:
 Enter the number of swift storage zones, MUST be no bigger than the number of storage devices configured  [1] :
@@ -342,7 +346,8 @@ Would you like to configure Tempest (OpenStack test suite). Note that provisioni
 32.设置Floating IP网段
 
 ```
-Enter the network address for the floating IP subnet  [172.24.4.224/28] :```
+Enter the network address for the floating IP subnet  [172.24.4.224/28] :
+```
 
 33.设置测试镜像的名称，源地址，格式等配置：
 
@@ -374,7 +379,9 @@ Enter the port of the redis server(s)  [6379] :
 Enter the password for the Aodh Keystone access :
 Confirm password :
 ```
+
 35.设置nagios用户的密码:
+
 ```
 Enter the password for the nagiosadmin user :
 ```
