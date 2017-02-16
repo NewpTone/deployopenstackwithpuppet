@@ -15,8 +15,7 @@ Packstack支持两种部署架构：
  - Multi-Node，即控制节点和计算机分离
  
  
- 因为Redhat官方有非常详细的使用文档，因此本文将简要地介绍Packstack的快速运行以及交互式运行方式来部署All-in-One的Openstack。
- 本文的重点会放在说明如何开发PackStack的Plugin来扩展Packstack的功能以满足定制化的需求。
+ 因为Redhat官方有详细的使用文档，因此本文将简要介绍Packstack的快速运行以及交互式运行方式来部署All-in-One的Openstack。
  
  
  ## 部署前准备
@@ -408,6 +407,40 @@ Proceed with the configuration listed above? (yes|no):
 # packstack --gen-answer-file=my_file
 ```
 
-然后，使用vim打开这个文件
+使用vim打开文件,每个配置项都含有详细的说明：
+```
+[general]
 
+# Path to a public key to install on servers. If a usable key has not
+# been installed on the remote servers, the user is prompted for a
+# password and this key is installed so the password will not be
+# required again.
+CONFIG_SSH_KEY=/root/.ssh/id_rsa.pub
 
+# Default password to be used everywhere (overridden by passwords set
+# for individual services or users).
+CONFIG_DEFAULT_PASSWORD=
+
+# The amount of service workers/threads to use for each service.
+# Useful to tweak when you have memory constraints. Defaults to the
+# amount of cores on the system.
+CONFIG_SERVICE_WORKERS=%{::processorcount}
+
+# Specify 'y' to install MariaDB. ['y', 'n']
+CONFIG_MARIADB_INSTALL=y
+
+# Specify 'y' to install OpenStack Image Service (glance). ['y', 'n']
+CONFIG_GLANCE_INSTALL=y
+
+......
+```
+例如，我们不希望配置MariaDB，只需要将`CONFIG_MARIADB_INSTALL`设置为`n`:
+
+```
+CONFIG_MARIADB_INSTALL=n
+```
+保存并退出my_file，在终端下运行以下命令指定相应的配置文件：
+
+```shell
+# packstack --answer-file=my_file
+```

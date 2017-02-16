@@ -66,6 +66,7 @@
   * [Packstack](deployment_tool/packstack.md)
   * [OSA](deployment_tool/osa.md)
   * [DevStack](deployment_tool/devstack.md)
+  * 编写一个定制化部署工具
 * [如何参与](howto.md)
 * [版本日志](release.md)
 
