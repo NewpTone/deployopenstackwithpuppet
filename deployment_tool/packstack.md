@@ -67,6 +67,459 @@ $ packstack --install-hosts=CONTROLLER_ADDRESS,NODE_ADDRESSES
  
  ### 交互式运行
  
- 
- 
- 
+1. 如果希望以交互式的方式来配置集群的部署，可以在终端下输入：
+
+```shell
+# packstack
+````
+
+2. packstack会提示你输入一个用于保存公共密钥的路径，输入`Enter`，则
+会使用默认的`~/.ssh/id_rsa.pub`：
+
+```
+Enter the path to your ssh Public key to install on servers:
+```
+
+
+3. packstack提示输入一个默认密码，该密码将作为admin user密码，
+不输入则随机生成：
+
+```
+Enter a default password to be used. Leave blank for a randomly generated one. :
+``` 
+
+4.输入每个wsgi服务的进程数，默认等于cpu的核数：
+
+```
+Enter the amount of service workers/threads to use for each service. Leave blank to use the default. [%{::processorcount}] :
+```
+
+5.确认是否要安装MariaDB数据库,默认为y：
+
+```
+Should Packstack install MariaDB [y|n]  [y] :
+```
+
+6.确认是否安装Openstack组件，可以根据需要定制服务：
+
+```
+Should Packstack install OpenStack Image Service (Glance) [y|n]  [y] :
+Should Packstack install OpenStack Block Storage (Cinder) [y|n]  [y] :
+Should Packstack install OpenStack Shared File System (Manila) [y|n]  [n] :
+Should Packstack install OpenStack Compute (Nova) [y|n]  [y] :
+Should Packstack install OpenStack Networking (Neutron) [y|n]  [y] :
+Should Packstack install OpenStack Dashboard (Horizon) [y|n]  [y] :
+Should Packstack install OpenStack Object Storage (Swift) [y|n]  [y] :
+Should Packstack install OpenStack Metering (Ceilometer) [y|n]  [y] :
+Should Packstack install OpenStack Telemetry Alarming (Aodh) [y|n]  [y] :
+Should Packstack install OpenStack Resource Metering (Gnocchi) [y|n]  [y] :
+Should Packstack install OpenStack Clustering (Sahara). If yes it'll also install Heat. [y|n]  [n] :
+Should Packstack install OpenStack Orchestration (Heat) [y|n]  [n] :
+Should Packstack install OpenStack Database (Trove) [y|n]  [n] :
+Should Packstack install OpenStack Bare Metal (Ironic) [y|n]  [n] :
+Should Packstack install OpenStack client tools [y|n]  [y] :
+```
+
+7.Packstack为所有服务配置NTP服务来校准系统时间，NTP的设置只对多节点有意义：
+```
+Enter a comma separated list of NTP server(s). Leave plain if Packstack should not install ntpd on instances:
+```
+
+8.是否安装Nagios监控服务：
+
+```
+Should Packstack install Nagios to monitor OpenStack hosts [y|n]  [y] :
+```
+
+9.哪些服务器在本次安装中被排除在外：
+
+```
+Enter a comma separated list of server(s) to be excluded. Leave plain if you don't need to exclude any server.:
+```
+10.是否启用调试模式：
+
+```
+Do you want to run OpenStack services in debug mode [y|n]  [n] :
+```
+
+11.指定控制器的地址:
+
+```
+Enter the controller host  [10.211.55.8] :
+```
+12.指定计算节点的地址：
+
+```
+Enter list of compute hosts  [10.211.55.8] :
+```
+
+13.指定网络节点的地址：
+
+```
+Enter list of network hosts  [10.211.55.8] :
+```
+
+14.是否使用VMWare vCenter作为hypervisor和datastore的后端：
+
+```
+Do you want to use VMware vCenter as hypervisor and datastore [y|n]  [n] :
+````
+
+15.指定是否使用不支持的参数，推荐使用默认设置：
+
+```
+Enable this on your own risk. Do you want to use unsupported parameters [y|n]  [n] :
+```
+
+16.网卡名称是否被自动识别为子网+CIDR的格式：
+```
+Should interface names be automatically recognized based on subnet CIDR [y|n]  [n] :
+```
+17.是否为每个服务器订阅Extra Packstacks for Enterprise Linux(EPEL)，建议使用默认设置：
+```
+To subscribe each server to EPEL enter "y" [y|n]  [n] :
+```
+
+18.是否启用自定义的软件包仓库:
+
+```
+Enter a comma separated list of URLs to any additional yum repositories to install:
+```
+
+19.是否启用rdo test：
+
+```
+To enable rdo testing enter "y" [y|n]  [n] :
+```
+
+20.是否启用Red Hat订阅，跳过即可：
+```
+To subscribe each server to Red Hat enter a username :
+To subscribe each server with RHN Satellite enter RHN Satellite server URL:
+```
+
+21.ssl证书相关的操作：
+```
+Enter the filename of the SSL CAcertificate, if the CONFIG_SSL_CACERT_SELFSIGN is set to y the path will be CONFIG_SSL_CERT_DIR/certs/selfcert.crt  [/etc/pki/tls/certs/selfcert.crt] :
+Enter the filename of the SSL CAcertificate Key file, if the CONFIG_SSL_CACERT_SELFSIGN is set to y the path will be CONFIG_SSL_CERT_DIR/keys/selfkey.key  [/etc/pki/tls/private/selfkey.key] :
+Enter the path to use to store generated SSL certificates in  [~/packstackca/] :
+Should packstack use selfsigned CAcert. [y|n]  [y] :
+Enter the ssl certificates subject country.  [--] :
+Enter the ssl certificates subject state.  [State] :
+Enter the ssl certificate subject location.  [City] :
+Enter the ssl certificate subject organization.  [openstack] :
+Enter the ssl certificate subject organizational unit.  [packstack] :
+Enter the ssl certificaate subject common name.  [centos-7.1.shared] :
+Enter the ssl certificate subject admin email.  [admin@centos-7.1.shared] :
+```
+
+22.配置AMQP服务，默认会使用RabbitMQ作为backend，不启用身份验证和SSL：
+
+```
+Set the AMQP service backend [rabbitmq]  [rabbitmq] :
+Enter the host for the AMQP service  [10.211.55.8] :
+Enable SSL for the AMQP service? [y|n]  [n] :
+Enable Authentication for the AMQP service? [y|n]  [n] :
+```
+
+23.配置MariaDB服务
+
+```
+Enter the IP address of the MariaDB server  [10.211.55.8] :
+Enter the password for the MariaDB admin user :
+Confirm password :
+```
+
+24.配置Identity服务，包括设置数据库连接的密码，创建默认的admin,demo用户等基本操作：
+
+```
+Enter the password for the Keystone DB access :
+Confirm password :
+Enter y if cron job for removing soft deleted DB rows should be created [y|n]  [y] :
+Confirm password [y|n]  [y] :
+Region name  [RegionOne] :
+Enter the email address for the Keystone admin user  [root@localhost] :
+Enter the username for the Keystone admin user  [admin] :
+Enter the password for the Keystone admin user :
+Confirm password :
+Enter the password for the Keystone demo user :
+Confirm password :
+Enter the Keystone identity backend type. [sql|ldap]  [sql] :
+```
+25.配置Image服务，包括设置数据库连接密码，glance用户密码，后端存储：
+
+```
+Enter the password for the Glance DB access :
+Confirm password :
+Enter the password for the Glance Keystone access :
+Confirm password :
+Glance storage backend [file|swift]  [file] :
+```
+
+26.配置块存储服务，包括设置数据库连接密码，cinder用户和密码:
+
+```
+Enter the password for the Cinder DB access :
+Confirm password :
+Enter y if cron job for removing soft deleted DB rows should be created [y|n]  [y] :
+Confirm password [y|n]  [y] :
+Enter the password for the Cinder Keystone access :
+Confirm password :
+Enter the Cinder backend to be configured [lvm|gluster|nfs|vmdk|netapp|solidfire]  [lvm] :
+Should Cinder's volumes group be created (for proof-of-concept installation)? [y|n]  [y] :
+Enter Cinder's volumes group usable size  [20G] :
+Enter y if cron job for removing soft deleted DB rows should be created [y|n]  [y] :
+Confirm password [y|n]  [y] :
+```
+
+27.配置计算服务，包括flavor,资源虚拟比，迁移，虚拟化软件等参数的设置：
+```
+Should Packstack manage default Nova flavors [y|n]  [y] :
+Enter the CPU overcommitment ratio. Set to 1.0 to disable CPU overcommitment  [16.0] :
+Enter the RAM overcommitment ratio. Set to 1.0 to disable RAM overcommitment  [1.5] :
+Enter protocol which will be used for instance migration [tcp|ssh]  [tcp] :
+Enter the compute manager for nova migration  [nova.compute.manager.ComputeManager] :
+Enter the path to a PEM encoded certificate to be used on the https server, leave blank if one should be generated, this certificate should not require a passphrase:
+Enter the SSL keyfile corresponding to the certificate if one was entered:
+Enter the PCI passthrough array of hash in JSON style for controller eg. [{'vendor_id':'1234', 'product_id':'5678', 'name':'default'}, {...}] :
+Enter the PCI passthrough whitelist as array of hash in JSON style for controller eg. [{'vendor_id':'1234', 'product_id':'5678', 'name':'default'}, {...}]:
+The nova hypervisor that should be used. Either qemu or kvm. [qemu|kvm]  [%{::default_hypervisor}] :
+Confirm password [qemu|kvm]  [%{::default_hypervisor}] :
+```
+28.配置网络服务，包括从组件，接口，网络驱动等细节的设置：
+```
+Enter the password for Neutron Keystone access :
+Confirm password :
+Enter the password for Neutron DB access :
+Confirm password :
+Enter the ovs bridge the Neutron L3 agent will use for external traffic, or 'provider' if using provider networks.  [br-ex] :
+Enter Neutron metadata agent password :
+Confirm password :
+Should Packstack install Neutron LBaaS [y|n]  [n] :
+Should Packstack install Neutron L3 Metering agent [y|n]  [y] :
+Would you like to configure neutron FWaaS? [y|n]  [n] :
+Would you like to configure neutron VPNaaS? [y|n]  [n] :
+Enter a comma separated list of network type driver entrypoints [local|flat|vlan|gre|vxlan]  [vxlan] :
+Enter a comma separated ordered list of network_types to allocate as tenant networks [local|vlan|gre|vxlan]  [vxlan] :
+Enter a comma separated ordered list of networking mechanism driver entrypoints [logger|test|linuxbridge|openvswitch|hyperv|ncs|arista|cisco_nexus|mlnx|l2population|sriovnicswitch]  [openvswitch] :
+Enter a comma separated  list of physical_network names with which flat networks can be created  [*] :
+Enter a comma separated list of physical_network names usable for VLAN:
+Enter a comma separated list of <tun_min>:<tun_max> tuples enumerating ranges of GRE tunnel IDs that are available for tenant network allocation:
+Enter a multicast group for VXLAN:
+Enter a comma separated list of <vni_min>:<vni_max> tuples enumerating ranges of VXLAN VNI IDs that are available for tenant network allocation  [10:100] :
+Enter the name of the L2 agent to be used with Neutron [linuxbridge|openvswitch]  [openvswitch] :
+Enter a comma separated list of supported PCI vendor devices, defined by vendor_id:product_id according to the PCI ID Repository.  [['15b3:1004', '8086:10ca']] :
+Set to y if the sriov agent is required [y|n]  [n] :
+Enter a comma separated list of interface mappings for the Neutron ML2 sriov agent:
+Enter a comma separated list of bridge mappings for the Neutron openvswitch plugin:
+Enter a comma separated list of OVS bridge:interface pairs for the Neutron openvswitch plugin:
+Enter a comma separated list of bridges for the Neutron OVS plugin in compute nodes. They must be included in os-neutron-ovs-bridge-mappings and os-neutron-ovs-bridge-interfaces.:
+Enter interface with IP to override the default tunnel local_ip:
+Enter comma separated list of subnets used for tunneling to make them allowed by IP filtering.:
+Enter VXLAN UDP port number  [4789] :
+```
+29.设置Dashboard服务，是否开启Https服务：
+```
+Would you like to set up Horizon communication over https [y|n]  [n] :
+```
+
+30.配置对象存储服务,包括设备逻辑，zone，replicas,文件系统和块设备大小的配置：
+```
+Enter the Swift Storage devices e.g. /path/to/dev:
+Enter the number of swift storage zones, MUST be no bigger than the number of storage devices configured  [1] :
+Enter the number of swift storage replicas, MUST be no bigger than the number of storage zones configured  [1] :
+Enter FileSystem type for storage nodes [xfs|ext4]  [ext4] :
+Enter the size of the storage device (eg. 2G, 2000M, 2000000K)  [2G] :
+```
+
+31.是否启用Tempest服务:
+
+```
+Would you like to provision for demo usage and testing [y|n]  [y] :
+Would you like to configure Tempest (OpenStack test suite). Note that provisioning is only supported for all-in-one installations. [y|n]  [n] :
+```
+
+32.设置Floating IP网段
+
+```
+Enter the network address for the floating IP subnet  [172.24.4.224/28] :```
+
+33.设置测试镜像的名称，源地址，格式等配置：
+
+```
+Enter the name to be assigned to the demo image  [cirros] :
+Enter the location of an image to be loaded into Glance  [http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img] :
+Enter the format of the demo image  [qcow2] :
+Enter the name of a user to use when connecting to the demo image via ssh  [cirros] :
+Enter the name to be assigned to the uec image used for tempest  [cirros-uec] :
+Enter the location of a uec kernel to be loaded into Glance  [http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-kernel] :
+Enter the location of a uec ramdisk to be loaded into Glance  [http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-initramfs] :
+Enter the location of a uec disk image to be loaded into Glance  [http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img] :
+Would you like to configure the external ovs bridge [y|n]  [y] :
+```
+
+34.设置Ceilometer,Aodh,Gnocchi服务：
+
+```
+Enter the password for Gnocchi DB access :
+Confirm password :
+Enter the password for the Gnocchi Keystone access :
+Confirm password :
+Enter the password for the Ceilometer Keystone access :
+Confirm password :
+Enter the Ceilometer service name. [ceilometer|httpd]  [httpd] :
+Enter the host for the MongoDB server  [10.211.55.8] :
+Enter the host for the Redis server  [10.211.55.8] :
+Enter the port of the redis server(s)  [6379] :
+Enter the password for the Aodh Keystone access :
+Confirm password :
+```
+35.设置nagios用户的密码:
+```
+Enter the password for the nagiosadmin user :
+```
+
+36.最后一步，确认生成的配置是否符合期望：
+```
+Packstack will be installed using the following configuration:
+==============================================================
+ssh-public-key:                /root/.ssh/id_rsa.pub
+default-password:
+service-workers:               %{::processorcount}
+mariadb-install:               y
+os-glance-install:             y
+os-cinder-install:             y
+os-manila-install:             n
+os-nova-install:               y
+os-neutron-install:            y
+os-horizon-install:            y
+os-swift-install:              y
+os-ceilometer-install:         y
+os-aodh-install:               y
+os-gnocchi-install:            y
+os-sahara-install:             n
+os-heat-install:               n
+os-trove-install:              n
+os-ironic-install:             n
+os-client-install:             y
+ntp-servers:
+nagios-install:                y
+exclude-servers:
+os-debug-mode:                 n
+os-controller-host:            10.211.55.8
+os-compute-hosts:              10.211.55.8
+os-network-hosts:              10.211.55.8
+os-vmware:                     n
+unsupported:                   n
+use-subnets:                   n
+use-epel:                      n
+additional-repo:
+enable-rdo-testing:            n
+rh-username:
+rhn-satellite-server:
+rh-sat6-server:
+ssl-cacert-file:               /etc/pki/tls/certs/selfcert.crt
+ssl-cacert-key-file:           /etc/pki/tls/private/selfkey.key
+ssl-cert-dir:                  ~/packstackca/
+ssl-cacert-selfsign:           y
+ssl-cert-subject-country:      --
+ssl-cert-subject-state:        State
+ssl-cert-subject-location:     City
+ssl-cert-subject-organization: openstack
+ssl-cert-subject-organizational-unit:packstack
+ssl-cert-subject-common-name:  centos-7.1.shared
+ssl-cert-subject-email:        admin@centos-7.1.shared
+amqp-backend:                  rabbitmq
+amqp-host:                     10.211.55.8
+amqp-enable-ssl:               n
+amqp-enable-auth:              n
+mariadb-host:                  10.211.55.8
+mariadb-pw:                    ********
+keystone-db-passwd:            ********
+keystone-db-purge-enable:      True
+keystone-region:               RegionOne
+keystone-admin-email:          root@localhost
+keystone-admin-username:       admin
+keystone-admin-passwd:         ********
+keystone-demo-passwd:          ********
+keystone-identity-backend:     sql
+glance-db-passwd:              ********
+glance-ks-passwd:              ********
+glance-backend:                file
+cinder-db-passwd:              ********
+cinder-db-purge-enable:        True
+cinder-ks-passwd:              ********
+cinder-backend:                lvm
+cinder-volumes-create:         y
+cinder-volumes-size:           20G
+nova-db-purge-enable:          True
+nova-db-passwd:                ********
+nova-ks-passwd:                ********
+nova-manage-flavors:           y
+novasched-cpu-allocation-ratio:16.0
+novasched-ram-allocation-ratio:1.5
+novacompute-migrate-protocol:  tcp
+nova-compute-manager:          nova.compute.manager.ComputeManager
+nova-ssl-cert:
+nova-ssl-key:
+nova-pci-alias:
+nova-pci-passthrough-whitelist:
+nova-libvirt-virt-type:        %{::default_hypervisor}
+os-neutron-ks-password:        ********
+os-neutron-db-password:        ********
+os-neutron-l3-ext-bridge:      br-ex
+os-neutron-metadata-pw:        ********
+os-neutron-lbaas-install:      n
+os-neutron-metering-agent-install:y
+neutron-fwaas:                 n
+os-neutron-vpnaas-install:     n
+os-neutron-ml2-type-drivers:   vxlan
+os-neutron-ml2-tenant-network-types:vxlan
+os-neutron-ml2-mechanism-drivers:openvswitch
+os-neutron-ml2-flat-networks:  *
+os-neutron-ml2-vlan-ranges:
+os-neutron-ml2-tunnel-id-ranges:
+os-neutron-ml2-vxlan-group:
+os-neutron-ml2-vni-ranges:     10:100
+os-neutron-l2-agent:           openvswitch
+os-neutron-ml2-supported-pci-vendor-devs:['15b3:1004', '8086:10ca']
+os-neutron-ml2-sriov-agent-required:n
+os-neutron-ml2-sriov-interface-mappings:
+os-neutron-ovs-bridge-mappings:
+os-neutron-ovs-bridge-interfaces:
+os-neutron-ovs-bridges-compute:
+os-neutron-ovs-tunnel-if:
+os-neutron-ovs-tunnel-subnets:
+os-neutron-ovs-vxlan-udp-port: 4789
+os-horizon-ssl:                n
+os-swift-ks-passwd:            ********
+os-swift-storages:
+os-swift-storage-zones:        1
+os-swift-storage-replicas:     1
+os-swift-storage-fstype:       ext4
+os-swift-storage-size:         2G
+provision-demo:                y
+provision-tempest:             n
+provision-demo-floatrange:     172.24.4.224/28
+provision-image-name:          cirros
+provision-image-url:           http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+provision-image-format:        qcow2
+provision-image-ssh-user:      cirros
+provision-uec-image-name:      cirros-uec
+provision-uec-kernel-url:      http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-kernel
+provision-uec-ramdisk-url:     http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-initramfs
+provision-uec-disk-url:        http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
+provision-tempest-repo-uri:    https://github.com/openstack/tempest.git
+provision-tempest-repo-revision:master
+provision-ovs-bridge:          y
+gnocchi-db-passwd:             ********
+gnocchi-ks-passwd:             ********
+ceilometer-ks-passwd:          ********
+ceilometer-service-name:       httpd
+mongodb-host:                  10.211.55.8
+redis-host:                    10.211.55.8
+redis-port:                    6379
+aodh-ks-passwd:                ********
+nagios-passwd:                 ********
+Proceed with the configuration listed above? (yes|no):
+```
