@@ -42,8 +42,31 @@ $ sudo yum install -y openstack-packstack
  
  ### 快速运行
  
- 快速运行模式，顾名思义就是一键搞定：
+ 快速运行模式，表示用户可以对参数不做任何配置即可开始部署，用户只需要决定是单节点还是多节点的部署方式。
+ 
+ #### 单节点
+ 
+ 在packstack命令后，使用--allinonec参数在本机上部署所有服务。
  
  ```shell
 $ packstack --allinone
  ```
+ 
+ #### 多节点
+ 
+ 使用--install-hostsc参数来运行packstack，该参数值是由一个逗号隔开的IP地址列表。
+ 
+ ```shell
+$ packstack --install-hosts=CONTROLLER_ADDRESS,NODE_ADDRESSES
+ ```
+ 
+ Packstack在部署完成后在终端上会输出以下信息：
+ ```
+ **** Installation completed successfully ******
+ ```
+ 
+ ### 交互式运行
+ 
+ 
+ 
+ 
