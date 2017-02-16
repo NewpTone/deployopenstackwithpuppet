@@ -40,11 +40,11 @@ $ sudo yum install -y openstack-packstack
 ```
  
  
- ### 快速运行
+### 快速运行
  
  快速运行模式，表示用户可以对参数不做任何配置即可开始部署，用户只需要决定是单节点还是多节点的部署方式。
  
- #### 单节点
+#### 单节点
  
  在packstack命令后，使用--allinonec参数在本机上部署所有服务。
  
@@ -52,7 +52,7 @@ $ sudo yum install -y openstack-packstack
 $ packstack --allinone
  ```
  
- #### 多节点
+#### 多节点
  
  使用--install-hostsc参数来运行packstack，该参数值是由一个逗号隔开的IP地址列表。
  
@@ -65,7 +65,7 @@ $ packstack --install-hosts=CONTROLLER_ADDRESS,NODE_ADDRESSES
  **** Installation completed successfully ******
  ```
  
- ### 交互式运行
+### 交互式运行
  
 1.如果希望以交互式的方式来配置集群的部署，可以在终端下输入：
 
@@ -386,7 +386,7 @@ Confirm password :
 Enter the password for the nagiosadmin user :
 ```
 
-36.最后一步，确认生成的配置是否符合期望：
+36.最后一步，确认生成的配置是否符合期望，输入`yes`，并按`回车`键开始执行操作：
 ```
 Packstack will be installed using the following configuration:
 ==============================================================
@@ -394,139 +394,20 @@ ssh-public-key:                /root/.ssh/id_rsa.pub
 default-password:
 service-workers:               %{::processorcount}
 mariadb-install:               y
-os-glance-install:             y
-os-cinder-install:             y
-os-manila-install:             n
-os-nova-install:               y
-os-neutron-install:            y
-os-horizon-install:            y
-os-swift-install:              y
-os-ceilometer-install:         y
-os-aodh-install:               y
-os-gnocchi-install:            y
-os-sahara-install:             n
-os-heat-install:               n
-os-trove-install:              n
-os-ironic-install:             n
-os-client-install:             y
-ntp-servers:
-nagios-install:                y
-exclude-servers:
-os-debug-mode:                 n
-os-controller-host:            10.211.55.8
-os-compute-hosts:              10.211.55.8
-os-network-hosts:              10.211.55.8
-os-vmware:                     n
-unsupported:                   n
-use-subnets:                   n
-use-epel:                      n
-additional-repo:
-enable-rdo-testing:            n
-rh-username:
-rhn-satellite-server:
-rh-sat6-server:
-ssl-cacert-file:               /etc/pki/tls/certs/selfcert.crt
-ssl-cacert-key-file:           /etc/pki/tls/private/selfkey.key
-ssl-cert-dir:                  ~/packstackca/
-ssl-cacert-selfsign:           y
-ssl-cert-subject-country:      --
-ssl-cert-subject-state:        State
-ssl-cert-subject-location:     City
-ssl-cert-subject-organization: openstack
-ssl-cert-subject-organizational-unit:packstack
-ssl-cert-subject-common-name:  centos-7.1.shared
-ssl-cert-subject-email:        admin@centos-7.1.shared
-amqp-backend:                  rabbitmq
-amqp-host:                     10.211.55.8
-amqp-enable-ssl:               n
-amqp-enable-auth:              n
-mariadb-host:                  10.211.55.8
-mariadb-pw:                    ********
-keystone-db-passwd:            ********
-keystone-db-purge-enable:      True
-keystone-region:               RegionOne
-keystone-admin-email:          root@localhost
-keystone-admin-username:       admin
-keystone-admin-passwd:         ********
-keystone-demo-passwd:          ********
-keystone-identity-backend:     sql
-glance-db-passwd:              ********
-glance-ks-passwd:              ********
-glance-backend:                file
-cinder-db-passwd:              ********
-cinder-db-purge-enable:        True
-cinder-ks-passwd:              ********
-cinder-backend:                lvm
-cinder-volumes-create:         y
-cinder-volumes-size:           20G
-nova-db-purge-enable:          True
-nova-db-passwd:                ********
-nova-ks-passwd:                ********
-nova-manage-flavors:           y
-novasched-cpu-allocation-ratio:16.0
-novasched-ram-allocation-ratio:1.5
-novacompute-migrate-protocol:  tcp
-nova-compute-manager:          nova.compute.manager.ComputeManager
-nova-ssl-cert:
-nova-ssl-key:
-nova-pci-alias:
-nova-pci-passthrough-whitelist:
-nova-libvirt-virt-type:        %{::default_hypervisor}
-os-neutron-ks-password:        ********
-os-neutron-db-password:        ********
-os-neutron-l3-ext-bridge:      br-ex
-os-neutron-metadata-pw:        ********
-os-neutron-lbaas-install:      n
-os-neutron-metering-agent-install:y
-neutron-fwaas:                 n
-os-neutron-vpnaas-install:     n
-os-neutron-ml2-type-drivers:   vxlan
-os-neutron-ml2-tenant-network-types:vxlan
-os-neutron-ml2-mechanism-drivers:openvswitch
-os-neutron-ml2-flat-networks:  *
-os-neutron-ml2-vlan-ranges:
-os-neutron-ml2-tunnel-id-ranges:
-os-neutron-ml2-vxlan-group:
-os-neutron-ml2-vni-ranges:     10:100
-os-neutron-l2-agent:           openvswitch
-os-neutron-ml2-supported-pci-vendor-devs:['15b3:1004', '8086:10ca']
-os-neutron-ml2-sriov-agent-required:n
-os-neutron-ml2-sriov-interface-mappings:
-os-neutron-ovs-bridge-mappings:
-os-neutron-ovs-bridge-interfaces:
-os-neutron-ovs-bridges-compute:
-os-neutron-ovs-tunnel-if:
-os-neutron-ovs-tunnel-subnets:
-os-neutron-ovs-vxlan-udp-port: 4789
-os-horizon-ssl:                n
-os-swift-ks-passwd:            ********
-os-swift-storages:
-os-swift-storage-zones:        1
-os-swift-storage-replicas:     1
-os-swift-storage-fstype:       ext4
-os-swift-storage-size:         2G
-provision-demo:                y
-provision-tempest:             n
-provision-demo-floatrange:     172.24.4.224/28
-provision-image-name:          cirros
-provision-image-url:           http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-provision-image-format:        qcow2
-provision-image-ssh-user:      cirros
-provision-uec-image-name:      cirros-uec
-provision-uec-kernel-url:      http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-kernel
-provision-uec-ramdisk-url:     http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-initramfs
-provision-uec-disk-url:        http://download.cirros-cloud.net/0.3.4/cirros-0.3.4-x86_64-disk.img
-provision-tempest-repo-uri:    https://github.com/openstack/tempest.git
-provision-tempest-repo-revision:master
-provision-ovs-bridge:          y
-gnocchi-db-passwd:             ********
-gnocchi-ks-passwd:             ********
-ceilometer-ks-passwd:          ********
-ceilometer-service-name:       httpd
-mongodb-host:                  10.211.55.8
-redis-host:                    10.211.55.8
-redis-port:                    6379
+......
 aodh-ks-passwd:                ********
 nagios-passwd:                 ********
 Proceed with the configuration listed above? (yes|no):
 ```
+
+### 非交互式方式运行
+
+使用下述命令生成一个answer file:
+
+```shell
+# packstack --gen-answer-file=my_file
+```
+
+然后，使用vim打开这个文件
+
+
