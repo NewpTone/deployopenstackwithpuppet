@@ -444,3 +444,246 @@ CONFIG_MARIADB_INSTALL=n
 ```shell
 # packstack --answer-file=my_file
 ```
+
+## 深入理解Packstack
+
+Packstack的使用非常简单，关于如何使用的介绍就到此结束。接下来才是重点，我们要深入到Packstack的核心逻辑: Plugin，并且举例说明如何编写Plugin来完成对Packstack的功能扩展。
+
+### 什么是Plugin
+
+在前面两章对于PuppetOpenstack modules的介绍中，所有服务的部署工作实际是由每个modules完成的。
+在使用Packstack的时候，我们发现Packstack支持大量的服务部署，例如:nova,glance,maridb,amqp等等。在其背后每个服务的配置项管理都是由plugin实现的，其路径是在: packstack/plugins，它看起来是这样的：
+
+  - __init__.py              
+  - amqp_002.py              
+  - aodh_810.py
+  - ...
+  - trove_850.py
+
+每个plugin的名称都是由服务名称+下划线+三位数字编码组成，那么这些数字有什么作用？
+
+我们来看一下packstack代码入口`packstack/installer/run_setup.py`是怎么加载plugins的:
+
+在主函数入口，可以看到第一步调用了loadPlugins函数来加载插件：
+```python
+def main():
+    options = ""
+
+    try:
+        # Load Plugins
+        loadPlugins()   
+        initPluginsConfig()
+```
+
+接着，我们跳转到了loadPlugins函数的定义，可以看到其中使用了sorted函数对由plugin文件组成的列表进行排序：
+```python
+def loadPlugins():
+    """
+    Load All plugins from ./plugins
+    """
+    sys.path.append(basedefs.DIR_PLUGINS)
+    sys.path.append(basedefs.DIR_MODULES)
+
+    fileList = [f for f in os.listdir(basedefs.DIR_PLUGINS) if f[0] != "_"]
+    fileList = sorted(fileList, cmp=plugin_compare)  #使用plugin_compare函数作为key进行排序
+    for item in fileList:
+        # Looking for files that end with ###.py, example: a_plugin_100.py
+        match = re.search("^(.+\_\d\d\d)\.py$", item)
+        if match:
+            try:
+                moduleToLoad = match.group(1)
+                logging.debug("importing module %s, from file %s", moduleToLoad, item)
+                moduleobj = __import__(moduleToLoad)
+                moduleobj.__file__ = os.path.join(basedefs.DIR_PLUGINS, item)
+                globals()[moduleToLoad] = moduleobj
+                checkPlugin(moduleobj)
+                controller.addPlugin(moduleobj)
+            except:
+                logging.error("Failed to load plugin from file %s", item)
+                logging.error(traceback.format_exc())
+                raise Exception("Failed to load plugin from file %s" % item)
+```
+
+查看函数plugin_compare的定义，我们终于找到了关键，plugin_compare使用每个plugin文件尾缀的三位数字用于排序比较：
+
+```python
+def plugin_compare(x, y):
+    """
+    Used to sort the plugin file list
+    according to the number at the end of the plugin module
+    """
+    x_match = re.search(".+\_(\d\d\d)", x)
+    x_cmp = x_match.group(1)
+    y_match = re.search(".+\_(\d\d\d)", y)
+    y_cmp = y_match.group(1)
+    return int(x_cmp) - int(y_cmp)
+```
+
+在了解了plugin的加载顺序后，我们再看看Plugin的代码结构。实际上，每个plugin的代码结构是一致的，由两个函数组成：
+
+  - `initConfig(controller)`    用于初始化Plugin的配置，主要是参数和参数组。
+  - `initSequences(controller)` 用于定义该plugin执行的任务。
+
+在这些plugin中，必然会有一些与众不同的plugin，比如说第一个被加载的plugin，，倒数第二个被加载的plugin，以及最后一个被加载的plugin:
+
+ - `prescript_000.py`是第一个被加载的plugin，顾名思义它提供了一些全局的初始化设置，比如ssh public key，default_password，workers的进程数量，是否开启各个OpenStack服务的设置等等，同时它会在被管理的主机上执行一些预备任务：生成authorized_keys文件，安装并开启epel源和rdo源，安装puppet软件包依赖和module依赖等等。
+ - `puppet_950.py`是一个重要的plugin，顾名思义它提供了与puppet相关的任务，例如：生成最终的manifest文件，拷贝puppet modules到指定主机，生成hieradata文件，以standalone方式运行puppet：执行`puppet apply`，获取puppet运行中的输出等等。
+ - `postscript_951.py`是最后一个呗加载的plugin，它只做了一件事情，就是运行Tempest跑测试任务。
+
+### 动手写一个Plugin
+
+在了解了plugin的运行机制后，我们来动手写一个plugin，我们称之为NOOP：这是一个空Plugin，默认只输出一行信息: NOOP Plugin.
+
+
+#### 创建一个Plugin文件
+
+在packstack/plugins目录下，我们创建一个plugin文件: noop_840.py。
+
+#### 设置Import和Plugin定义
+
+```python
+# -*- coding: utf-8 -*-
+
+"""
+Installs and configures NOOP
+"""
+
+from packstack.installer import basedefs
+from packstack.installer import validators
+from packstack.installer import processors
+from packstack.installer import utils
+
+from packstack.modules.common import filtered_hosts
+from packstack.modules.documentation import update_params_usage
+from packstack.modules.ospluginutils import generate_ssl_cert
+
+# ------------- NOOP Packstack Plugin Initialization --------------
+
+PLUGIN_NAME = "NOOP"
+PLUGIN_NAME_COLORED = utils.color_text(PLUGIN_NAME, 'blue')
+```
+
+每个Plugin的import可能会有所不同，但大多数都会用到packstack.installer和packstack.modules。
+
+此外，这里有两个和plugin相关的变量：
+
+ |变量|说明|
+ | -- | -- |
+ |PLUGIN_NAME|plugin名称，全部大写字母|
+ |PLUGIN_NAME_COLORED|plugin显示的颜色，默认使用blue即可。|
+
+#### 定义Plugin的配置信息
+
+我们定义一个initConfig函数，其中包含了两个变量:
+ - params
+ - group
+
+```python
+def initConfig(controller):
+    params = [
+               {"CMD_OPTION": "enable-noop",
+                "USAGE": "To set up noop service set this to 'y'",
+                "PROMPT": "Would you like to set up noop service",
+                "OPTION_LIST": ["y", "n"],
+                "VALIDATORS": [validators.validate_options],
+                "DEFAULT_VALUE": "n",
+                "MASK_INPUT": False,
+                "LOOSE_VALIDATION": True,
+                "CONF_NAME": "CONFIG_ENABLE_NOOP",
+                "USE_DEFAULT": False,
+                "NEED_CONFIRM": False,
+                "CONDITION": False},
+             ]
+    group = {"GROUP_NAME": "NOOP",
+             "DESCRIPTION": "NOOP Config parameters",
+             "PRE_CONDITION": "CONFIG_NOOP_INSTALL",
+             "PRE_CONDITION_MATCH": "y",
+             "POST_CONDITION": False,
+             "POST_CONDITION_MATCH": True}
+    controller.addGroup(group, params)
+```
+
+params是NOOP plugin定义的配置项，每个配置项的数据类型是字典。这些配置项可以作为顺序执行的一部分，或者作为Puppet模板的变量。
+
+|选项|说明|
+| -- | -- |
+|CMD_OPTION|被命令行使用的选项名称|
+|USAGE|选项的使用说明，同时作为answer file的注释|
+|PROMPT|交互模式下给用户的提示|
+|OPTION_LIST|可选值列表，可以设置为[]或移除该选项，表示对选项值无限制|
+|VALIDATORS|验证器函数列表，用于检查输入是否符合要求|
+|DEFAULT_VALUE|选项的默认值|
+|PROCESSORS|处理器函数列表，处理器函数对用户的输入做了处理，比如processors.process_host将主机名转变为IP地址等等|
+|MASK_INPUT| 是否隐藏用户的输入，如password|
+|LOOSE_VALIDATION|若为true，则即使验证器返回为false，仍然使用用户输入的选项值|
+|CONF_NAME|在answer file中的配置项名称，你同时可以在controller.CONF dict中找到|
+|USE_DEFAULT|若为true,在交互模式下，将不会要求用户输入此变量的值，而直接DEFAULT_VALUE|
+|NEED_CONFIRM|若为true，则要求用户确认其输入（比如password)|
+|CONDITION|enable/disable该选项的条件,总是设置为False即可|
+|DEPRECATES|弃用的CONF_NAME选项列表，通常在新版本时使用|
+
+group表示组的概念，在Packstack中，会把相关的配置项分组，这样就可以通过组的方式来管理和使用。group的数据类型是字典:
+
+|选项|说明|
+| -- | -- |
+|GROUP_NAME|组名，全局唯一|
+|DESCRIPTION|组的描述，在命令行的帮助命令下会显示此信息|
+|PRE_CONDITION|前提条件，可以是一个配置项的值或函数的返回值匹配预期。若为False，那么该配置组处于启用状态|
+|PRE_CONDITION_MATCH|前提条件的预期匹配值|
+|POST_CONDITION|配置组所有参数是正确的后置条件，若设置为False，则表示不做检查。通常设置为False|
+|POST_CONDITION_MATCH|后置条件的预期匹配值，通常设置为True|
+
+这里最重要的是PRE_CONDITION和PRE_CONDITION_MATCH，可能有些晦涩，我们以部署Cinder服务为例，只有当PRE_CONDITION中的变量CONFIG_CINDER_INSTALL为"y"时，才会显示"Cinder"组的配置选项:
+
+```json
+    {"GROUP_NAME": "CINDER",
+     "DESCRIPTION": "Cinder Config parameters",
+     "PRE_CONDITION": "CONFIG_CINDER_INSTALL",
+     "PRE_CONDITION_MATCH": "y",
+     "POST_CONDITION": False,
+     "POST_CONDITION_MATCH": True
+    }
+```
+
+最后一步，把这些已定义的选项添加controller的组中：
+
+```python
+controller.addGroup(group, params)
+```
+
+#### 定义函数执行顺序
+
+前面我们说到每个plugin除了定义一组相关的选项之外，还会执行一些任务，比如：从用户给定的变量值来渲染template，从而生成该服务的Puppet manifest文件。这些任务是由一个个函数组成，函数之间有执行的先后顺序，这个顺序就是由initSeqeuence函数来决定。
+
+我们假设NOOP服务的安装需要数据库服务MariaDB，以及在Keystone中创建endpoint等操作:
+
+```python
+def initSequences(controller):
+    if controller.CONF['CONFIG_NOOP_INSTALL'] != 'y':
+    return
+    steps = [{'title': 'Adding MariaDB manifest entries',
+             'functions': [create_mariadb_manifest]},
+            {'title': 'Adding NOOP manifest entries',
+             'functions': [create_manifest]},
+            {'title': 'Adding NOOP Keystone manifest entries',
+             'functions': [create_keystone_manifest]}]
+controller.addSequence('Installing NOOP service', [], [], steps)
+```
+
+setps是一个列表，其中每个元素的数据类型都是字典，它的格式如下：                                                                                                   
+
+|选项|说明|
+| -- | -- |
+|title|函数的简单描述信息|
+|functions| 函数列表|
+
+最后，我们调用controller.addSequence()方法把plugin的steps添加到将要被执行的序列列表中。
+通常情况下，第二个和第二个选项为空。
+
+
+#### 生成manifest文件
+每个函数都是接受固定的两个参数:
+ - config
+ - messages
+
+
