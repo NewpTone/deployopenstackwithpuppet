@@ -72,16 +72,16 @@ The password: secret
 对于Ubuntu系统就是修改APT源，比如[阿里云镜像源](http://mirrors.aliyun.com/)，只需要修改`/etc/apt/source.list`配置文件即可，替换为需要使用的镜像源。如：
 
 ```
- deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
-  deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
-  deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
-  deb http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
-  deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
-  deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
-  deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
-  deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
-  deb-src http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
-  deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
 ```
 
 ### 2. 使用国内的pip源
