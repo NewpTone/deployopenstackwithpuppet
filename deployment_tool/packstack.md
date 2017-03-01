@@ -682,8 +682,44 @@ setps是一个列表，其中每个元素的数据类型都是字典，它的格
 
 
 #### 生成manifest文件
+
+在讲生成manifest文件之前，我们需要花些时间来了解packstack的templates，在当前版本中packstack的templates的路径是packstack/puppet/templates，数量已经从几十个削减为3个:
+
+ - controller
+ - compute
+ - network
+
+我们以controller为例，我们选取其中的代码片段:
+
+```puppet
+stage { "init": before  => Stage["main"] }
+
+Exec { timeout => hiera('DEFAULT_EXEC_TIMEOUT') }
+Package { allow_virtual => true }
+
+class {'::packstack::prereqs':
+  stage => init,
+}
+
+include ::firewall
+
+if hiera('CONFIG_NTP_SERVERS', '') != '' {
+  include '::packstack::chrony'
+}
+
+include '::packstack::amqp'
+include '::packstack::mariadb'
+
+if hiera('CONFIG_MARIADB_INSTALL') == 'y' {
+  include 'packstack::mariadb::services'
+} else {
+  include 'packstack::mariadb::services_remote'
+} 
+```
+我们可以发现，这实质上是一个manifest文件(.pp)，而非template文件(.erb)，所有class或define的include不再使用erb模板的方式来渲染，而是使用了简单的条件判断来做选择。
+
+
 每个函数都是接受固定的两个参数:
  - config
  - messages
-
 
