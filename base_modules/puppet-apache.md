@@ -5,10 +5,6 @@
 3. [小结](#小结) 
 4. [动手练习](#动手练习)
 
-**本节作者：余兴超**    
-
-**建议阅读时间 1h**
-
 puppet-apache模块是由puppetlabs公司维护的官方模块，提供完善的apache管理能力。
 
 **puppet-apache module的管理范围:**

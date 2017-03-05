@@ -4,10 +4,6 @@
 3. [小结](#小结) 
 4. [动手练习](#动手练习)
 
-**本节作者：周维宇**    
-
-**建议阅读时间 30min**
-
 ## 先睹为快
 puppet-memcache 是由Steffen Zieger(saz)维护的一个模块，他还维护了很多其他的基础模块包括puppet-sudo,puppet-ssh等.
 在解说这个模块前，我们先动手部署一个memcached吧

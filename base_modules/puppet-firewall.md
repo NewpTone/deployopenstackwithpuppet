@@ -5,9 +5,6 @@
 3. [小结](#小结) 
 4. [动手练习](#动手练习)
 
-**本节作者：周维宇**    
-
-**建议阅读时间 1h**
 
 puppet-firewall模块是由puppetlabs公司维护的官方模块。通过引入firewall resource来让你可以通过puppet DSL来管理你的firewall规则,另外还引入了firewall chaing resource
 来允许你管理 iptables chains,这个模块仅支持iptables和ip6tables。
