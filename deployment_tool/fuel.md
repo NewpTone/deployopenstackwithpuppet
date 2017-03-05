@@ -1,6 +1,6 @@
 # Fuel
 
-# What is Fuel?
+## What is Fuel?
 
 Fuel 是由 Mirantis 公司开发的一个开源的 OpenStack 部署和管理工具，也是最为流行和易用的 OpenStack 部署管理工具。Mirantis 使用 Fuel 来快速的给客户交付一套生产可用的 OpenStack。Fuel 使用了 Puppet/Cobbler/Mcollective 等开源工具，同时使用 Python/Ruby 开发了部分自有服务，Fuel 的最大特点是它能提供 Web 界面用于安装部署和管理 OpenStack，除此之外它还有如下特点：
 
@@ -15,7 +15,7 @@ Fuel 是由 Mirantis 公司开发的一个开源的 OpenStack 部署和管理工
 
 如果想快速的体验 Fuel，可以去 http://demo.fuel-infra.org:8000/ 体验 Fuel 的 demo 版本。
 
-# Fuel 架构
+## Fuel 架构
 
 Fuel 的架构包含：
 
@@ -83,9 +83,3 @@ Astute 还会完成一些其他的操作，例如：
 * 当 Ceph 节点部署后更新 RadosGW map
 
 当一个环境被删除时，Astute 通过 Mcollective agent 来删除所有点的的启动删除，并重启节点，这些节点会通过 bootstrap 镜像重新引导，可以用于新环境的部署。
-
-  
-
-
-
-
