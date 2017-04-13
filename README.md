@@ -38,7 +38,7 @@ DevOps Team从13年伊始就全身心投入到持续交付和持续集成事业�
 > * 陆源([小斯](http://weibo.com/2294179087/profile?topnav=1&wvr=6&is_all=1))  &emsp;  推崇BDD（Bug~~Business~~-Driven Development），爱GW，不爱GFW。2012年开始埋坑，目前负责Pluto自动化部署工具的开发。
 > * 周维宇(spunkzwy) &emsp; ~~上午写Bug，下午修Bug~~专注于云计算与容器技术，目前负责CMDB和Portal的开发。
 > * 韩亮亮(leon)  &emsp;专注于节食和美食，目前负责服务器生命周期管理工具的开发。
-
+> * 薛飞扬(eatpotato)  &emsp;专注于云计算，目前负责自动化部署工具的开发。
 
 # 镜像地址
 
