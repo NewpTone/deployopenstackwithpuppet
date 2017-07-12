@@ -53,7 +53,7 @@ $ packstack --allinone
  
 #### 多节点
  
- 使用--install-hostsc参数来运行packstack，该参数值是由一个逗号隔开的IP地址列表。
+ 使用--install-hosts参数来运行packstack，该参数值是由一个逗号隔开的IP地址列表。
  
  ```shell
 $ packstack --install-hosts=CONTROLLER_ADDRESS,NODE_ADDRESSES
