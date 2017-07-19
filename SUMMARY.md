@@ -1,8 +1,7 @@
 # Summary
 
 * [前言](README.md)
-* [概览](Introduction/Intro.md)
-  * [准备工作](Introduction/requirement.md)
+* [初始PuppetOpenstack](Introduction/Intro.md)
   * [相关约定](Introduction/convention.md)
   * [术语表](Introduction/term.md)
   * [项目概览](Introduction/project_overview.md)
@@ -70,5 +69,4 @@
 * [结语  ](end.md)
 * [如何参与](howto.md)
 * [版本日志](release.md)
-
 
