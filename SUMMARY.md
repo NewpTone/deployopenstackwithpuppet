@@ -6,7 +6,8 @@
   * [相关约定](Introduction/convention.md)
   * [术语表](Introduction/term.md)
   * [项目概览](Introduction/project_overview.md)
-* [基础模块](base_modules/readme.md)
+* [Puppet开发基础](preparation/README.md)
+* [OpenStack基础服务模块](base_modules/readme.md)
   * [puppet-apache](base_modules/puppet-apache.md)
   * [puppet-memcache](base_modules/puppet-memcache.md)
   * [puppet-sysctl](base_modules/puppet-sysctl.md)
@@ -18,7 +19,7 @@
   * [puppet-vcsrepo](base_modules/puppet-vcsrepo.md)
   * [puppet-mongodb](base_modules/puppet-mongodb.md)
   * [puppet-ceph](base_modules/puppet-ceph.md)
-* [Openstack模块](Openstack_modules/README.md)
+* [Openstack服务模块](Openstack_modules/README.md)
   * [模块目录结构](Introduction/module_structure.md)
   * [puppet-keystone](Openstack_modules/puppet-keystone.md)
   * [puppet-nova](Openstack_modules/puppet-nova.md)
@@ -36,7 +37,7 @@
   * [puppet-rally](Openstack_modules/puppet-rally.md)
   * [puppet-designate](Openstack_modules/puppet-designate.md)
   * [puppet-ceilometer](Openstack_modules/puppet-aodh.md)
-* [公共库和工具类模块](Library_modules/readme.md)
+* [PuppetOpenstack公共库和工具类模块](Library_modules/readme.md)
   * [puppet-oslo](Openstack_modules/puppet-oslo.md)
   * [puppet-vswitch](base_modules/puppet-vswitch.md)
   * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
@@ -69,4 +70,5 @@
 * [结语  ](end.md)
 * [如何参与](howto.md)
 * [版本日志](release.md)
+
 
