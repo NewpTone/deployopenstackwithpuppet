@@ -4,7 +4,7 @@
 * [初识PuppetOpenstack](Introduction/Intro.md)
   * [相关约定](Introduction/convention.md)
   * [术语表](Introduction/term.md)
-  * [项目概览](Introduction/project_overview.md)
+  * [PuppetOpenstack项目简介](Introduction/project_overview.md)
   * [关于Puppet](Introduction/guan-yu-puppet.md)
 * [Puppet开发基础](preparation/README.md)
 * [OpenStack基础服务模块](base_modules/readme.md)
