@@ -1,19 +1,21 @@
-# Puppet基础模块
+# 第二章 OpenStack基础服务模块
 
+
+## 本章概览
 
 何为基础模块？基础模块对应的是Openstack中所使用到的基础服务，例如数据库，消息队列，缓存，Web服务器等等，或者是操作系统的配置模块，例如防火墙，网卡等。
 
-本书的主旨是讲解Openstack的自动化部署，因此在这些模块中，我们只会去说明Openstack使用到的class或者define。
+在OpenStack生产环境中，对外提供API服务的组件运行在Web服务器上，服务组件之间大多通过消息队列（MQ)进行通讯，认证使用的Token数据则会被存到缓存服务中，租户的虚拟机，块设备等等资源信息均被保存到关系型数据库中等等场景，都用到了大量的基础服务。那么在本章将会介绍如何使用Puppet来管理这些基础服务。
 
-* puppet-apache
-* puppet-corosync 
-* puppet-firewall 
-* puppet-memcached 
-* puppet-mongodb 
-* puppet-mysql 
-* puppet-rabbitmq 
-* puppet-rsync
-* puppet-sysctl
-* puppet-vswitch
-* puppet-xinetd 
-* puppet-vcsrepo
+每一小节会介绍一个单独的Puppet模块，每个模块的内容统一地划分为1-6个部分：
+
+* 基础知识  &emsp; 你在讲什么？给我讲讲基础先。
+* 先睹为快  &emsp;拜托！先别说那些无聊的理论和代码剖析和说教，run起来让我看看效果先。
+* 核心代码  &emsp; 还有这种操作？老司机，带带我。
+* 使用说明  &emsp; 常见和经典的使用用例
+* 小结     &emsp;&emsp;&emsp;我们刚才都讲了什么？
+* 课后练习  &emsp;嗯，我感觉我什么都明白了。是吗？来，你来握方向盘。
+
+在每一节内容里，会穿插一些重要function,resource type,facter的使用技巧，会涉及到一些理论知识，再扯一点历史。
+
+例如，在`puppet-oslo`模块章节，会讲到为什么Puppet原生不支持迭代，如何去实现。当然，为了避免偏离本书主旨，笔者会点到为止。如果你对这些分支知识感兴趣的话，可以跳转到本书给出的参考链接，继续深陷其中。

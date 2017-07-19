@@ -60,8 +60,14 @@
 
 第三大块则是一些尚在开发阶段或者已经废弃的模块：
 
-* Storage (Ceph)  @luyuan
+* Storage (Ceph) 
 * Monitoring (Monasca)
 * Composition Layer (deprecated in Juno) (OpenStack)
+
+
+## 推荐的阅读顺序
+
+如果你是第一次接触PuppetOpenstack，推荐从`公共库和工具类模块`章节 的`puppet-openstack-integration`一节开始，这节会介绍如何使用PuppetOpenstack模块快速部署一个All-in-One的Openstack服务。
+
 
 

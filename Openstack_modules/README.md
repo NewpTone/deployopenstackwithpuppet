@@ -1,4 +1,4 @@
-# Puppet OpenStack模块
+# 第四章  Puppet-OpenStack模块
 
 PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet的经典素材。它体现在以下几点：
 
