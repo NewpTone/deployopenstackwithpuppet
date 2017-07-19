@@ -1,7 +1,7 @@
 # Summary
 
 * [前言](README.md)
-* [初始PuppetOpenstack](Introduction/Intro.md)
+* [初识PuppetOpenstack](Introduction/Intro.md)
   * [相关约定](Introduction/convention.md)
   * [术语表](Introduction/term.md)
   * [项目概览](Introduction/project_overview.md)
