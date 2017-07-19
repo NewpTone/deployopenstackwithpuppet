@@ -5,6 +5,8 @@
   * [相关约定](Introduction/convention.md)
   * [术语表](Introduction/term.md)
   * [项目概览](Introduction/project_overview.md)
+  * [关于Puppet](Introduction/guan-yu-puppet.md)
+  * [关于PuppetOpenstack](Introduction/guan-yu-puppetopenstack.md)
 * [Puppet开发基础](preparation/README.md)
 * [OpenStack基础服务模块](base_modules/readme.md)
   * [puppet-apache](base_modules/puppet-apache.md)
