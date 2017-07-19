@@ -8,7 +8,7 @@
 其规格如下： `2 vCPU`, `4G RAM`, `30G Disk`, 至少有一块`NIC`，操作系统为`CentOS 7.1/7.2`，并可以连接上Internet
 
 
-```shell
+```bash
 # Script for installing puppet Based on CentOS 7.x
 
 set -e
