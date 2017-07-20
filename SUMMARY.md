@@ -8,6 +8,7 @@
   * [关于Puppet](Introduction/guan-yu-puppet.md)
 * [Puppet开发基础](preparation/README.md)
   * [环境准备](preparation/huan-jing-zhun-bei.md)
+  * [Puppet核心概念](preparation/puppethe-xin-gai-nian.md)
 * [OpenStack基础服务模块](base_modules/readme.md)
   * [puppet-apache](base_modules/puppet-apache.md)
   * [puppet-memcache](base_modules/puppet-memcache.md)

@@ -8,7 +8,14 @@
 其规格如下： `2 vCPU`, `4G RAM`, `30G Disk`, 至少有一块`NIC`，操作系统为`CentOS 7.1/7.2`，并可以连接上Internet
 
 
+## 安装Puppet
+
+接下来打开终端，使用root用户在命令行下输入以下命令：
+
 ```bash
+
+cat << EOF >> install_puppet.sh
+
 # Script for installing puppet Based on CentOS 7.x
 
 set -e
@@ -68,5 +75,8 @@ $SUDO service auditd start
 
 # SElinux in permissive mode so later we can catch alerts
 $SUDO setenforce 0
+EOF
+
+bash install_puppet.sh
 
  ``` 
