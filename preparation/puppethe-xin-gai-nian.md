@@ -9,14 +9,23 @@
 
 比如，软件包（package)就属于一种资源(resource type)。
 
-要在服务器上安装vim软件包，只需要声明一个package资源:
 
+在服务器上安装vim软件包，只需要声明一个package资源:
 
 ```
-
 package {'vim':
   ensure => present
 }
 ```
+
+
+在服务器上管理ntp服务，相应地声明一个service资源：
+```
+service {'ntpd':
+  ensure => running
+}
+```
+
+
 
 
