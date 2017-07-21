@@ -4,7 +4,7 @@
 ## 环境准备
 
 
-在开始介绍PuppetOpenstack前，我们需要准备一台虚拟服务器用于接下来的练习和测试。
+在开始介绍PuppetOpenstack前，我们需要准备一台虚拟服务器用于接下来的练习。
 
 读者可以通过使用虚拟化软件或者通过云平台创建一台虚拟机。
 
@@ -21,7 +21,6 @@ $ hostnamectl set-hostname learnpom
 $ echo "127.0.1.1 learnpom.example.in learnpom" >> /etc/hosts
 ```
 
-
 ## 了解Puppet
 
 在安装Puppet前，首先需要了解Puppet的运行方式，当前Puppet支持两种运行方式：
@@ -29,7 +28,9 @@ $ echo "127.0.1.1 learnpom.example.in learnpom" >> /etc/hosts
  - Standalone模式，只需要安装Puppet agent软件包
  
 在通常的开发场景下，笔者推荐使用Standalone模式，操作简单，定位问题容易；
-在管理内部的测试/生产环境时，笔者建议须使用Server/Client模式，进行集中式管理；
+在管理内部的测试/生产环境时，笔者建议须使用Server/Client模式，进行集中式管理。
+
+本书中除个别场景外，默认以Standalone模式为主。
 
 ## 安装Puppet
 
@@ -109,5 +110,20 @@ bash install_puppet.sh
 
  ``` 
 
-## 安装PuppetMaster
+## 安装PuppetServer
 
+Puppetserver的安装比较复杂，但是Puppet不就是可以做自动化安装部署吗？
+
+我们可以使用`puppet module`安装用于部署Puppet Server的module，然后完成Puppetserver的一键安装。
+
+在终端下执行以下命令：
+
+```shell
+$ puppet module install theforeman-puppet
+
+$ cat > install.pp <<EOF
+class { '::puppet': server => true, server_foreman => false }
+EOF
+
+$ puppet apply install.pp -v
+```
