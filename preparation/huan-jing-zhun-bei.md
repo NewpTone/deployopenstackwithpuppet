@@ -1,14 +1,42 @@
-# 环境准备
+# 准备工作
+
+
+## 环境准备
 
 
 在开始介绍PuppetOpenstack前，我们需要准备一台虚拟服务器用于接下来的练习和测试。
 
-读者可以在本机上使用虚拟化软件或者通过云平台创建一台虚拟机。
+读者可以通过使用虚拟化软件或者通过云平台创建一台虚拟机。
 
-其规格如下： `2 vCPU`, `4G RAM`, `30G Disk`, 至少有一块`NIC`，操作系统为`CentOS 7.1/7.2`，并可以连接上Internet
+其规格如下： 
 
+ - `2 vCPU`, `4G RAM`, `30G Disk`, 至少有一块`NIC`，操作系统为`CentOS 7.1/7.2`，可以访问Internet
+
+
+在安装Puppet之前，需要为虚拟主机设置合适的主机名，域名，时间等。
+
+```bash
+$ hostnamectl set-hostname learnpom
+
+$ echo "127.0.1.1 learnpom.example.in learnpom" >> /etc/hosts
+```
+
+
+## 了解Puppet
+
+在安装Puppet前，首先需要了解Puppet的运行方式，当前Puppet支持两种运行方式：
+ - Server/Client模式，需要安装Puppet agent和Puppet server软件包
+ - Standalone模式，只需要安装Puppet agent软件包
+ 
+在通常的开发场景下，笔者推荐使用Standalone模式，操作简单，定位问题容易；
+在管理内部的测试/生产环境时，笔者建议须使用Server/Client模式，进行集中式管理；
 
 ## 安装Puppet
+
+Puppet由三个软件包构成：
+
+- puppet-agent: 用于安装Puppet,Ruby,Facter,Hiera和依赖包的软件包
+- puppetserver: 用于安装Puppet Server服务，
 
 接下来打开终端，使用root用户在命令行下输入以下命令：
 
@@ -80,3 +108,6 @@ EOF
 bash install_puppet.sh
 
  ``` 
+
+## 安装PuppetMaster
+
