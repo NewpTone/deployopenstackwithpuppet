@@ -1,7 +1,7 @@
 # 准备工作
 
 
-## 环境准备
+## 0.环境准备
 
 
 在开始介绍PuppetOpenstack前，我们需要准备一台虚拟服务器用于接下来的练习。
@@ -21,7 +21,7 @@ $ hostnamectl set-hostname learnpom
 $ echo "127.0.1.1 learnpom.example.in learnpom" >> /etc/hosts
 ```
 
-## 了解Puppet
+## 1.了解Puppet
 
 在安装Puppet前，首先需要了解Puppet的运行方式，当前Puppet支持两种运行方式：
  - Server/Client模式，需要安装Puppet agent和Puppet server软件包
@@ -32,7 +32,7 @@ $ echo "127.0.1.1 learnpom.example.in learnpom" >> /etc/hosts
 
 本书中除个别场景外，默认以Standalone模式为主。
 
-## 安装Puppet
+## 2.安装Puppet
 
 Puppet由三个软件包构成：
 
@@ -110,11 +110,11 @@ bash install_puppet.sh
 
  ``` 
 
-## 安装PuppetServer
+## 3.安装PuppetServer
 
-Puppetserver的安装比较复杂，但是Puppet不就是可以做自动化安装部署吗？
+Puppetserver的手动安装和配置部署比较繁杂，但是Puppet的目标不就是实现软件安装部署的自动化吗？
 
-我们可以使用`puppet module`安装用于部署Puppet Server的module，然后完成Puppetserver的一键安装。
+因此，我们可以使用`puppet module`安装用于部署Puppet Server的module，然后完成Puppetserver的一键安装。
 
 在终端下执行以下命令：
 
@@ -127,3 +127,4 @@ EOF
 
 $ puppet apply install.pp -v
 ```
+
