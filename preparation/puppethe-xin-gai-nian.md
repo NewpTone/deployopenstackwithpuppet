@@ -91,5 +91,15 @@ Class定义文件应存放在modules的manifests目录下，Puppet将自动地�
 
 在Puppet中，有两种方式来声明一个Class：
 
- - Include方式
- - resource声明方式 
+ - 类Include方式
+ - 类Resource声明方式 
+ 
+#### 1.3.1 类Include方式
+
+类Include方式是指使用`include`，`require`，`contain`，`hiera_include`函数来声明Class，使用这种方式Class可以安全地被多次调用。
+
+何谓安全地多次调用？
+
+任何一个Class在一个指定node definition的Manifests文件中，只能被声明一次。否则会产生资源重复声明的错误，这是初学者容易犯的错误。
+
+
