@@ -96,10 +96,108 @@ Class定义文件应存放在modules的manifests目录下，Puppet将自动地�
  
 #### 1.3.1 类Include方式
 
-类Include方式是指使用`include`，`require`，`contain`，`hiera_include`函数来声明Class，使用这种方式Class可以安全地被多次调用。
-
-何谓安全地多次调用？
-
-任何一个Class在一个指定node definition的Manifests文件中，只能被声明一次。否则会产生资源重复声明的错误，这是初学者容易犯的错误。
+类Include方式是指使用`include`，`require`，`contain`，`hiera_include`函数来声明Class，使用这种方式Class可以安全地被多次声明。
 
 
+例如：
+
+```puppet
+class compute(){
+  include ::nova
+  include ::nova::api
+}
+
+node 'compute_node' {
+  include compute
+  # nova类被声明了2次
+  include ::nova
+}
+```
+
+何谓安全地多次声明？
+
+ > 任何一个Class在一个指定节点的定义中，只能被声明一次，否则Puppet在运行时会抛出资源重复声明的错误。这也是初学者容易犯错的地方。
+
+而通过类include的方式可以实现尽管Class被多次声明，但最终只向catalog添加一次的效果。
+
+但使用这种方式，则Class中的参数传值只能通过Hiera进行。
+
+
+### 1.3.2 类Class方式
+
+类Class的方式则要求每个被声明的Class只被声明一次。通过这种方式，在声明某个特定Class的时候，可以对指定参数进行重新赋值。
+
+例如：
+
+```puppet
+class compute($ip='127.0.0.1'){
+  class {'nova':
+    ipaddress => $ip
+  }
+  class {'nova::api':}
+}
+
+node 'compute_node' {
+  class{'compute':
+    ip => '192.168.1.1'
+  }
+}
+```
+
+### 2.Defines
+
+
+Defines也称为是Defined resource type，是一段可以被多次赋值的代码块，可以理解为是一种轻量级的自定义的资源类型。
+
+例如，以下是nova::manage:network define，用于管理nova network的创建。在实际使用中，可以通过传递不同的参数给nova::manage::network来创建不同的nova network。
+
+```puppet
+define nova::manage::network (
+  $network,
+  $label         = 'novanetwork',
+  $num_networks  = 1,
+  $network_size  = 255,
+  $vlan_start    = undef,
+  $project       = undef,
+  $allowed_start = undef,
+  $allowed_end   = undef,
+  $dns1          = undef,
+  $dns2          = undef
+) {
+
+  include ::nova::deps
+
+  nova_network { $name:
+    ensure        => present,
+    network       => $network,
+    label         => $label,
+    num_networks  => $num_networks,
+    network_size  => $network_size,
+    project       => $project,
+    vlan_start    => $vlan_start,
+    allowed_start => $allowed_start,
+    allowed_end   => $allowed_end,
+    dns1          => $dns1,
+    dns2          => $dns2,
+  }
+
+}
+```
+
+初学者在选择如何define和class时，常常犹豫不决。
+
+首先，来看这两种类型的最大区别：
+
+ - Define：在一个catalog中可以被重复声明
+ - Class： 在一个catatlog中只能被声明一次
+
+再谈使用场景：
+ - Class通常用于管理具有唯一性的资源
+ - Define通常用于管理具有多样性的资源
+ 
+ 以Apache为例，会使用Class来管理Apache软件包，主配置文件，以及服务状态的管理；而Apache vhost则会使用Define来管理。我们会在后面`puppet-apache`章节中详细讲解。
+ 
+ 
+ # 3.Catalog
+ 
+ 
