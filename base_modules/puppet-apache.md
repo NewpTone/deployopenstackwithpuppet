@@ -1,38 +1,39 @@
 # puppet-apache
 
-1. [先睹为快－一言不和，立马动手?](#先睹为快)
+1. [先睹为快](#先睹为快)
 2. [核心代码－如何管理apache服务](＃核心代码讲解)
 3. [小结](#小结) 
 4. [动手练习](#动手练习)
 
-**本节作者：余兴超**    
+Apache HTTP Server（简称Apache）是Apache软件基金会的一个开放源代码的网页服务器软件，可以在大多数电脑操作系统中运行，由于其跨平台和安全性[注 1]。被广泛使用，是最流行的Web服务器软件之一。它快速、可靠并且可通过简单的API扩充，将Perl／Python等解释器编译到服务器中。
 
-**建议阅读时间 1h**
+`puppet-apache`模块是由Puppet公司维护的官方模块，提供了完善的Apache管理能力。
 
-puppet-apache模块是由puppetlabs公司维护的官方模块，提供完善的apache管理能力。
+项目地址：https://github.com/puppetlabs/puppetlabs-apache
 
 **puppet-apache module的管理范围:**
 
 - Apache配置文件和目录
-- Package/Service/Conf
-- Apache modules
-- Virtual hosts
-- Listened-to ports
+- Apache软件包/服务/配置文件
+- Apache的module
+- 虚拟主机(Virtual hosts)
+- 监听端口(Listened-to ports)
 
-在开始介绍代码前，给出一个重要的警告：
+在开始介绍puppet-apache模块前，先给出一个重要警示：
 
 > WARNING: Configurations not managed by Puppet will be purged.
 
-如果你之前使用手工配置了Apache服务，想要尝试使用puppet-apache模块管理，请额外小心该模块默认情况下会清理掉所有没有被puppet管理的配置文件！
+对于已有的Apache服务，如果尝试使用puppet-apache模块进行管理，请额外小心该模块在默认情况下会清理掉所有没有被Puppet管理的配置文件！
 
-我们主要以Openstack服务中使用到的类进行介绍。
+本节主要以OpenStack服务中使用到的类进行介绍。
 
 # 先睹为快
 
 不想往下看，已经跃跃欲试了？
+
 OK, let's rock!
    
-在终端下输入：
+打开终端，并输入：以下命令
    
    ```puppet apply -ve "include ::apache"```
    
@@ -44,8 +45,9 @@ class { 'apache': }
 
    ```puppet apply -v test.pp```
 
-在约1分钟内（取决于你的网速和虚拟机的性能），你就已经完成了Apache服务的安装，配置和启动了。
-如何做到的呢？我们打开puppet-apache模块下manifests/init.pp文件，看看是如何做的？
+约1分钟之后（取决于网速和虚拟机的性能），Puppet已经完成了Apache服务的安装，配置和启动了。
+
+这是如何做到的呢？我们打开puppet-apache模块下manifests/init.pp文件，看看是如何做的？
 
 # 核心代码讲解
 ## class apache

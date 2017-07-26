@@ -1,9 +1,6 @@
 # 术语表
 
-## resource
 
-resource得单独讲，因为它的地位略高。
-在Linux中，一切皆文件(`file`)。辣么在Puppet中，一切皆资源(`resource`)。
 
 ## 其他术语
 
