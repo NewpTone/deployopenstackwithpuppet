@@ -198,6 +198,27 @@ define nova::manage::network (
  以Apache为例，会使用Class来管理Apache软件包，主配置文件，以及服务状态的管理；而Apache vhost则会使用Define来管理。我们会在后面`puppet-apache`章节中详细讲解。
  
  
- # 3.Catalog
+ # 3. Nodes
  
+假设你已经下载了puppet-apache和puppet-mysql模块，接下来要为指定服务器赋予指定的角色，那么这个过程称为是节点分类（Node Classification）。
+在Puppet中，这些数据通常存储在节点定义文件中。
+
+节点定义文件的存放路径通常位于`<ENVIRONMENTS DIRECTORY>/<ENVIRONMENT>/manifests/site.pp`。
+
+现在我们要配置2种类型的节点：Web服务器`www.example.com`和DB服务器`db1.example.com`，在site.pp中加入以下代码：
+
+```puppet
+node 'www.example.com' {
+  include apache
+}
+node 'db.example.com' {
+  include mysql
+}
+```
+
+*最佳实践*
+
+尽管在节点定义文件里可以添加任何的Puppet代码，但请保持只在节点定义文件中做两件事情：声明类和设置变量。
+
+
  
