@@ -1,8 +1,7 @@
 # 术语表
 
+本书的后续章节中使用了与Puppet，Ruby，OpenStack等技术相关的术语，为了让读者更快地理解其含义，下表中给出了本书所出现的术语和释义。
 
-
-## 其他术语
 
 | 名称 | 说明 |
 | -- | -- |
@@ -12,10 +11,10 @@
 | class | puppet中resource的集合，与面向对象中的类无关 |
 | define | puppet中resource的集合，与编程语言中的函数定义无关  |
 | module | puppet中class和define的集合，与服务紧密相关，例如puppet-apache，专门管理apache所有相关配置 |
-| transformation layer | 转发层，你可以理解为对class和define的调用层 |
-| manifests | puppet代码的文件夹路径 |
-| node definition | 节点定义文件 |
-| hiera   |  数据文件，用于存放puppet的变量赋值  |
+| transformation layer | 转换层，可以理解为对class和define的调用层 |
+| manifests | 用于puppet代码的文件目录 |
+| node definition | 节点定义文件，等价于角色定义 |
+| hiera   |  数据文件，用于存放节点所有变量的赋值  |
 |RVM | 安装和管理多个Ruby环境以及Ruby应用所使用的Ruby环境。|
 |Rails |[Web开发框架](http://zh.wikipedia.org/wiki/Ruby_on_Rails)  |
 |RubyGems| RubyGems是一个方便而强大的Ruby程序包管理器（ package manager），类似RedHat的RPM.它将一个Ruby应用程序打包到一个gem里，作为一个安装单元。无需安装，最新的Ruby版本已经包含RubyGems了|

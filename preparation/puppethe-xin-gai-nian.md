@@ -4,7 +4,7 @@
 
 然而，在Puppet中有一些非常重要的概念，对于这些核心概念的准确理解，将有助于读者快速掌握Puppet Modules的开发，因此，本节将花费一些篇幅来帮助读者深入理解这些核心概念。
 
-## 0.Resource type
+## 0.Resource Type
 
 在Linux中，一切皆文件(`file`)。而在Puppet中，一切皆资源(`resource`)。
 
@@ -40,9 +40,9 @@ service {'ntpd':
 - user
 - group
 
-### 0.1 Resource declaration
+### 0.1 资源声明
 
-资源声明则是一个表达式，用于描述资源的期望状态并将其添加到Catalog。
+资源声明（Resource declaration）则是一个表达式，用于描述资源的期望状态并将其添加到Catalog。
 
 可以理解为类似于编程语言中的函数调用。
 
@@ -51,7 +51,7 @@ service {'ntpd':
 与面向对象语言不同，类(Class)在Puppet中只是表示了一个代码块：通常将一些相关的功能组合到一起，并存储到module中，以便后期使用。
 
 
-### 1.1 Class的定义
+### 1.1 类的定义
 
 定义一个Class的语法格式如下：
   - 以`class`关键字开头
@@ -85,7 +85,7 @@ class apache (String $version = 'latest') {
 
 Class定义文件应存放在modules的manifests目录下，Puppet将自动地加载该路径下的所有类。
 
-### 1.3 Class的声明
+### 1.3 类的声明
 
 在Puppet manifest文件中声明一个Class时，则会将其添加到catalog文件。通常在节点定义文件中或者其他class文件中去声明一个Class。
 
@@ -94,9 +94,9 @@ Class定义文件应存放在modules的manifests目录下，Puppet将自动地�
  - 类Include方式
  - 类Resource声明方式 
  
-#### 1.3.1 类Include方式
+#### 1.3.1 Include方式
 
-类Include方式是指使用`include`，`require`，`contain`，`hiera_include`函数来声明Class，使用这种方式Class可以安全地被多次声明。
+Include方式是指使用`include`，`require`，`contain`，`hiera_include`函数来声明Class，使用这种方式Class可以安全地被多次声明。
 
 
 例如：
@@ -123,9 +123,9 @@ node 'compute_node' {
 但使用这种方式，则Class中的参数传值只能通过Hiera进行。
 
 
-### 1.3.2 类Class方式
+### 1.3.2 Class方式
 
-类Class的方式则要求每个被声明的Class只被声明一次。通过这种方式，在声明某个特定Class的时候，可以对指定参数进行重新赋值。
+Class的方式则要求每个被声明的Class只被声明一次。通过这种方式，在声明某个特定Class的时候，可以对指定参数进行重新赋值。
 
 例如：
 
