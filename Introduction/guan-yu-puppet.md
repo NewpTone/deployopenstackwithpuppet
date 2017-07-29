@@ -14,20 +14,16 @@ Puppet是由Puppet公司开发的系统管理框架和工具集，被用于IT服
 
 ## Puppet公司简介
 
-Puppet公司，曾为Puppetlabs，后更名为Puppet，是由xxx创立。
-
+Puppet是由Puppet公司所有，曾名为Puppetlabs。
 
 除了自家的拳头产品Puppet之外，Puppet公司还提供了一些相关领域的运维自动化工具。
-
 
 除了软件，Puppet公司还有两项值得关注的技术输出：
 
 - 半年一度的PuppetConf大会已跻身于IT圈的顶级技术会议之列
 - 每年发布的State of DevOps Report是DevOps领域最具影响力的调查报告
 
-
-
-## 其他玩家
+## 其他类似产品
 
 除了Puppet之外，在业界常见的配置管理工具还有：
 
