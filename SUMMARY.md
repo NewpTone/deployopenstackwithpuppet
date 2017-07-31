@@ -71,6 +71,4 @@
   * [DevStack](deployment_tool/devstack.md)
   * [编写一个定制化部署工具](deployment_tool/custom_tool.md)
 * [结语  ](end.md)
-* [如何参与](howto.md)
-* [版本日志](release.md)
 
