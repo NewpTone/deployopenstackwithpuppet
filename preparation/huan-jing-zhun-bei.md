@@ -37,13 +37,15 @@ $ echo "127.0.1.1 learnpom.example.in learnpom" >> /etc/hosts
 Puppet由三个软件包构成：
 
 - puppet-agent: 用于安装Puppet,Ruby,Facter,Hiera和依赖包的软件包
-- puppetserver: 用于安装Puppet Server服务，
+- puppetserver: 用于安装Puppet Server服务
 
-接下来打开终端，使用root用户在命令行下输入以下命令：
+> 注：本文所使用的Puppet版本是4.1x
+
+打开虚拟机的终端，使用root权限在命令行下输入以下命令：
 
 ```bash
 
-cat << EOF >> install_puppet.sh
+$ cat << EOF >> install_puppet.sh
 
 # Script for installing puppet Based on CentOS 7.x
 
@@ -106,7 +108,7 @@ $SUDO service auditd start
 $SUDO setenforce 0
 EOF
 
-bash install_puppet.sh
+$ sudo bash install_puppet.sh
 
  ``` 
 

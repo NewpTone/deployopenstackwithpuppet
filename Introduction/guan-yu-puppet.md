@@ -14,7 +14,7 @@ Puppet是由Puppet公司开发的系统管理框架和工具集，被用于IT服
 
 ## Puppet公司简介
 
-Puppet是由Puppet公司所有，曾名为Puppetlabs。
+Puppet是由Puppet公司所有，曾用名为Puppetlabs。
 
 除了自家的拳头产品Puppet之外，Puppet公司还提供了一些相关领域的运维自动化工具。
 
