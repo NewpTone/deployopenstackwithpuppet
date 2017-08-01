@@ -23,6 +23,14 @@ Puppet是由Puppet公司所有，曾用名为Puppetlabs。
 - 半年一度的PuppetConf大会已跻身于IT圈的顶级技术会议之列
 - 每年发布的State of DevOps Report是DevOps领域最具影响力的调查报告
 
+
+## 基础知识
+
+* 对Linux基础知识有所了解，推荐《鸟哥的Linux私房菜 基础学习篇》 
+* 对Puppet基础知识有所了解  推荐 [官方学习文档](https://learn.puppet.com/)
+* 对OpenStack部署有所了解
+
+
 ## 其他类似产品
 
 除了Puppet之外，在业界常见的配置管理工具还有：
