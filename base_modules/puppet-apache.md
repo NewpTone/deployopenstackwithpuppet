@@ -148,7 +148,7 @@ class { 'apache::mod::ssl':
 ```puppet
 apache::mod { 'mod_ssl': }
 ```
-需要说明的是，在使用`define apache::mod`的方式下，Puppet仅会为用户安装指定名称的mod软件包，用户需要手动完成对于mod配置文件的设置。
+需要说明的是，在使用`define apache::mod`的方式下，Puppet仅会安装指定名称的mod软件包，用户需要手动完成对于mod配置文件的设置。
 
 ### 2.2.1 class apache::mod::wsgi
 
