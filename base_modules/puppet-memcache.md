@@ -35,7 +35,7 @@ $ puppet apply -e "class { 'memcached': }"
 
 ### 2.1 `Class memcached`
 
-以下代码完成了对`Memcached`软件包管理：
+1.以下代码完成了对`Memcached`软件包管理：
 
 ```puppet
   package { $memcached::params::package_name:
@@ -50,9 +50,9 @@ $ puppet apply -e "class { 'memcached': }"
     }
   }
 ```
-这里可以看到在`package`资源类型中，参数`provider`并不常见，它用于配置管理软件包的后端，常见的可选项有：`yum`,`apt`,`pip`等。
+此处，值得一提的是：在`package`资源类型中，需要重写参数`provider`默认值的情况并不常见，该参数用于设置管理软件包的后端，常见的可选项有：`yum`,`apt`,`pip`等。
 
-下述代码完成了对`Memcached`服务的管理：
+2.下述代码完成了对`Memcached`服务的管理：
 
 ```puppet
   if $service_manage {
@@ -64,7 +64,12 @@ $ puppet apply -e "class { 'memcached': }"
     }
   }
 ```
-下述代码完成了对`Memcached`配置文件管理：
+
+在`service`资源类型中，需要设置参数`hasstatus`的情况也并不多见，该参数用于设置目标服务是否具有查看服务状态的脚本，默认为`true`。如果该服务的软件包中并没有提供查看服务运行状态的脚本，可以添加`status`参数，来用于指定一个手动运行的命令：若返回值为0，则认为服务是运行状态；若返回值非0，则认为服务是非运行状态。
+
+### 2.2 `memcached_sysconfig.erb`模板
+
+在`class memcached`中使用了`file`资源对`Memcached`配置文件进行管理：
 
 ```puppet
   if ( $memcached::params::config_file ) {
@@ -72,13 +77,76 @@ $ puppet apply -e "class { 'memcached': }"
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => template($memcached::params::config_tmpl),  #使用了模板完成对配置完成的管理
+      content => template($memcached::params::config_tmpl),
       require => Package[$memcached::params::package_name],
       notify  => $service_notify_real,
     }
   }
+```
 
-    ```
+第一次见到了模板(`template`)，这是Puppet用于管理配置文件的常用方法。
+
+模板是指含有可执行代码和数据的特殊文本格式文件，通过渲染最终生成纯文本文件。使用模板的目标就是通过一些简单的输入（传递几个参数）就可以产生复杂的文本输出。
+
+在`memcached::params`中查询到RHEL下的`$memcached::params::config_tmpl`值为`${module_name}/memcached_sysconfig.erb`。
+
+`.erb`又称为`Embedded Ruby`模板语言，Puppet可以通过函数`template`和`inline_template`来渲染模板文件。
+
+下面取自`templates/memcached_sysconfig.erb`文件的部分代码片段。
+
+```
+<%-
+result = []
+if @verbosity
+  result << '-' + @verbosity.to_s
+end
+
+...
+
+if @extended_opts
+  result << '-o ' + @extended_opts.join(',')
+end
+result << '-t ' + @processorcount.to_s
+
+# log to syslog via logger
+if @syslog && @logfile.empty?
+	result << '2>&1 |/bin/logger &'
+# log to log file
+elsif !@logfile.empty? && !@syslog
+  result << '>> ' + @logfile + ' 2>&1'
+end
+-%>
+<%- if scope['osfamily'] != 'Suse' -%>
+PORT="<%= @tcp_port %>"
+USER="<%= @user %>"
+MAXCONN="<%= @max_connections %>"
+<% Puppet::Parser::Functions.function('memcached_max_memory') -%>
+CACHESIZE="<%= scope.function_memcached_max_memory([@max_memory]) %>"
+OPTIONS="<%= result.join(' ') %>"
+<%- else -%>
+MEMCACHED_PARAMS="<%= result.join(' ') %>"
+
+## Path:        Network/WWW/Memcached
+## Description: username memcached should run as
+## Type:        string
+## Default:     "memcached"
+## Config:      memcached
+#
+# username memcached should run as
+#
+MEMCACHED_USER="<%= @user %>"
+
+...
+<%- end -%>
+```
+
+首先，在ERB模板中，标签(tag)是一个重要的概念。例如：
+ - ```<% CODE %>```以成对出现，表示这是一段可执行代码
+ - ```<%= EXPRESSION %>```以成对出现，表示是插入值的表达式
+ - ```<%# COMMENT %>```成对出现，表示为一段注释
+ - ```<%%```或```%%>```，表示```<%```或```%>```字符
+
+如果在标签中加入```-```符，则会移除缩进和换行。
 
   
 ## 推荐阅读
