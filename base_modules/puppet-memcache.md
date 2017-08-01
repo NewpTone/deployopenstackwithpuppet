@@ -1,29 +1,42 @@
-# puppet-memcached
-1. [先睹为快－一言不和，立马动手?](#先睹为快)
-2. [核心代码－如何管理memcached服务](＃核心代码讲解)
+# `puppet-memcached`
+
+1. [先睹为快](#1.先睹为快)
+2. [代码解析](#2.代码解析)
 3. [小结](#小结) 
 4. [动手练习](#动手练习)
 
-**本节作者：周维宇**    
 
-**建议阅读时间 30min**
+Memcached是一个高性能的分布式内存对象缓存系统，用于动态Web应用以减轻数据库负载，最初由LiveJournal的Brad Fitzpatrick开发，目前得到了广泛的使用。它通过在内存中缓存数据和对象来减少读取数据库的次数，从而提高动态、数据库驱动网站的速度。
 
-## 先睹为快
-puppet-memcache 是由Steffen Zieger(saz)维护的一个模块，他还维护了很多其他的基础模块包括puppet-sudo,puppet-ssh等.
-在解说这个模块前，我们先动手部署一个memcached吧
-在命令行执行
-```puppet
-puppet apply -e "class { 'memcached': }"
+`puppet-memcached`是由Steffen Zieger(saz)维护的一个模块。同时，他还维护了`puppet-sudo`,`puppet-ssh`等模块。
+
+`puppet-memcached`项目地址：https://github.com/saz/puppet-memcached
+
+## 1.先睹为快
+
+不想看下面大段的代码说明，已经跃跃欲试了？
+
+Ok，我们开始吧！
+   
+打开虚拟机终端并输入以下命令：
+
+```bash
+$ puppet apply -e "class { 'memcached': }"
 ```
-ok,部署完成，赶紧来看下这是怎么实现的吧
 
-##核心代码讲解
+在看到赏心悦目的绿字后，Puppet已经完成了Memcached服务的安装，配置和启动。这是如何做到的呢？
 
-puppet-memcached只有一个Class:
+我们打开`puppet-memcached`模块下`manifests/init.pp`文件来一探究竟吧。
 
-### Class memcached
 
-####软件包管理
+## 2.代码解析
+
+`puppet-memcached`模块的代码结构非常简洁，所有的工作都在`Class memcached`中完成：
+
+### 2.1 `Class memcached`
+
+以下代码完成了对`Memcached`软件包管理：
+
 ```puppet
   package { $memcached::params::package_name:
     ensure   => $package_ensure,
@@ -37,7 +50,10 @@ puppet-memcached只有一个Class:
     }
   }
 ```
-####服务管理
+这里可以看到在`package`资源类型中，参数`provider`并不常见，它用于配置管理软件包的后端，常见的可选项有：`yum`,`apt`,`pip`等。
+
+下述代码完成了对`Memcached`服务的管理：
+
 ```puppet
   if $service_manage {
     service { $memcached::params::service_name:
@@ -48,42 +64,27 @@ puppet-memcached只有一个Class:
     }
   }
 ```
-####配置文件管理
-使用标准的puppet模版实现
+下述代码完成了对`Memcached`配置文件管理：
+
 ```puppet
   if ( $memcached::params::config_file ) {
     file { $memcached::params::config_file:
       owner   => 'root',
       group   => 'root',
       mode    => '0644',
-      content => template($memcached::params::config_tmpl),
+      content => template($memcached::params::config_tmpl),  #使用了模板完成对配置完成的管理
       require => Package[$memcached::params::package_name],
       notify  => $service_notify_real,
     }
   }
-  ```
-  ####防火墙管理
-  主要是打开memecahed监听的端口，允许外部访问
-  ```puppet
-    if $manage_firewall_bool == true {
-    firewall { "100_tcp_${tcp_port}_for_memcached":
-      dport  => $tcp_port,
-      proto  => 'tcp',
-      action => 'accept',
-    }
 
-    firewall { "100_udp_${udp_port}_for_memcached":
-      dport  => $udp_port,
-      proto  => 'udp',
-      action => 'accept',
-    }
-  }
-  ```
-  ##小结
+    ```
+
   
-  这个模块比较简单，只有一个Class，为什么呢？因为memcached部署起来就是很简单啊。。
+## 推荐阅读
   
-  ##动手练习
   
-  1. 限制memcached最大使用内存为50%
-  2. 关闭对防火墙规则的管理
+##动手练习
+  
+1. 限制memcached最大使用内存为50%
+2. 关闭对防火墙规则的管理
