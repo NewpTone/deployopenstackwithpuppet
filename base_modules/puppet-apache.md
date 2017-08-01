@@ -1,8 +1,8 @@
 # puppet-apache
 
 1. [先睹为快](#先睹为快)
-2. [代码讲解－如何管理apache服务](＃代码讲解)
-3. [小结](#小结) 
+2. [代码讲解－如何管理apache服务](#代码讲解)
+3. [推荐阅读](#推荐阅读) 
 4. [动手练习](#动手练习)
 
 Apache HTTP Server（简称Apache）是Apache软件基金会的一个开放源代码的网页服务器软件，可以在大多数电脑操作系统中运行，由于其跨平台和安全性被广泛使用，是最流行的Web服务器软件之一。它快速、可靠并且可通过简单的API扩充，将Perl／Python等解释器编译到服务器中。
@@ -131,9 +131,19 @@ class { 'apache':
 }
 ```
 
-## 2.2 `define apache::mod和apache::mod::<MODULE NAME>`
+## 2.2 配置Apache mod
 
-`puppet-apache`支持使用两种方式来安装mod软件包和管理mod配置文件。以`mod_ssl`为例：
+`puppet-apache`支持使用两种方式来安装mod软件包和管理mod配置文件：
+  - `class apache::mod::<MODEULE_NAME>`方式
+  - `define apache::mod`方式
+
+其中`apache::mod::<MODULE NAME>`支持众多已预先定义的Apache mod的管理，而`define apache::mod`方式则可以灵活地支持未在`define apache::mod`中的mod。
+
+## 2.2.1 `class apache::mod::ssl`
+
+下面以`mod_ssl`为例进行说明：
+
+为了确保通讯安全，会使用HTTPS来加密通讯，因此需在Apache启用mod_ssl。
 
 - `class apache::mod::<MODEULE_NAME>`方式：
 
@@ -148,25 +158,8 @@ class { 'apache::mod::ssl':
 ```puppet
 apache::mod { 'mod_ssl': }
 ```
-需要说明的是，在使用`define apache::mod`的方式下，Puppet仅会安装指定名称的mod软件包，用户需要手动完成对于mod配置文件的设置。
 
-### 2.2.1 class apache::mod::wsgi
-
-`apache::mod::<MODULE NAME>`支持数量众多的Apache mod的管理。
-
-OpenStack服务的所有提供API接口的组件使用Python语言编写，Python原生的Web服务器性能较弱，通常只适合用于因此要将Python程序运行在Apache上，那么需要使用到wsgi mod。
-在通常情况下,使用默认参数apache::mod::wsgi就可以完成wsgi mod的管理工作，同时也提供了5个可配置的参数，其中wsgi_socket_prefix有默认值，分别是：
-
-* $wsgi_socket_prefix = $::apache::params::wsgi_socket_prefix
-* $wsgi_python_path
-* $wsgi_python_home
-* $package_name
-* $mod_path
-
-## class apache::mod::ssl
-
-此外，为了确保通讯安全，用户会要求使用HTTPS来加密通讯，因此我们需要使用到ssl mod。
-同上，在通常情况下，使用默认参数apache::mod::ssl就可以完成ssl mod的管理工作，同时也提供了10个可配置的参数，并附有默认值：
+在通常情况下，使用默认参数apache::mod::ssl就可以完成mod_ssl的管理工作，同时也提供了10个可配置的参数：
 
 *  $ssl_compression         = false
 *  $ssl_cryptodevice        = 'builtin'
@@ -179,13 +172,35 @@ OpenStack服务的所有提供API接口的组件使用Python语言编写，Pytho
 *  $ssl_random_seed_bytes   = '512'
 *  $ssl_sessioncachetimeout = '300'
 
-## define apache::vhost
 
-在配置Apache时，最常见的运维操作是添加和修改虚拟主机。
+需要注意的是，在使用`define apache::mod`方式下，Puppet仅会安装指定名称的mod软件包，用户需要手动完成对于mod配置文件的设置。
+
+### 2.2.2 `class apache::mod::wsgi`
+
+OpenStack服务的所有提供API接口的组件使用Python语言编写，Python原生的Web服务器性能较弱，只适合用于非线上环境。为了提高API服务的性能，需将Python Web程序运行在Apache上，将使用到`mod_wsgi`。
+
+在通常情况下,声明`apache::mod::wsgi`时使用默认参数就可以完成`mod_wsgi`的安装和配置工作：
+
+```puppet
+class { 'apache::mod::wsgi':}
+```
+
+`apache::mod::wsgi`也提供了5个可配置的参数，其中`$wsgi_socket_prefix`有默认值：
+
+* `$wsgi_socket_prefix` = $::apache::params::wsgi_socket_prefix
+* `$wsgi_python_path`
+* `$wsgi_python_home`
+* `$package_name`
+* `$mod_path`
+
+
+## 2.3 `define apache::vhost`
+
+在配置Apache时，最常见的操作之一就是添加和修改虚拟主机。
 
 因此，在`puppet-apache`模块中`apache::vhost`是使用最频繁的define，用于管理Apache服务的vhost配置文件。
 
-### 配置一个vhost
+### 2.3.1 配置一个vhost
 
 最简单的调用方式是在声明一个`apache::vhost`时，只对参数port和docroot传值，例如：
 
@@ -196,7 +211,7 @@ apache::vhost { 'vhost.example.com':
 }
 ```
 
-### 配置开启SSL的vhost
+### 2.3.2 配置开启SSL的vhost
 
 在线上配置vhost时，经常会使用HTTPS来确保Web访问的安全性，这在puppet中配置起来也非常容易。在声明一个`apache::vhost`时，开启$ssl参数即可：
 ``` puppet
@@ -206,7 +221,7 @@ apache::vhost { 'ssl.example.com':
   ssl     => true,
 }
 ```
-若要为开启SSL的vhost指定证书路径，则使用参数`ssl_cert`和`ssl_key`：
+如果要对开启SSL的vhost指定证书路径，则在声明时引入参数`ssl_cert`和`ssl_key`：
 
 ```puppet
 apache::vhost { 'cert.example.com':
@@ -218,8 +233,33 @@ apache::vhost { 'cert.example.com':
 }
 ```
 
+### 2.3.3 配置一个WSGI的vhost
 
-## 相关文档
+下面代码示例说明了如何为vhost配置WSGI mod，用于运行Python Web服务：
+
+```puppet
+apache::vhost { 'wsgi.example.com':
+  port                        => '80',
+  docroot                     => '/var/www/pythonapp',
+  wsgi_application_group      => '%{GLOBAL}',
+  wsgi_daemon_process         => 'wsgi',
+  wsgi_daemon_process_options => {
+    processes    => '4',
+    threads      => '24',
+    display-name => '%{GROUP}',
+  },
+  wsgi_import_script          => '/var/www/wsgi.example.com',
+  wsgi_import_script_options  => {
+    process-group     => 'wsgi',
+    application-group => '%{GLOBAL}',
+  },
+  wsgi_process_group          => 'wsgi',
+  wsgi_script_aliases         => { '/' => '/var/www/wsgi.example.com' },
+}
+```
+
+
+## 推荐阅读
 
 * [ServerLimit](https://httpd.apache.org/docs/current/mod/mpm_common.html#serverlimit)
 * [ServerName](https://httpd.apache.org/docs/current/mod/core.html#servername)
@@ -232,5 +272,5 @@ apache::vhost { 'cert.example.com':
 
 ## 动手练习
 
-1. 使用puppet搭建一套LAMP环境（注：需和puppet-mysql结合使用）
-2. 使用puppet-apache管理一个HTTPS站点
+1. 使用Puppet搭建一套LAMP环境（注：需和`puppet-mysql`结合使用）
+2. 使用`Certbot`和`puppet-apache`配置并管理一个HTTPS站点(注：`Certbot`的说明见https://certbot.eff.org/)

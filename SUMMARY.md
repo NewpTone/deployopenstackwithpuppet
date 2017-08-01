@@ -11,7 +11,7 @@
   * [理解Hiera](preparation/hiera.md)
   * [准备开发测试环境](preparation/huan-jing-zhun-bei.md)
 * [OpenStack基础服务模块](base_modules/readme.md)
-  * [puppet-apache](base_modules/puppet-apache.md)
+  * [puppet-apache模块](base_modules/puppet-apache.md)
   * [puppet-memcache](base_modules/puppet-memcache.md)
   * [puppet-sysctl](base_modules/puppet-sysctl.md)
   * [puppet-rsync](base_modules/puppet-rsync.md)
