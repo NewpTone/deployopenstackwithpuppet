@@ -84,6 +84,8 @@ $ puppet apply -e "class { 'memcached': }"
   }
 ```
 
+### 2.2.1 什么是模板
+
 第一次见到了模板(`template`)，这是Puppet用于管理配置文件的常用方法。
 
 模板是指含有可执行代码和数据的特殊文本格式文件，通过渲染最终生成纯文本文件。使用模板的目标就是通过一些简单的输入（传递几个参数）就可以产生复杂的文本输出。
@@ -125,20 +127,14 @@ CACHESIZE="<%= scope.function_memcached_max_memory([@max_memory]) %>"
 OPTIONS="<%= result.join(' ') %>"
 <%- else -%>
 MEMCACHED_PARAMS="<%= result.join(' ') %>"
-
-## Path:        Network/WWW/Memcached
-## Description: username memcached should run as
-## Type:        string
-## Default:     "memcached"
-## Config:      memcached
-#
-# username memcached should run as
-#
+...
 MEMCACHED_USER="<%= @user %>"
 
 ...
 <%- end -%>
 ```
+
+### 2.2.2 模板标签
 
 首先，在ERB模板中，标签(tag)是一个重要的概念。例如：
  - ```<% CODE %>```以成对出现，表示这是一段可执行代码
@@ -147,6 +143,33 @@ MEMCACHED_USER="<%= @user %>"
  - ```<%%```或```%%>```，表示```<%```或```%>```字符
 
 如果在标签中加入```-```符，则会移除缩进和换行。
+
+在`memcached_sysconfig.erb`代码片段中，以下为插入值的表达式，最终会将$tcp_port,$user,$max_connections变量的值插入到Memcached的配置文件中：
+```
+PORT="<%= @tcp_port %>"
+USER="<%= @user %>"
+MAXCONN="<%= @max_connections %>"
+```
+而下述代码则为一段可执行代码，用于判断`$osfamily`的值是否为'Suse'：
+```
+<%- if scope['osfamily'] != 'Suse' -%>
+```
+
+### 2.2.3 模板变量
+
+模板可以访问Puppet中的变量，在模板中访问变量时会有一个范围(scope)的概念，调用该模板的class或define中的变量为该模板的局部变量，可以直接使用变量名进行调用。
+
+在ERB模板中有两种方式来访问变量：
+  - `@variable`
+  - `scope['variable']`
+
+在ERB模板中，变量的命名规范是是以`@`开头，例如下述代码片段中，在渲染该模板文件时，Puppet会去`class memcached`中去搜寻与`@tcp_port`对应的`$tcp_port`变量，查询到该变量的默认值是11211
+
+```
+PORT="<%= @tcp_port %>"
+```
+
+
 
   
 ## 推荐阅读
