@@ -53,12 +53,15 @@ node /^web\d+$/ {
 web02.yaml
 
 ```yaml
+---
 # 变量使用类名标识的命名空间来区分
 apache::default_vhost: false
 ```
 
 web03.yaml
 ```yaml
+---
+
 apache::default_mods: true
 ```
 
@@ -101,6 +104,7 @@ node /^web\d+$/ {
 
 在`class ntp`有一个参数是`$ntp_server`，需要在每一个web节点的yaml文件中添加以下参数：
 ```yaml
+---
 ntp::ntp_server: 
  - '10.0.10.101'
  - '10.0.10.102'
@@ -133,6 +137,7 @@ hierarchy:
 在common.yaml中对$ntp_server赋值:
 
 ```yaml
+---
 ntp::ntp_server: 
  - '10.0.10.101'
  - '10.0.10.102'

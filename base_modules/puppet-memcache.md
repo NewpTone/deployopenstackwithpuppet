@@ -1,8 +1,8 @@
-# `puppet-memcached`
+# `puppet-memcached`模块
 
-1. [先睹为快](#1.先睹为快)
-2. [代码解析](#2.代码解析)
-3. [小结](#小结) 
+1. [先睹为快](#先睹为快)
+2. [代码讲解](#代码讲解)
+3. [推荐阅读](#推荐阅读) 
 4. [动手练习](#动手练习)
 
 
@@ -14,9 +14,9 @@ Memcached是一个高性能的分布式内存对象缓存系统，用于动态We
 
 ## 1.先睹为快
 
-不想看下面大段的代码说明，已经跃跃欲试了？
+不想看下面大段的代码解析，已经跃跃欲试了？
 
-Ok，我们开始吧！
+OK，我们开始吧！
    
 打开虚拟机终端并输入以下命令：
 
@@ -163,19 +163,26 @@ MAXCONN="<%= @max_connections %>"
   - `@variable`
   - `scope['variable']`
 
-在ERB模板中，变量的命名规范是是以`@`开头，例如下述代码片段中，在渲染该模板文件时，Puppet会去`class memcached`中去搜寻与`@tcp_port`对应的`$tcp_port`变量，查询到该变量的默认值是11211
+`@variable`方式是ERB模板中变量的命名规范，以`@`开头，用于访问当前范围内的变量。如下述代码片段中，在渲染该模板文件时，Puppet会在`class memcached`中去搜寻与`@tcp_port`对应的`$tcp_port`变量，查询到该变量的默认值是11211，最终在`/etc/sysconfig/memcached`中得到配置`PORT=11211`。
 
 ```
 PORT="<%= @tcp_port %>"
 ```
+而`scope['variable']`方式则可以访问所有的变量（包括当前范围以外的），使用哈希风格的表达式用于指定需要访问的变量，例如`scope[foo::bar]`
+如下述代码片段中，Puppet将从Facter中获取到变量$osfamily的值。
+```
+<%- if scope['osfamily'] != 'Suse' -%>
+```
 
-
+本节对于模板的介绍就到这里，后续会再次谈到模板。
 
   
 ## 推荐阅读
-  
+
+  - https://docs.puppet.com/puppet/4.10/lang_template_erb.html
+  - https://docs.puppet.com/puppet/4.10/lang_template.html
   
 ##动手练习
   
-1. 限制memcached最大使用内存为50%
-2. 关闭对防火墙规则的管理
+1. 将`Memcached`服务的默认进程数为服务器核数的一半
+2. 关闭`puppet-memcached`对防火墙规则的管理
