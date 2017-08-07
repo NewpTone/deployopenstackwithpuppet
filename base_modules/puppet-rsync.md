@@ -1,9 +1,9 @@
 # `puppet-rsync`模块
 
 1. [先睹为快](#1.先睹为快)
-2. [代码讲解](#代码讲解)
-3. [扩展阅读](#扩展阅读) 
-4. [动手练习](#动手练习)
+2. [代码讲解](#2.代码讲解)
+3. [扩展阅读](#3.扩展阅读) 
+4. [动手练习](#4.动手练习)
 
 
 `Rsync`(remote sync)是一款通过网络进行数据同步的软件，由于Rsync会对需要同步的源和目的进行对比，只同步有改变的部分，所以相比常见的scp命令更加高效。
@@ -69,7 +69,7 @@ rsync::get { '/foo':
 
 ###  2.2 `class: rsync::server`
 
-`class rsync::server`则用于管理rsync server，`rsync`在server模式下以守护进程存在，能够接收客户端的数据请求。使用时，可以在客户端使用rsync命令把文件发送到服务器端，也可以向服务器请求获取文件。`class rsync::server`使用xinetd来管理rsync服务，使用`concat`模块来管理rsync配置文件。
+`class rsync::server`则用于管理rsync server，`rsync`在server模式下以守护进程存在，能够接收客户端的数据请求。使用时，可以在客户端使用rsync命令把文件发送到服务器端，也可以向服务器请求获取文件。`class rsync::server`使用xinetd来管理rsync服务，使用`concat`模块来管理rsync配置文件。我们会在下一节谈到`puppet-xinetd`模块。
 
 ```puppet
 class rsync::server(
@@ -166,8 +166,9 @@ class swift::ringserver(
 在`rsync::server::module {'swift_server'}`实例中，swift_server的路径为`/etc/swift`，所有者和所属组是`swift`，设置了默认的最大连接数，设为只读权限。
 
 
-### Class rsync::repo
-####创建一个存放数据的rsync仓库
+## 2.4 `class rsync::repo`
+
+`class rsync::repo`对`rsync::server::module`进行了简单的封装，为用户创建一个存放数据的rsync仓库，包括用于存放数据的目录和rsync服务。
 ```puppet
 class rsync::repo {
   include rsync::server
@@ -181,13 +182,11 @@ class rsync::repo {
     require => File[$base],
   }
 ```
-rsync::repo类主的作用是创建一个rsync的仓库，仓库位置默认设置在/data/rsync的目录下。
-
 
 ## 3.扩展阅读
 
-- 动态域 https://docs.puppet.com/puppet/5.0/lang_scope.html#dynamic-scope
-- 继承  https://docs.puppet.com/puppet/5.0/lang_classes.html#inheritance
+- 动态域的使用 https://docs.puppet.com/puppet/5.0/lang_scope.html#dynamic-scope
+- 关于继承的使用  https://docs.puppet.com/puppet/5.0/lang_classes.html#inheritance
 
 ## 4.动手练习
 

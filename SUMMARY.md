@@ -15,7 +15,7 @@
   * [puppet-memcached模块](base_modules/puppet-memcache.md)
   * [puppet-sysctl模块](base_modules/puppet-sysctl.md)
   * [puppet-rsync模块](base_modules/puppet-rsync.md)
-  * [puppet-xinetd](base_modules/puppet-xinetd.md)
+  * [puppet-xinetd模块](base_modules/puppet-xinetd.md)
   * [puppet-rabbitmq](base_modules/puppet-rabbitmq.md)
   * [puppet-firewall](base_modules/puppet-firewall.md)
   * [puppet-mysql](base_modules/puppet-mysql.md)
