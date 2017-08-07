@@ -184,14 +184,13 @@ class rsync::repo {
 rsync::repo类主的作用是创建一个rsync的仓库，仓库位置默认设置在/data/rsync的目录下。
 
 
-## 小结
-rsync模块分为几个部分，
-1、安装rsync服务 
-2、配置rsync服务 
-3、启动rsync服务 
-4、定义rsync服务的数据库存放端
-5、定义rsync如何同步远程和本地的数据
+## 3.扩展阅读
 
-## 动手练习
-1.如何指定一端IP地址可以与rsyncserver同步？
-2.如何设置rsync服务的最大连接数量？
+- 动态域 https://docs.puppet.com/puppet/5.0/lang_scope.html#dynamic-scope
+- 继承  https://docs.puppet.com/puppet/5.0/lang_classes.html#inheritance
+
+## 4.动手练习
+
+1.请说明上述代码中的`$conf_file = $::osfamily ? { ...}`的作用和用法
+
+2.搭建一个用于同步软件包的rsync服务器，incoming_chmod设为'0755'，outgoing_chmod设为'0644'，只读权限。
