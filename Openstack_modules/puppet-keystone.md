@@ -1,56 +1,57 @@
-# Puppet-keystone模块介绍
+# `puppet-keystone`模块介绍
 
-0. [基础知识 - 快速了解Keystone ](#基础知识)
+0. [基础知识 - 理解Keystone](#基础知识)
 1. [先睹为快](#先睹为快)
 2. [核心代码讲解 - 如何做到管理keystone服务？](#核心代码讲解)
     - [class keystone](###class keystone)
     - [class keystone::service](###class keystone::service)
     - [class keystone::endpoint](###class keystone::endpoint)
     - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
-    - [class keystone::config](###class keystone::config) 
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
-#基础知识
+# 0.基础知识
 
-`puppet-keystone`是用来配置和管理Keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
+`puppet-keystone`是用于配置和管理Keystone，其中包括:服务，软件包，Keystone user，role，service，endpoint等等。其中keystone user, role, service, endpoint等资源的管理是通过自定义的resource type来实现。
 
-在开始介绍puppet-keystone的基本使用前，我们先来看看keystone中的基础概念。
+在开始介绍puppet-keystone模块前，先来回顾一下Keystone中的基础概念。
 
 Identity
 ---
-Keystone的认证部分包含：`user`和`group`，可以通过SQL或通用LDAP支持。
+Keystone的Identity：`user`和`group`，用于标识用户的身份，数据可以存在Keystone数据库中，或者也可以使用LDAP。
 
 | 名称 | 说明 |
 |--------|:-----:|
 | user | user表示独立的API消费者，user非全局唯一，必须属于某个domain，但在domain命名空间下唯一 |
-| group| group表示汇总user集合的容器，和user一样，group非全局唯一，group必须属于某个domain，在domain命名空间下唯一|
+| group| group表示汇总user集合的容器，和user一样，group非全局唯一，必须属于某个domain，在domain命名空间下唯一|
 
 Resources
 ---
-Keystone的resources部分包含：`Projects`和`Domains`，通常存储在SQL中。
+Keystone的resources部分提供了两类数据：`Projects`和`Domains`，通常存储在SQL中。
 
 | 名称 | 说明 |
 |--------|:-----:|
-|Project(Tenant)|Project(在v2.0时也称为Tenant)表示Openstack基本单位的所有权限，表示在Openstack中的资源必须归属于某个特定project。project同样的，非全局唯一，必须归属于某个domain，在domain命名空间下唯一。若一个project没有被指定domain，那么它的domain会被设置为default |
-|Domain|domain是project，user和group的更高层级的容器。每个domain定义了一个命名空间，keystone默认提供了一个名为'Default'的domain。Domain是全局唯一的。|
+|Project(Tenant)|Project(在v2.0时也称为Tenant)表示Openstack基本单位的所有权限。在OpenStack中的资源必须归属于某个特定project。project非全局唯一，必须归属于某个domain，在domain命名空间下唯一。若一个project没有被指定domain，那么其domain会被设置为default |
+|Domain|domain是project，user和group更高层级的容器。每个domain定义了一个命名空间，Keystone默认提供了一个名为'Default'的默认domain。Domain是全局唯一的。|
 
 Assignment
 ---
+Assignment提供了role和role assignment的数据。
 
 | 名称 | 说明 |
 |--------|:-----:|
-|Role|role指定了user能获取的授权级别，roles可以授予到domain或project级别，role可以被指定到单独的user或group级别。注意噢，role可是全局唯一的。|
-|Role Assignments|一个包含Role,Resource,Identity的三元组|
+|Role| role指定了user能获取的授权级别，roles可以domain或project级别授予，role可以被指定到单独的user或group。注意噢，role可是全局唯一的。|
+|Role Assignments|一个包含Role, Resource, Identity的三元组|
 
 Token
 ===
-Token服务验证和管理token，在完成对用户正确的认证请求后，Keystone会返回相应的token。token有时效期，在用户与Openstack服务的交互中，会使用token作为验证信息，提高系统的安全性。
+Token服务用于验证和管理token，在完成对用户正确的认证请求后，Keystone会返回相应的token，token存在有效期。在用户与Openstack服务的交互中，会使用token作为验证信息，提高系统的安全性。
 
 Catalog
 ===
-Catalog提供了各service的endpoint注册入口，用于endpoint自动发现。
-以下是service catalog的样例：
+Catalog提供了各个service的endpoint注册入口，用于endpoint自动发现。
+
+以下是Keystone service catalog的样例：
 ```json
 "catalog": [
     {
@@ -65,17 +66,17 @@ Catalog提供了各service的endpoint注册入口，用于endpoint自动发现�
     }
 ]
 ```
-通常，作为user是不用太关心这个列表的，catalog在以下情况下会出现在响应中：
+通常，作为用户不需要关心这个列表，catalog在以下情况下会作为返回值响应：
  - token creation response (`POST /v3/auth/tokens`)
  - token validation response (`GET /v3/auth/tokens`)
  - standalone resource (`GET /v3/auth/catalog`)
 
 Services
 ===
-service catalog本身是由一组services组成，辣么service的定义是：
+service catalog本身是由一组services组成，service的定义是：
 
 
-> Service实体表示Openstack中的web服务。每个service可以有0个或以上的endpoint，当然有没有endpoint的service并没有什么卵用。完整描述请参见：[Identity API v3 spec](https://github.com/openstack/keystone-specs/blob/master/api/v3/identity-api-v3.rst#services-v3services)
+> Service实体表示Openstack中的web服务。每个service可以有0个或以上的endpoint，当然没有endpoint的service并没有什么实际用途。完整描述请参见：[Identity API v3 spec](https://github.com/openstack/keystone-specs/blob/master/api/v3/identity-api-v3.rst#services-v3services)
 
 除了和endpoint相关以外，还有两个非常重要的属性：
 
@@ -83,11 +84,11 @@ service catalog本身是由一组services组成，辣么service的定义是：
 
 > 面向用户的service名称
 
-这表示该参数的值不是为了让程序去解析的，而是作为一个终端用户可读的字符串。例如keystone服务的name，你可以设置为"Keystone"或者"UnitedStack Public Cloud Indetity Service"。因此，使用者可以根据实际需求来设置。
+这表示该参数的值不是为了让程序去解析的，而是作为一个终端用户可读的字符串。例如keystone服务的name，你可以设置为"Keystone"或者"New Public Cloud Indetity Service"。因此，使用者可以根据实际需求来设置。
 
 - type (string)
 
-> 描述service所实现的API。该参数值只能在给定的列表中选择。目前Openstack支持的参数值是：`compute, image, ec2, identity, volume, network`。
+> 描述service所实现的API。该参数值只能在给定的列表中选择。目前Openstack支持的参数值有：`compute, image, ec2, identity, volume, network`等。
 
 Endpoints
 ===
@@ -110,11 +111,12 @@ Endpoint表示API服务的基础URL，以及与其相关的metadata。每个服�
 
 > service enpoint的完整URL。
 
-这个完整URL应该由不带版本信息的基础URL加端口号组成。一个好例子是这样滴：
-`https://identity.example.com:35357/`，相反的,`https://identity.example.com:35357/v2.0/`就是一个反例，它引导所有的client去连接指定的v2.0版本，不管这些客户端能否处理哪里版本。
+这个完整URL应该由不带版本信息的基础URL加端口号组成。一个理想的url是：`https://identity.example.com:35357/`
+
+相反,`https://identity.example.com:35357/v2.0/`作为一个反例，它引导所有的client去连接指定的v2.0版本，不管这些客户端能否处理哪里版本。
 
 
-我们通过图例来解释这些比较复杂的概念：
+我们通过图例来解释这些复杂的概念：
 
 Keystone v2 model
 ---
@@ -146,20 +148,21 @@ Keystone服务组件
 |keystone| 基于命令行的keystone客户端工具|
 
 
-## 先睹为快
+## 1.先睹为快
 
-在解说puppet-keystone模块前，让我们来使用它部署一个keystone服务先吧。
+不想看下面大段的代码解析，已经跃跃欲试了？
 
-在终端下执行以下命令:
+OK，我们开始吧！
+   
+打开虚拟机终端并输入以下命令：
 
 ```bash
-puppet apply -v keystone/examples/v3_basic.pp
+$ puppet apply -v keystone/examples/v3_basic.pp
 ```
 
-等待puppet执行完成后，在终端下试试吧：
+等待命令执行完成，在终端下试试吧：
 
 ```bash
-# To be sure everything is working, run:
    $ export OS_IDENTITY_API_VERSION=3
    $ export OS_USERNAME=admin
    $ export OS_USER_DOMAIN_NAME=admin_domain
@@ -167,10 +170,12 @@ puppet apply -v keystone/examples/v3_basic.pp
    $ export OS_PROJECT_NAME=admin
    $ export OS_PROJECT_DOMAIN_NAME=admin_domain
    $ export OS_AUTH_URL=http://keystone.local:35357/v3
+
    $ openstack user list
+   $ openstack service list
 ```
 
-这是如何做到的？下面来看看v3_basic.pp的代码
+这是如何做到的？下面来看v3_basic.pp代码
 
 ```puppet
 #设置了全局的Exec属性，当命令执行失败时，输出结果
@@ -206,19 +211,19 @@ class { '::keystone::endpoint':
 }
 ```
 
-## 核心代码讲解
+## 2.核心代码讲解
 
-### class keystone
+### 2.1 class keystone
 
-class keystone逻辑非常复杂，我们先抛开大量的判断逻辑和类调用，它主要做了三件核心工作：
+`class keystone`逻辑非常复杂，暂先抛开大量的判断逻辑和类调用，它主要完成了三个主要任务：
 
-* 安装keystone软件包
-* 管理keystone.conf中的核心参数
-* 管理keystone服务
+* 安装Keystone软件包
+* 管理Keystone.conf中的主要配置项 
+* 管理Keystone服务
 
-#### keystone软件包管理
+#### 2.1.1 keystone软件包管理
 
-这里有一个非常有用的参数是$package_ensure，我们可以指定软件包的版本，或者将其标记为总是安装最新版本，我们将会在最佳实践部分去介绍它。
+这里有一个重要参数$package_ensure，可以指定软件包的版本，或者将其标记为总是安装最新版本，本书将会在最佳实践部分再次提及它。
 
 ```puppet
 # keystone软件包
@@ -237,18 +242,20 @@ class keystone逻辑非常复杂，我们先抛开大量的判断逻辑和类调
   }
 ```
 
-#### keystone.conf核心参数管理
+#### 2.1.2 keystone.conf核心参数管理
 
-class keystone里管理了大量的配置参数，比如cache,token,db,endpoint设置等相关参数，这里不一一列举。
+class keystone管理了大量的配置项，比如cache, token, db, endpoint等相关参数，这里不一一列举。
 
-这里只一个代码片段为例来解释keystone_config的用法。keystone_config是一个自定义的resource type，其源码路径位于：
+那么对于这些选项是如何管理的呢？这里我们要提到`keystone_config`。
 
-* lib/puppet/type/keystone_config.rb   定义
-* lib/puppet/provider/keystone_config/ini_setting.rb  实现 
+`keystone_config`是一个自定义的resource type，其代码路径是：
 
-在这里我们关注如何使用，在Advanced Puppet一书中我们将讲解如何编写custom resource type。
+* lib/puppet/type/keystone_config.rb   定义了keystone_config
+* lib/puppet/provider/keystone_config/ini_setting.rb  实现了keystone_config
 
-keystone_config有多种使用方法:
+在这里我们关注如何使用`keystone_config`。
+
+keystone_config有几种使用场景:
 
 对指定参数赋值：
 ``` puppet
@@ -266,7 +273,7 @@ keystone_config有多种使用方法:
    keystone_config { 'section_name/option_name': ensure => absent}
 ```
 
-OK，讲解就到这里，我们来看代码。
+OK，讲解就到这里，下面看一段实际的代码。
 ```puppet
   keystone_config {
     'DEFAULT/admin_token':      value => $admin_token, secret => true;
@@ -274,10 +281,11 @@ OK，讲解就到这里，我们来看代码。
     'DEFAULT/admin_bind_host':  value => $admin_bind_host;
     'DEFAULT/public_port':      value => $public_port;
     'DEFAULT/admin_port':       value => $admin_port;
-    'paste_deploy/config_file': value => $paste_config;
   }
 ```
-#### keystone服务管理
+与之对应的keystone.conf配置文件[DEFAULT]下的admin_token等配置项被Puppet修改为指定值。
+
+#### 2.1.3 keystone服务管理
    puppet支持keystone以单进程模式运行或者跑在Apache上，请注意，如果需要将keystone运行在Apache上，那么需要添加keystone::wsgi::apache，代码如下：
 ```puppet
    class { 'keystone':
@@ -293,13 +301,7 @@ OK，讲解就到这里，我们来看代码。
 ```puppet
  if $service_name == $::keystone::params::service_name {
     $service_name_real = $::keystone::params::service_name
-    if $validate_service {
-      if $validate_auth_url {
-        $v_auth_url = $validate_auth_url
-      } else {
-        $v_auth_url = $admin_endpoint
-      }
-      
+     ... 
       #这里调用了keystone::service类，用于管理keystone服务的具体配置
       class { '::keystone::service':
         ensure         => $service_ensure,
@@ -342,9 +344,9 @@ OK，讲解就到这里，我们来看代码。
   }
 ```
 
-### class keystone::service
+### 2.2 class keystone::service
 
-我们在class keystone中就遇到了keystone::service，那么来看看其代码。值得一讲有两块代码：
+在`class keystone`中就遇到了keystone::service，从类的名称可以得知，该类用于管理Keystone服务。其中有两段代码需要注意：
 
 第一段是管理keystone服务：
 ```puppet
@@ -375,11 +377,11 @@ OK，讲解就到这里，我们来看代码。
   }
 ```
 
-### class keystone::endpoint 
+### 2.3 class keystone::endpoint 
 
-顾名思义，用于创建和管理keystone的service,endpoint。
+顾名思义，`class keystone::endpoint`用于创建和管理Keystone的service和endpoint。
 
-来看一段使用样例：
+以下是使用样例：
 
 ```puppet
   class { 'keystone::endpoint':
@@ -405,10 +407,13 @@ OK，讲解就到这里，我们来看代码。
     default_domain      => $default_domain,
   }
 ```
-### define keystone::resource::service_identity
+接下来，需要跳转到`keystone::resource::service_identity`的定义了。
 
-少侠莫慌，我们接着来看keystone::resource::service_identity，终于到路的尽头了，我们来看看它是怎么实现的。
-我先看看它是如何实现管理user的。
+### 2.3.1  define keystone::resource::service_identity
+
+莫慌，接着来看keystone::resource::service_identity，终于到路的尽头了，来看看它是怎么实现的。
+
+首先，它实现了管理keystone user：
 ```puppet
 if $configure_user {
     if $user_domain_real {
@@ -432,35 +437,23 @@ if $configure_user {
     }
   }
 ```
-这里的关键是keystone_user，这又是一个自定义resource type，其源码路径为:
+
+这里的关键是keystone_user资源，这又是一个自定义resource type，其源码路径为:
 
 * lib/puppet/type/keystone_config.rb   定义
 * lib/puppet/provider/keystone_config/ini_setting.rb  实现 
 
-通过keystone_user，puppet完成了user的管理工作（包括创建和修改）。
-同理，我们还看到了keystone_domain，目的是完成对domain的管理。
-剩下的代码同理，就不一一解读了。
+通过keystone_user，Puppet完成了对user的管理（包括创建,修改,查询）。
 
-### class keystone::config
+同理，还有keystone_domain，目的是完成对domain的管理。剩下的代码同理，就不一一解读了。
 
-这个类最初是由我(xingchao)提出用于自定义参数管理，自定义参数是指所有未被puppet-keystone模块管理的参数。怎么理解？
-打个比方，keystone在Mitaka版本新增了一个参数称为new_mitaka_op（虚构），那么在puppet-keystone模块里并没有该参数，这时候，我们只要使用keystone::config就可以轻松完成参数的管理。
-在hiera文件中添加如下代码：
+## 3.小结
 
-```yaml
----
-   keystone::config::keystone_config:
-     DEFAULT/new_mitaka_opt:
-       value: newValue
-```
+  在这里，我们介绍了puppet-keystone的核心代码，当然该module还有许多重要的class我们并没有涉及，例如：keystone::deps，keystone::policy等等。这些就留给读者自己去阅读代码了。
 
-## 小结
-  在这里，我们介绍了puppet-keystone的核心代码，当然该module还有许多重要的class我们并没有涉及，例如：keystone::deps，keystone::policy等等。这些就留给读者自己去阅读代码了，当然在后期的版本中，我也会进一步去完善puppet-keystone的核心代码内容。
-
-## 动手练习
+## 4.动手练习
 
 1. 配置token_flush的cron job，使得可以定期清理Keystone数据库的token表中token失效数据。
 2. 将keystone服务运行在Apache上
 3. 如何开启keystone的debug日志级别
 4. 接第3问，在keystone和keystone::loging里都存在$verbose变量，这种代码冗余的原因是出于什么考虑？可以移除吗？
-

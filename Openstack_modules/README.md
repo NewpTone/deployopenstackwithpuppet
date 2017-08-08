@@ -1,15 +1,15 @@
 # 第四章  Puppet-OpenStack模块
 
-PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet的经典素材。它体现在以下几点：
+PuppetOpenstack项目发展到今日，代码经历了多次的迭代和持续的更新，其代码和规范可以称之为Puppet进阶的经典素材。它体现在以下几点：
 
 * 严格遵守Puppet Code Style
-* 完全松耦合的逻辑
+* 松耦合的代码逻辑
 * 几乎没有代码冗余，非常高的代码复用率
-* 精心设计的自定义resource type和facter，在灵活性和控制能力上做出了良好的权衡
+* 精心编写的自定义Resource Type和Facter，在灵活性和控制能力上做出了权衡
 
 目前官方提供的模块有以下：
 
-* [Alarming](https://github.com/openstack/puppet-aodh/) (Aodh)
+* Alarming (Aodh)
 * Key Manager (Barbican)
 * Telemetry (Ceilometer)
 * Block Storage (Cinder)
@@ -37,7 +37,7 @@ PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet�
 * Root Cause Analysis (Vitrage)
 * Message service (Zaqar)
 
-本书将会cover核心Openstack服务和部分热门服务：
+本书将会覆盖核心Openstack服务和部分热门服务：
 
 * Telemetry (Ceilometer)
 * Block Storage (Cinder)  

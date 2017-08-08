@@ -181,6 +181,7 @@ class rabbitmq::service(
     }
   }
 }
+```
 
 读者可能已经注意到参数$service_ensure和$service_manage被声明了数据类型，其中Boolean被称为是数据类型(Data types)，在Puppet中有以下数据类型:
 
@@ -199,7 +200,7 @@ class rabbitmq::service(
 
 例如，`Boolean $service_manage`严格地限定了$service_manage的数据类型为布尔型，而使用`Optional[String, Boolean] $service_manage`则可以指定$service_manage的数据类型可以是布尔型或者字符串。
 
-```
+
 ## 3.扩展阅读
 
 - 数据类型 https://docs.puppet.com/puppet/4.10/lang_data.html

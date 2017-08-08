@@ -7,19 +7,14 @@
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
-**本节作者：余兴超**    
 
-**建议阅读时间 40m**
+## 0.基础知识
 
-## 基础知识
-
-这是读者和作者都会感到轻松又欢快的一章，因为puppet-horizon模块比较简单...
-回到正题，Horizon为用户提供了Web图形化的管理界面来完成一些常见的运维操作，例如创建虚拟机实例，管理网络，设置访问权限等等。下图给出了Horizon的预览页面的样例。
+Horizon是OpenStack Dashbaord项目，为用户提供了Web图形化的管理界面来完成一些常见的虚拟资源操作，例如创建虚拟机实例，管理网络，设置访问权限等等。下图给出了Horizon的预览页面的样例。
 
 ![](../images/03/horizon.png)
 
-而puppet-horizon模块则是用来配置和管理horzion服务，包括horzion软件包，配置文件和服务的管理，在生产环境下，horizon将运行在Apache上，而不是运行在horizon开发服务器上。
-除了四大核心项目以外，horizon还支持以下项目：
+除了四大核心项目以外，Horizon还支持以下项目：
 
 * swift
 * cinder
@@ -30,21 +25,29 @@
 
 > 注：要正常运行horizon服务，至少需安装Nova,Keystone,Glance,Neutron服务
 
-## 先睹为快
+`puppet-horizon`模块用于配置和管理horzion服务，包括Horzion软件包，配置文件和服务的管理，并且`puppet-horizon`支持将Horizon将运行在Python内置Web服务器或Apache服务器上。
+
+## 1.先睹为快
+
+不想看下面大段的代码解析，已经跃跃欲试了？
+
+OK，我们开始吧！
+   
+打开虚拟机终端并输入以下命令：
 
 ```puppet
-puppet apply -e 'class {'horizon': secret_key => 'big'}'
+$ puppet apply -e 'class {'horizon': secret_key => 'big'}'
 ```
 
-在puppet执行结束后，horizon就部署完成，并运行在Apache上了。
+等待命令执行完成，Puppet完成了Horizon部署，并将其运行在Apache上。
 
-## 核心代码讲解
+## 2.核心代码讲解
 
-### class horizon
+### 2.1 class horizon
 
-horizon类做了以下三件事情
+`class horizon`管理了以下三个任务:
 
-- 完成了horizon软件包的安装:
+- Horizon软件包的安装:
 
 ```puppet
   package { 'horizon':
@@ -54,7 +57,7 @@ horizon类做了以下三件事情
   }
 ```
 
-- horizon配置文件的管理:
+- Horizon配置文件的管理:
 
 ```puppet
   concat { $::horizon::params::config_file:
@@ -69,15 +72,13 @@ horizon类做了以下三件事情
   }
 ```
 
-这里稍微一提concat这种管理配置文件的方式，因为在其他模块里，我们已经看到这种管理配置文件的方式了，而它曾经流行过一段时间。
+这里说明一下concat管理配置文件的方式，在其他模块中也出现过这种管理配置文件的方式，而它曾经流行过一段时间。
 
 了解过template的同学都知道，这是puppet管理配置文件的内置方式，这种方式的优缺点非常明显，其缺点就是每次配置文件发生新的变动，那么模板也得保持同步的更新。
 
-因此，有人就提出来，我们把模板给拆成一个个分片(fragment)，把基本保持不变化的代码放在xx1中，把经常变化分为一类的放到xx2中，然后最后再拼接起来(concat)。所以就有了上面这段代码的来历。
+因此，有人提出来一种新方法，将模板文件拆为分片(fragment)，把保持不变的配置项放到分片1中，把频繁更新的配置项放到分片2中，然后最后再拼接起来(concat)。这种方法简化了模板维护的成本，使得配置文件的管理变得更灵活，但本质上仍是模板。
 
-为什么后来它不流行了呢？参见我的博客：[Openstack配置文件管理的变迁之路](http://www.cnblogs.com/yuxc/p/3650660.html)
-
-- 接着往下，管理horizon服务并运行在Apache上:
+- 管理Horizon服务的运行环境:
 
 ```puppet
   if $configure_apache {
@@ -97,14 +98,14 @@ horizon类做了以下三件事情
   }
 ```
 
-这个类中没什么特别重要的类，值得一提的是几个比较重要的参数：
+这个类的代码通俗易懂，值得一提的是以下4个参数，若配合不慎可能会导致服务运行异常：
 
 - keystone_url
 - available_regions
 - cache_server_ip
 - secret_key
 
-还有一个是函数member的使用，类似于python中的in，用于判断一个变量是否存在于一个list中，list在左，变量在右边：
+还有一点是函数member的使用，类似于Python中的`in`，用于判断指定变量是否存在于指定的数组中，第一个参数是数组变量，第二个参数是成员变量：
 
 ```puppet
  if ! (member($tuskar_ui_deployment_mode_allowed_values, $tuskar_ui_deployment_mode)) {
@@ -112,12 +113,11 @@ horizon类做了以下三件事情
   }
 ```
 
+### 2.1 `class horizon::wsgi::apache`
 
-## class horizon::wsgi::apache
+`horizon::wsgi::apache`用于配置将horizon运行在apache上。
 
-和其他模块相同后缀名的类一样，用于配置将horizon运行在apache上。
-
-这里值得一提的有两点，第一点是merge函数：
+这里有两点值得注意，第一点是merge函数：
 
 ```puppet
   if $bind_address {
@@ -127,7 +127,7 @@ horizon类做了以下三件事情
   }
 ```
 
-第二点是仍然是函数ensure_resource:
+第二点是函数ensure_resource:
 
 ```puppet
   ensure_resource('apache::vhost', $vhost_conf_name, merge ($default_vhost_conf, $extra_params, {
@@ -147,13 +147,13 @@ horizon类做了以下三件事情
     $merged_hash_list
   }))
 ```
-这么写的主要原因是为了代码简洁。
+使用`ensure_resource`的目的是为了使代码更简洁。
 
-## 小结
+## 3.小结
 
-   这章的内容比较简单，因此我们介绍了像concat,merge,ensure_resource这些define和function，它们的加入使得代码逻辑变得更加强大。
+本节介绍了如何使用`puppet-horizon`模块部署Horizon服务，同时也介绍了concat, merge, ensure_resource等define和function，合理使用有助于提高代码的简洁和优雅。
 
-## 动手练习
+## 4.动手练习
 
 1. 开启Horizon SSL端口
 2. 确保Horizon服务只监听在内网IP上
