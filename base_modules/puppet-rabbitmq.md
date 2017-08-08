@@ -45,7 +45,7 @@ $ puppet apply -e "class { 'rabbitmq': }"
 # 2.代码讲解
 ### 2.1 `class rabbitmq`
 
-`class rabbitmq`是一个入口类，用于声明当前模块中的所有资源，比如：判断参数值得类型是否符合预期、调用其它类（include）、继承params类、判断参数是否启用LADP验证等等。
+`class rabbitmq`是一个入口类，用于声明当前模块中的相关资源，同时也会包含一些逻辑判断和声明，如：判断参数值类型是否符合预期、调用其它类（include）、继承params类、判断参数是否启用LADP验证等等。
 ``` puppet
 class rabbitmq(
   $admin_enable               = $rabbitmq::params::admin_enable,
@@ -78,19 +78,21 @@ class rabbitmq(
 
 }
 ```
-`validate_re`函数是用于检查参数传入值是否与给定的正则表达式匹配。
+在代码块首有一些类似于```validate_re($package_apt_pin, '^(|\d+)$')```的代码，其实`validate_re`函数接收两个参数：参数名，正则表达式。用于检查指定参数的传入值是否与给定的正则表达式匹配。
+因此，在应用catalog前对输入数据进行检查，可以提前发现的用户错误传参。
 
-`class rabbitmq`核心的代码是声明了4个类：
+`class rabbitmq`作为一个入口类，声明了4个类：
+
 - rabbitmq::install
 - rabbitmq::config
 - rabbitmq::service
 - rabbitmq::management
 
 
-## class rabbitmq::install
-此类主要负责rabbitmq服务端的软件部署。
+### 2.2 class rabbitmq::install
+`rabbitmq::install`用于管理RabbitMQ Server的软件部署和配置, 注意其参数的默认值是`$rabbitmq::param_name`的格式，说明该类在被声明时，`class rabbitmq`也需同时被声明。
 ```puppet
-
+class rabbitmq::install {
   $package_ensure   = $rabbitmq::package_ensure
   $package_name     = $rabbitmq::package_name
   $package_provider = $rabbitmq::package_provider
@@ -122,8 +124,11 @@ class rabbitmq(
   }
 }
 ```
-## class rabbitmq::config
-config类主要是负责rabbitmq服务目录、配置文件、文件内容的写入等配置
+### 2.3 `class rabbitmq::config`
+
+`rabbitmq::config`类用于统一管理RabbitMQ服务的目录和配置文件。可能会有读者有疑问，为什么要将软件包的安装和配置文件的管理分拆为
+两个类。原因很简单，为了代码可读性，`rabbitmq::config`的代码长度有两百多行，若与其他代码合并在一起，阅读起来会非常痛苦。
+这也是Puppet的最佳实践之一：尽可能保持代码的简洁和可读性。
 ```puppet
 class rabbitmq::config {
 
@@ -131,7 +136,9 @@ class rabbitmq::config {
   $cluster_node_type          = $rabbitmq::cluster_node_type
   $cluster_nodes              = $rabbitmq::cluster_nodes
   $config                     = $rabbitmq::config
+  ...
   }
+  ...
   file { '/etc/rabbitmq':
     ensure => directory,
     owner  => '0',
@@ -144,19 +151,17 @@ class rabbitmq::config {
     group  => '0',
     mode   => '0644',
   }
+  ...
 ```
 
-## Class rabbitmq::service
-上面我们说了软件包的安装、软件包配置文件的下发，既然准备工作已经做好，那么咱们需要让这个服务启动，service 这个类就是来负责触发服务的管理。
+### 2.4 `class rabbitmq::service`
+`rabbitmq::install`和`rabbitmq::config`分别完成了软件包的安装、配置文件的生成，准备工作已经完成，`rabbitmq::service`类用于管理服务状态。
 ```puppet
 class rabbitmq::service(
-  $service_ensure = $rabbitmq::service_ensure,
-  $service_manage = $rabbitmq::service_manage,
-  $service_name   = $rabbitmq::service_name,
+  Enum['running', 'stopped'] $service_ensure  = $rabbitmq::service_ensure,
+  Boolean $service_manage                     = $rabbitmq::service_manage,
+  $service_name                               = $rabbitmq::service_name,
 ) inherits rabbitmq {
-
-  validate_re($service_ensure, '^(running|stopped)$')
-  validate_bool($service_manage)
 
   if ($service_manage) {
     if $service_ensure == 'running' {
@@ -175,13 +180,35 @@ class rabbitmq::service(
       name       => $service_name,
     }
   }
-
 }
+
+读者可能已经注意到参数$service_ensure和$service_manage被声明了数据类型，其中Boolean被称为是数据类型(Data types)，在Puppet中有以下数据类型:
+
+  - Strings
+  - Numbers
+  - Booleans
+  - Arrays
+  - Hashes
+  - Regular Expressions
+  - Sensitive
+  - Undef
+  - Resource References
+  - Default
+
+此外，Enum称为是抽象数据类型(abstract data types)，可以灵活地匹配/限制指定参数的数据类型。
+
+例如，`Boolean $service_manage`严格地限定了$service_manage的数据类型为布尔型，而使用`Optional[String, Boolean] $service_manage`则可以指定$service_manage的数据类型可以是布尔型或者字符串。
+
 ```
-#小结
-rabbitmq 模块也比较简单，需要注意是默认安装的时候有guest用户，一般情况下我们会删除此用户。
-#动手练习
-1.如何删除rabbitmq中guest用户？
+## 3.扩展阅读
+
+- 数据类型 https://docs.puppet.com/puppet/4.10/lang_data.html
+- 抽象数据类型 https://docs.puppet.com/puppet/4.10/lang_data_abstract.html
+
+## 4.动手练习
+
+1.默认安装的时候有guest用户，出于安全考虑，会删除此用户，请使用puppet-rabbitmq完成此操作。
 2.如何使用自定义资源rabbitmq_user来创建用户？
+3.在OpenStack中，fanout类型的队列应在程序退出时删除，RabbitMQ中可以使用Policy设置Queue的TTL，请使用rabbitmq_policy将.*上所有queue的ttl设置为18000s。
 
 
