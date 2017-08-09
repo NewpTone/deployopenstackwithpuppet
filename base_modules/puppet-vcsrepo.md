@@ -1,20 +1,42 @@
-# puppet-vcsrepo
+# `puppet-vcsrepo`模块
 
-1. [先睹为快－使用用例](#先睹为快)
-2. [动手练习](#动手练习)
+1. [先睹为快](##1.先睹为快)
+2. [使用示例](##2.使用示例)
+3. [动手练习](##3.动手练习)
 
-puppet-vcsrepo模块的目的是提供了一种使用Puppet的方式来用户的管理版本控制系统(VCS)，如:git,svn,cvs,bazaar等。 
+`puppet-vcsrepo`是由Puppet公司维护的官方模块,提供了管理版本控制系统(VCS)的能力，如:git,svn,cvs,bazaar等。 
+`puppet-vcsrepo`项目地址：https://github.com/puppetlabs/puppetlabs-vcsrepo
+
 **注1** `vcsrepo`并不会主动安装任何的vcs软件，因此在使用该模块前需要完成VCS的安装。    
-**注2** `git`是puppet公司官方支持的vcs provider
+**注2** `git`是Puppet公司唯一官方支持的vcs provider
 
-# 先睹为快
+## 1.先睹为快
 
-## Git
+不想看下面大段的代码解析，已经跃跃欲试了？
 
-例1: 创建和管理一个空的文件：
+OK，我们开始吧！
+
+创建一个git.pp文件并输入：
+```puppet
+vcsrepo { '/tmp/git_repo':
+  ensure   => present,
+  provider => git,
+}
+```
+打开虚拟机终端并输入以下命令：
+```
+$ puppet apply -v git.pp
+```
+该命令将会创建一个git仓库，其路径是'/tmp/git_repo'。
+
+## 2.使用示例
+
+`puppet-vcsrepo`模块除了自定义资源类型vcsrepo以外，并没有任何manfests代码。因此，本节主要介绍使用vcsrepo来管理git仓库。
+
+例1: 创建和管理一个空的git bare仓库：
 ```puppet
 vcsrepo { '/path/to/repo':
-  ensure   => present,
+  ensure   => bare,
   provider => git,
 }
 ```
@@ -96,11 +118,10 @@ vcsrepo { '/path/to/repo':
   },
 }
 ```
-### via SSH
+
+例7：使用指定用户的SSH密钥来clone repo：
 
 若要使用SSH方式连接到源码仓库，推荐使用Puppet来管理SSH密钥，并使用[`require`](http://docs.puppetlabs.com/references/stable/metaparameter.html#require)元参数来确保它们间的执行顺序。
-
-例7：使用指定用户的key clone repo：
 
 ```puppet
 csrepo { '/path/to/repo':
@@ -112,9 +133,9 @@ csrepo { '/path/to/repo':
 }
 ```
 
-## Git支持的特性和参数
+### 2.1 Git支持的特性和参数
 
-Features: 
+特性: 
  - `bare_repositories`
  -  `depth`
  -  `multiple_remotes`
@@ -123,7 +144,7 @@ Features:
  -  `submodules`
  -  `user`
 
-Parameters: 
+参数: 
  - `depth` 
  - `ensure`
  - `excludes`
@@ -138,7 +159,7 @@ Parameters:
  - `source`
  - `user`
 
-## 动手练习
+## 3.动手练习
 
-1.使用`vcsrepo`管理nova源码仓库，并使用stable/mitaka分支   
+1.使用`vcsrepo`管理nova源码仓库，并使用stable/ocata分支   
 2.使用`vcsrepo`管理一个带有submodule的项目，并指定管理submodule
