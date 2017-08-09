@@ -1,22 +1,26 @@
-# puppet-firewall
+# `puppet-firewall`模块
 
-1. [先睹为快－一言不和，立马动手?](#先睹为快)
-2. [核心代码－如何管理apache服务](#核心代码讲解)
-3. [小结](#小结) 
+1. [先睹为快](#先睹为快)
+2. [代码讲解](#代码讲解)
+3. [推荐阅读](#推荐阅读) 
 4. [动手练习](#动手练习)
 
-**本节作者：周维宇**    
 
-**建议阅读时间 1h**
+iptables是一个配置Linux内核防火墙的命令行工具，用于设定一些特殊的规则，允许或拒绝数据包通过。
 
-puppet-firewall模块是由puppetlabs公司维护的官方模块。通过引入firewall resource来让你可以通过puppet DSL来管理你的firewall规则,另外还引入了firewall chaing resource
-来允许你管理 iptables chains,这个模块仅支持iptables和ip6tables。
+puppet-firewall模块是由Puppet公司维护的官方模块。通过自定义资源类型来管理用户的firewall规则,另外还引入了firewall chaing resource
+管理iptables chains, 当前支持iptables和ip6tables。
 
-## 先睹为快
+`puppet-firewall`项目地址：'https://github.com/puppetlabs/puppetlabs-firewall'
 
-是不是还想按着上面章节写的一样，马上尝试使用一下这个模块，少侠别激动，这个模块用起来是有风险的，不小心会把自己关在外面哦，请确保你可以通过除了ssh外的其他方式访问。
+## 1.先睹为快
 
-编写 learn_firewall.pp文件
+不想看下面大段的代码解析，已经跃跃欲试了？
+
+先别激动，这个模块的使用是有风险的，操作不慎会把自己也拒之门外，请确保可以通过除ssh外的方式登陆。
+
+编写learn_firewall.pp文件:
+
 ```puppet
   class my_fw::pre {
     Firewall {
