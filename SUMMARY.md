@@ -17,7 +17,7 @@
   * [puppet-rsync模块](base_modules/puppet-rsync.md)
   * [puppet-xinetd模块](base_modules/puppet-xinetd.md)
   * [puppet-rabbitmq模块](base_modules/puppet-rabbitmq.md)
-  * [puppet-firewall](base_modules/puppet-firewall.md)
+  * [puppet-firewall模块](base_modules/puppet-firewall.md)
   * [puppet-mysql模块](base_modules/puppet-mysql.md)
   * [puppet-vcsrepo模块](base_modules/puppet-vcsrepo.md)
   * [puppet-mongodb模块](base_modules/puppet-mongodb.md)
