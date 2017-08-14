@@ -1,32 +1,39 @@
-# puppet-vswitch
-1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理openvswitch服务？](#核心代码讲解)
-    - [class vswitch](###class vswitch)
-    - [class vswitch::ovs](###class vswitch::ovs)
-3. [小结](##小结)
-4. [动手练习 - 光看不练假把式](##动手练习)
+# `puppet-vswitch`模块
 
-**本节作者：韩亮亮**    
+1. [先睹为快](#1.先睹为快)
+2. [代码讲解](#2.代码讲解)
+3. [扩展阅读](#3.扩展阅读) 
+4. [动手练习](#4.动手练习)
 
-**建议阅读时间 30分钟**
 
-## 先睹为快
-puppet-vswitch是管理openvswitch的模块，部署超级简单.
-编辑一个test.pp，输入以下内容：
-```puppet
-class { 'vswitch':
-  provider  => 'ovs',
-}
-```
-在终端下输入:
+Open vSwitch(OVS)是一个高质量的、多层虚拟交换机，使用开源Apache2.0许可协议。它的目的是让大规模网络自动化可以通过编程扩展,同时仍然支持标准的管理接口和协议，Open vSwitch支持多种linux 虚拟化技术，包括Xen/XenServer， KVM和irtualBox。
+
+`puppet-vswitch`项目是由OpenStack社区维护的模块，用于配置和管理Openvswitch。
+
+`puppet-vswitch`项目地址: https://github.com/openstack/puppet-vswitch
+
+在OVS中，有三个非常重要的基本概念：
+
+- Bridge: 表示一个以太网交换机，其功能是根据流规则，把从端口收到的数据包转发到一个或多个端口
+- Port: 收发数据包的单元，每个Port都属于一个特定的bridge
+- Interface: 连接到Port的网络接口设备，可以是物理网卡，也可以是虚拟网卡
+
+## 1.先睹为快
+
+不想看下面大段的代码说明，已经跃跃欲试了？
+
+OK，我们开始吧！
+   
+打开虚拟机终端并输入以下命令：
 ```bash
-puppet apply -v test.pp
+$ puppet apply -e 'class {'vswitch': provider => 'ovs'}'
 ```
-Openvswitch服务就装好了（其实也就是安装一个包，启动一个服务。。。）
+等待命令执行完成，Puppet完成了Openvswitch安装并启动了ovs服务。
 
-## 核心代码讲解
-### class vswitch
-class vswitch的逻辑很简单，只需要传入provider的值，然后include对应的class，目前只有vswitch::ovs一个。
+## 2.代码讲解
+### 2.1 class vswitch
+
+`class vswitch`的逻辑比较简单，使用include函数声明了"::vswitch::${provider}"。
 ```puppet
 class vswitch (
   $provider = $vswitch::params::provider
@@ -36,12 +43,8 @@ class vswitch (
 }
 ```
 
-### class vswitch::ovs
-class vswitch::ovs
-看起来代码不少，大多数为兼容不同的系统版本的代码，L版的代码中支持的系统为：Debian、Redhat、FreeBSD,
-在一个系统版本下对应的代码只有很少的一部分，例如，在CentOS中有用的代码为只是安装一个openvswitch的软件包，
-并且启动服务。
-service管理的代码如下：
+### 2.2 class vswitch::ovs
+`class vswitch::ovs`用于管理Openvswitch的软件包和服务,管理服务的代码如下：
 ```puppet
     'Redhat': {
       service { 'openvswitch':
@@ -51,37 +54,46 @@ service管理的代码如下：
       }
     }
 ```
-软件包管理代码如下，包的名称调用的params中的参数，并且指定安装软件的顺序在启动服务之前。
+管理openvswitch软件包的代码如下，指定安装软件的顺序在启动服务之前:
 ```puppet
   package { $::vswitch::params::ovs_package_name:
     ensure => $package_ensure,
     before => Service['openvswitch'],
   }
 ```
-puppet-vswitch模块提供了vs_port和vs_bridge两个provider，如果想要创建一个名为br-ex的ovs bridge，
-我们可以使用vs_bridge来创建：
+
+### 自定义资源类型vs_port/vs_bridge/vs_config
+`puppet-vswitch`模块提供了vs_port和vs_bridge两个自定义资源类型，分别用于管理port和bridge。
+
+例1, 使用`vs_bridge`创建一个名为br-ex的ovs bridge：
 ```puppet
 vs_bridge { 'br-ex':
   ensure => present,
 }
 ```
-而如果想要把端口绑到br-ex上，我们可以是用vs_port来实现：
+例2，使用vs_port将端口eth1绑定到br-ex上：
 ```puppet
-vs_port { 'eth2':
+vs_port { 'eth1':
   ensure => present,
   bridge => 'br-ex',
 }
 ```
-vswitch::ovs 在最后定义了执行顺序，创建ovs bridge和绑定port，都要在启动服务之后。
+例3，使用vs_config添加新配置项到Openvswitch配置文件中：
+```puppet
+vs_config { 'parameter_name':
+  ensure => present,
+  value => "some_value"
+} 
+```
 
-### class vswitch::params
-vswitch::params为别的class提供参数，在vswitch::params里根据不同的系统指定了不同的软件包、
-服务等名称
+在`vswitch::ovs`指定了资源的执行顺序，vs_bridge和vs_port在openvswitch服务之后。
 
-## 小结
-我们在本章里介绍了puppet-vswitch的核心代码，这个模块相对简单，大家可以自己练习一下，对照代码，
-了解每一步是怎么实现的。
+```puppet
+  Service['openvswitch'] -> Vs_port<||>
+  Service['openvswitch'] -> Vs_bridge<||>
+```
 
-## 动手练习
-1. 部署openvswitch服务
-2. 创建一个bridge，名字是br-tun,并且把eth1加入到br-tun
+
+## 3.动手练习
+
+1. 创建一个vs bridge br-tun, 并且把eth1加入到br-tun
