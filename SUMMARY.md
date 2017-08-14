@@ -42,7 +42,7 @@
   * [puppet-aodh](Openstack_modules/puppet-aodh.md)
 * [PuppetOpenstack公共库和工具类模块](Library_modules/readme.md)
   * [puppet-oslo](Openstack_modules/puppet-oslo.md)
-  * [puppet-vswitch](base_modules/puppet-vswitch.md)
+  * [puppet-vswitch模块](base_modules/puppet-vswitch.md)
   * [puppet-openstacklib](Library_modules/puppet-openstacklib.md)
   * [puppet-openstack-integration](Library_modules/puppet-openstack-integration.md)
   * [puppet-openstack-specs](Library_modules/puppet-openstackspecs.md)
