@@ -19,7 +19,7 @@
   * [puppet-rabbitmq模块](base_modules/puppet-rabbitmq.md)
   * [puppet-firewall](base_modules/puppet-firewall.md)
   * [puppet-mysql模块](base_modules/puppet-mysql.md)
-  * [puppet-vcsrepo](base_modules/puppet-vcsrepo.md)
+  * [puppet-vcsrepo模块](base_modules/puppet-vcsrepo.md)
   * [puppet-mongodb](base_modules/puppet-mongodb.md)
   * [puppet-ceph](base_modules/puppet-ceph.md)
 * [Openstack服务模块](Openstack_modules/README.md)
