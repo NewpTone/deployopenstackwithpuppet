@@ -13,9 +13,9 @@
 
 #基础知识
 
-`puppet-keystone`是用来配置和管理Keystone服务，包括服务，软件包，keystone user，role，service，endpoint等等。其中keystone user, role, service, endpoint等资源的管理是使用自定义的resource type来实现。
+`puppet-keystone`是用于配置和管理Keystone，包括服务，软件包，Keystone user，role，service，endpoint等等。其中keystone user, role, service, endpoint等资源的管理是通过自定义的resource type来实现。
 
-在开始介绍puppet-keystone的基本使用前，我们先来看看keystone中的基础概念。
+在开始介绍puppet-keystone模块前，先来看看Keystone中的基础概念。
 
 Identity
 ---
