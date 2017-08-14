@@ -1,6 +1,6 @@
 # 第四章  Puppet-OpenStack模块
 
-PuppetOpenstack模块发展到今天，其代码可以称得上是学习Puppet的经典素材。它体现在以下几点：
+PuppetOpenstack项目发展到今日，代码经历了多次的迭代和持续的更新，其代码和规范可以称之为Puppet进阶的经典素材。它体现在以下几点：
 
 * 严格遵守Puppet Code Style
 * 完全松耦合的逻辑
