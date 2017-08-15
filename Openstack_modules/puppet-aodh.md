@@ -1,7 +1,8 @@
-# puppet-aodh
+# puppet-aodh模块
 
+0. [基础知识 - 理解Aodh](#基础知识)
 1. [先睹为快 - 一言不合，立马动手?](#先睹为快)
-2. [核心代码讲解 - 如何做到管理aodh服务？](#核心代码讲解)
+2. [核心代码讲解 - 如何管理Aodh服务？](#核心代码讲解)
     - [class aodh](##class aodh)
     - [class aodh::db](##class aodh::db)
     - [class aodh::keystone](##class aodh::keystone)
@@ -12,15 +13,12 @@
 3. [小结](#小结)
 4. [动手练习 - 光看不练假把式](#动手练习)
 
-**本节作者：陆源**
 
-**建议阅读时间 1h**
+## 0.理解Aodh
 
-## Aodh简述
-Aodh是Openstack基础架构团队贡献（此团队提供持续集成测试和代码审查服务），但此模块不是openstack核心项目。aodh主要提供配置和管理OpenStack告警服务。注意：在Mitaka版本中原先的ceilometer-alarm组件全部被清除，由aodh来代替。
-## Aodh架构图
-![](../images/03/aodh.png)
-## Aodh服务
+Aodh是Openstack告警项目，最初在Havana版本中作为Ceilometer项目的一个组件(ceilometer-alarm)出现在Ceilometer项目中，在Liberty版本中演变成了独立项目Aodh，用户可以为独立事件或者样本设置阈值和告警机制。
+
+Aodh服务由以下组件组成：
 ---
 | 名称 | 说明 |
 |--------|:-----:|
@@ -29,96 +27,72 @@ Aodh是Openstack基础架构团队贡献（此团队提供持续集成测试和�
 | openstack-aodh-notifier | 根据配置的告警方式，发出告警 |
 | openstack-aodh-listener | 监听事件，触发事件相关的告警 |
 
-## 先睹为快
-部署Aodh，服务依赖于keystone服务和http服务。
-```puppet
-class { '::aodh': }
-class { '::aodh::keystone::authtoken':
-#需要自定义密码
-  password => 'puppetopenstack',
-}
-class { '::aodh::api':
-  enabled      => true,
-  service_name => 'httpd',
-}
-include ::apache
-class { '::aodh::wsgi::apache':
-  ssl => false,
-}
-class { '::aodh::auth':
-#需要自定义密码
-  auth_password => 'puppetopenstack',
-}
-class { '::aodh::evaluator': }
-class { '::aodh::notifier': }
-class { '::aodh::listener': }
-class { '::aodh::client': }
-```
-然后执行以下命令
+各个组件之间的关系如下图所示:
+![](../images/03/aodh.png)
+
+
+## 1.先睹为快
+
+不想看下面大段的代码解析，已经跃跃欲试了？
+
+OK，我们开始吧！
+   
+打开虚拟机终端并输入以下命令：
 
 ```bash
-# puppet apply examples/site.pp
+$ puppet apply examples/aodh.pp
 ```
-aodh就安装完成了。`puppet-aodh`模块中，我们主要介绍`class aodh`和`class aodh::三大组件`：
+等待命令执行完成，Puppet完成了对Aodh服务的安装。
 
-## 核心代码讲解
-### class aodh
+注：部署Aodh服务，依赖于Keystone服务。
+
+## 2.核心代码讲解
+### `class aodh`
+`class aodh`完成了以下三项任务:
+
+  - Aodh common包的安装
+  - Aodh配置文件的清理
+  - RabbitMQ和AMQP选项的管理
+
+其中rabbit和AMQP相关的选项管理均是通过oslo::messaging::rabbit和oslo::messaging::amqp来管理，关于puppet-oslo模块，将会在下一个章节详细介绍。
 ```puppet
-    package { 'aodh':
-    ensure => $ensure_package,
-    name   => $::aodh::params::common_package_name,
-    #tag属性
-    tag    => ['openstack', 'aodh-package'],
+  oslo::messaging::rabbit { 'aodh_config':
+    rabbit_userid               => $rabbit_userid,
+    rabbit_password             => $rabbit_password,
+    rabbit_virtual_host         => $rabbit_virtual_host,
+    rabbit_host                 => $rabbit_host,
+    rabbit_port                 => $rabbit_port,
+    rabbit_hosts                => $rabbit_hosts,
+    rabbit_ha_queues            => $rabbit_ha_queues,
+    heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
+    heartbeat_rate              => $rabbit_heartbeat_rate,
+    rabbit_use_ssl              => $rabbit_use_ssl,
+    kombu_reconnect_delay       => $kombu_reconnect_delay,
+    kombu_ssl_version           => $kombu_ssl_version,
+    kombu_ssl_keyfile           => $kombu_ssl_keyfile,
+    kombu_ssl_certfile          => $kombu_ssl_certfile,
+    kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
+    kombu_compression           => $kombu_compression,
+    amqp_durable_queues         => $amqp_durable_queues,
   }
 ```
-puppet-aodh中对rpc的选择主要提供了两种：RabbitMQ和AMQP，所提供的参数如下:
-```puppet
-  if $rpc_backend == 'rabbit' {
-    oslo::messaging::rabbit { 'aodh_config':
-      rabbit_userid               => $rabbit_userid,
-      rabbit_password             => $rabbit_password,
-      rabbit_virtual_host         => $rabbit_virtual_host,
-      rabbit_host                 => $rabbit_host,
-      rabbit_port                 => $rabbit_port,
-      rabbit_hosts                => $rabbit_hosts,
-      rabbit_ha_queues            => $rabbit_ha_queues,
-      heartbeat_timeout_threshold => $rabbit_heartbeat_timeout_threshold,
-      heartbeat_rate              => $rabbit_heartbeat_rate,
-      rabbit_use_ssl              => $rabbit_use_ssl,
-      kombu_reconnect_delay       => $kombu_reconnect_delay,
-      kombu_ssl_version           => $kombu_ssl_version,
-      kombu_ssl_keyfile           => $kombu_ssl_keyfile,
-      kombu_ssl_certfile          => $kombu_ssl_certfile,
-      kombu_ssl_ca_certs          => $kombu_ssl_ca_certs,
-      kombu_compression           => $kombu_compression,
-      amqp_durable_queues         => $amqp_durable_queues,
-    }
-  }
-    elsif $rpc_backend == 'amqp' {
-    oslo::messaging::amqp { 'aodh_config':
-      server_request_prefix  => $amqp_server_request_prefix,
-      broadcast_prefix       => $amqp_broadcast_prefix,
-      group_request_prefix   => $amqp_group_request_prefix,
-      container_name         => $amqp_container_name,
-      idle_timeout           => $amqp_idle_timeout,
-      trace                  => $amqp_trace,
-      ssl_ca_file            => $amqp_ssl_ca_file,
-      ssl_cert_file          => $amqp_ssl_cert_file,
-      ssl_key_file           => $amqp_ssl_key_file,
-      ssl_key_password       => $amqp_ssl_key_password,
-      allow_insecure_clients => $amqp_allow_insecure_clients,
-      sasl_mechanisms        => $amqp_sasl_mechanisms,
-      sasl_config_dir        => $amqp_sasl_config_dir,
-      sasl_config_name       => $amqp_sasl_config_name,
-      username               => $amqp_username,
-      password               => $amqp_password,
-    }
-  }
+
+在package资源中，有一个元属性tag:
 ```
-tag属性的定义：资源、类和自定义define类型实例可以有任意数量的标签，加上他们可以自动收到一些标签。标签用处很多：
-* 可以收集资源
-* 根据标签分析报告
-* 限制catalog运行
+package { 'aodh':
+  ensure => $package_ensure_real,
+  name   => $::aodh::params::common_package_name,
+  tag    => ['openstack', 'aodh-package'],
+}
+```
+`tag`顾名思义就是标签，资源、类和定义都可以对其标记，一个资源可以有任意数量的标记。有多种标记资源的方式，以上代码是使用了元参数tag，对aodh package资源
+添加了2个tag：'openstack','aodh-package'。这些tag会在`aodh::deps`中使用，用于收集标记为`aodh-package`的package资源:
+
+```puppet
+ anchor { 'aodh::install::begin': }
+  -> Package<| tag == 'aodh-package'|>
+  ~> anchor { 'aodh::install::end': }
+```
 
 ### class aodh::db
 class aodh::db应该和db目录下的几个文件放在一起看，aodh默认使用MySQL数据库，首先aodh::db::mysql调用::openstacklib::db::mysql创建aodh的数据库，代码如下:
