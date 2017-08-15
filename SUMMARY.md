@@ -39,7 +39,7 @@
   * [puppet-manila](Openstack_modules/puppet-manila.md)
   * [puppet-rally](Openstack_modules/puppet-rally.md)
   * [puppet-designate](Openstack_modules/puppet-designate.md)
-  * [puppet-aodh](Openstack_modules/puppet-aodh.md)
+  * [puppet-aodh模块](Openstack_modules/puppet-aodh.md)
 * [PuppetOpenstack公共库和工具类模块](Library_modules/readme.md)
   * [puppet-oslo](Openstack_modules/puppet-oslo.md)
   * [puppet-vswitch模块](base_modules/puppet-vswitch.md)

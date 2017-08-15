@@ -94,27 +94,6 @@ package { 'aodh':
   ~> anchor { 'aodh::install::end': }
 ```
 
-
-### class aodh::keystone::auth
-aodh::keystone::auth模块是用来创建aodh的endpoint和role，其中有这么一段代码：
-```puppet
-  ::keystone::resource::service_identity { $auth_name:
-    configure_user      => $configure_user,
-    configure_user_role => $configure_user_role,
-    configure_endpoint  => $configure_endpoint,
-    service_type        => $service_type,
-    service_description => $service_description,
-    service_name        => $service_name_real,
-    region              => $region,
-    password            => $password,
-    email               => $email,
-    tenant              => $tenant,
-    roles               => ['admin', 'ResellerAdmin'],
-    public_url          => $public_url_real,
-    admin_url           => $admin_url_real,
-    internal_url        => $internal_url_real,
-  }
-```
 ### class aodh::api
 api的主要是提供数据的接口，为告警数据的提供存储和访问。在class aodh::api中先是定义了以下几个依赖关系：
 ```puppet
