@@ -23,7 +23,7 @@
   * [puppet-mongodb模块](base_modules/puppet-mongodb.md)
   * [puppet-ceph](base_modules/puppet-ceph.md)
 * [Openstack服务模块](Openstack_modules/README.md)
-  * [OpenStack模块代码结构](Introduction/module_structure.md)
+  * [OpenStack模块代码结构](Openstack_modules/module_structure.md)
   * [puppet-keystone模块](Openstack_modules/puppet-keystone.md)
   * [puppet-nova](Openstack_modules/puppet-nova.md)
   * [puppet-neutron](Openstack_modules/puppet-neutron.md)
