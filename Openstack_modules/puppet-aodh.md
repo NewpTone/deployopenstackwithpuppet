@@ -94,32 +94,7 @@ package { 'aodh':
   ~> anchor { 'aodh::install::end': }
 ```
 
-### class aodh::db
-class aodh::db应该和db目录下的几个文件放在一起看，aodh默认使用MySQL数据库，首先aodh::db::mysql调用::openstacklib::db::mysql创建aodh的数据库，代码如下:
-```puppet
-  ::openstacklib::db::mysql { 'aodh':
-    user          => $user,
-    password_hash => mysql_password($password),
-    dbname        => $dbname,
-    host          => $host,
-    charset       => $charset,
-    collate       => $collate,
-    allowed_hosts => $allowed_hosts,
-  }
-```
-触发dbsync.而class aodh::db则调用oslo::db配置aodh中db相关参数。
-```puppet
-  oslo::db { 'aodh_config':
-    db_max_retries => $database_db_max_retries,
-    connection     => $database_connection,
-    idle_timeout   => $database_idle_timeout,
-    min_pool_size  => $database_min_pool_size,
-    max_retries    => $database_max_retries,
-    retry_interval => $database_retry_interval,
-    max_pool_size  => $database_max_pool_size,
-    max_overflow   => $database_max_overflow,
-  }
-```
+
 ### class aodh::keystone::auth
 aodh::keystone::auth模块是用来创建aodh的endpoint和role，其中有这么一段代码：
 ```puppet
