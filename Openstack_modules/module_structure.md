@@ -174,5 +174,72 @@ class aodh::db::sync (
 ```
 aodh::db::sync的实现是通过声明exec资源来调用aodh-dbsync命令行完成数据库初始化的操作。
 
-## 3.User，Role，Endpoint管理
+## 3.User，Role，Service, Endpoint管理
 
+在OpenStack部署工作中，与Keystone相关的初始化操作是集群正常运行必不可少的步骤：
+- 创建Domain
+- 创建Project
+- 创建User，设置Password
+- 创建并指定Role
+- 创建Service
+- 创建Endpoint
+
+包括后期的运维过程中，password或者endpoint的变更等常见操作都可以通过Puppet完成。而这背后的工作是通过`<service>::keystone::auth`来完成的。
+
+### 3.1 `class <service>::keystone::auth`
+
+`<service>::keystone::auth`用于创建OpenStack服务的user,service和endpoint，以Aodh为例：
+
+```puppet
+class aodh::keystone::auth (
+  $password,
+  $auth_name           = 'aodh',
+  $email               = 'aodh@localhost',
+  $tenant              = 'services',
+  $configure_endpoint  = true,
+  $configure_user      = true,
+  $configure_user_role = true,
+  $service_name        = 'aodh',
+  $service_type        = 'alarming',
+  $region              = 'RegionOne',
+  $public_url          = 'http://127.0.0.1:8042',
+  $internal_url        = 'http://127.0.0.1:8042',
+  $admin_url           = 'http://127.0.0.1:8042',
+) {
+
+  include ::aodh::deps
+
+  keystone::resource::service_identity { 'aodh':
+    configure_user      => $configure_user,
+    configure_user_role => $configure_user_role,
+    configure_endpoint  => $configure_endpoint,
+    service_name        => $service_name,
+    service_type        => $service_type,
+    service_description => 'OpenStack Alarming Service',
+    region              => $region,
+    auth_name           => $auth_name,
+    password            => $password,
+    email               => $email,
+    tenant              => $tenant,
+    public_url          => $public_url,
+    internal_url        => $internal_url,
+    admin_url           => $admin_url,
+  }
+
+}
+```
+实际上`aodh::keystone::auth`在声明`define keystone::resource::service_identity`的基础上，根据Aodh服务而重写了相关的参数。
+
+下面来看一段代码，关于`keystone::resource::service_identity`如何实现service的管理：
+```
+  if $configure_service {
+    if $service_type {
+      ensure_resource('keystone_service', "${service_name_real}::${service_type}", {
+        'ensure'      => $ensure,
+        'description' => $service_description,
+      })
+    } else {
+      fail ('When configuring a service, you need to set the service_type parameter.')
+    }
+  }
+```
