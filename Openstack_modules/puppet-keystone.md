@@ -448,63 +448,6 @@ if $configure_user {
 
 同理，还有keystone_domain，目的是完成对domain的管理。剩下的代码同理，就不一一解读了。
 
-### 2.4 class keystone::config
-
-该类是由笔者在14年初提出的特性，其目的是用于灵活地管理自定义配置项，其代码实现非常简单，由create_resources和自定义资源类型keystone_config/keystone_paste_ini构成。
-```puppet
-# == Class: keystone::config
-#
-# This class is used to manage arbitrary keystone configurations.
-#
-# === Parameters
-#
-# [*keystone_config*]
-#   (optional) Allow configuration of arbitrary keystone configurations.
-#   The value is an hash of keystone_config resources. Example:
-#   { 'DEFAULT/foo' => { value => 'fooValue'},
-#     'DEFAULT/bar' => { value => 'barValue'}
-#   }
-#   In yaml format, Example:
-#   keystone_config:
-#     DEFAULT/foo:
-#       value: fooValue
-#     DEFAULT/bar:
-#       value: barValue
-#
-# [*keystone_paste_ini*]
-#   (optional) Allow configuration of /etc/keystone/keystone-paste.ini options.
-#
-#   NOTE: The configuration MUST NOT be already handled by this module
-#   or Puppet catalog compilation will fail with duplicate resources.
-#
-class keystone::config (
-  $keystone_config  = {},
-  $keystone_paste_ini = {},
-) {
-
-  include ::keystone::deps
-
-  validate_hash($keystone_config)
-  validate_hash($keystone_paste_ini)
-
-  create_resources('keystone_config', $keystone_config)
-  create_resources('keystone_paste_ini', $keystone_paste_ini)
-}
-```
-
-自定义参数是指所有未被puppet-keystone模块管理的参数。怎么理解？
-
-打个比方，keystone在某版本新增了一个参数称为new_param，在puppet-keystone模块里并没有该参数，此时，只要使用keystone::config就可以轻松完成参数的管理。
-
-在hiera文件中添加以下代码：
-
-```yaml
----
-   keystone::config::keystone_config:
-     DEFAULT/new_param:
-       value: newValue
-```
-
 ## 3.小结
 
   在这里，我们介绍了puppet-keystone的核心代码，当然该module还有许多重要的class我们并没有涉及，例如：keystone::deps，keystone::policy等等。这些就留给读者自己去阅读代码了。
