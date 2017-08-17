@@ -7,7 +7,6 @@
     - [class keystone::service](###class keystone::service)
     - [class keystone::endpoint](###class keystone::endpoint)
     - [define keystone::resource::service_identity](###define  keystone::resource::service_identity)
-    - [class keystone::config](###class keystone::config) 
 3. [小结](##小结)
 4. [动手练习 - 光看不练假把式](##动手练习)
 
