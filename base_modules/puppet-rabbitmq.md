@@ -42,7 +42,8 @@ $ puppet apply -e "class { 'rabbitmq': }"
 
 等待上述命令执行完成，Puppet完成了对RabbitMQ服务的安装和配置。
 
-# 2.代码讲解
+## 2.代码讲解
+
 ### 2.1 `class rabbitmq`
 
 `class rabbitmq`是一个入口类，用于声明当前模块中的相关资源，同时也会包含一些逻辑判断和声明，如：判断参数值类型是否符合预期、调用其它类（include）、继承params类、判断参数是否启用LADP验证等等。
