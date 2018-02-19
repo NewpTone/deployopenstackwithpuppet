@@ -16,7 +16,7 @@ MongoDB是一个基于分布式文件存储的数据库，旨在为Web应用提�
 
 `puppet-mongodb`项目地址：https://github.com/puppetlabs/puppetlabs-mongodb
 
-# 1.先睹为快
+## 1.先睹为快
 
 不想看下面大段的代码解析，已经跃跃欲试了？
 
@@ -31,15 +31,15 @@ $ puppet apply -e "include mongodb::server,mongodb::client" -v
 在看到赏心悦目的绿字后，Puppet已经完成了MongoDB服务的安装，配置和启动，输入mongo就可以进入命令行界面了。
 
 
-# 2.代码讲解
+## 2.代码讲解
 
 ### 2.1 `class mongodb`
 
 `class mongodb`的代码比较简单，声明了`class mongodb::server`。
 
-## 2.2 `class mongodb::server`
+### 2.2 `class mongodb::server`
 
-### 2.2.1 类包含和链式箭头
+#### 2.2.1 类包含和链式箭头
 在该类中，有一段复杂的代码:
 
 ```puppet
@@ -167,7 +167,7 @@ class include_class {
   Class['a']->Class['b']
 }
 ```
-### 2.2.2
+#### 2.2.2
 
 MongoDB分为三种模式：StandAlone，Replication和Sharding。
 
