@@ -1,3 +1,5 @@
+# 关于Puppet
+
 ## Puppet简介
 
 Puppet是由Puppet公司开发的系统管理框架和工具集，被用于IT服务的自动化管理。由于良好的声明式语言和易于扩展的框架设计以及可重用可共享的模块，使得Google、Cisco、Twitter、RedHat、New York Stock Exchange等众多公司和机构在其数据中心的自动化管理中用到了Puppet。
@@ -24,14 +26,14 @@ Puppet是由Puppet公司所有，曾用名为Puppetlabs。
 - 每年发布的State of DevOps Report是DevOps领域最具影响力的调查报告
 
 
-## 基础知识
+## 基础知识要求
 
 * 对Linux基础知识有所了解，推荐《鸟哥的Linux私房菜 基础学习篇》 
 * 对Puppet基础知识有所了解  推荐 [官方学习文档](https://learn.puppet.com/)
 * 对OpenStack部署有所了解
 
 
-## 其他类似产品
+## 同类工具
 
 除了Puppet之外，在业界常见的配置管理工具还有：
 
